@@ -1,0 +1,75 @@
+---
+title: bootstrap validate + Axios
+categories: AJAX
+tags:
+- AJAX
+- Axios
+- bootstrap validate
+- Vue.js
+---
+想要在表單使用 bootstrap 4 validate 驗證，驗證通過後把資料透過 Axios 傳出去。
+過程中發現2個問題:
+1. 用 router 的關係.所以切換頁面時不是整頁刷新(無法觸發 load 事件).因此訂單第一次都送不出去.頁面刷新後才有辦法送出。
+2. 驗證通過後 Axios 程式碼都會直接跳過去，連跑 catch 負責顯示驗證錯誤的部分都沒有。
+記錄一下解題過程。
+
+原本程式碼
+```
+validateBootstrap() {
+      const vm = this;
+      ("use strict");
+      // 這邊用 load 畫面載進來時觸發
+      window.addEventListener(
+        "load",
+        function() {
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          const forms = document.getElementsByClassName("needs-validation");
+          // Loop over them and prevent submission
+          const validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener("submit",function(event) {
+                if (form.checkValidity() === false) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                } else {
+                  // 驗證過
+                  //按鈕全部不能按
+                  $("a").addClass("disabled");
+                  $("button").prop("disabled", true);
+                  vm.sentStep1();
+                }
+                form.classList.add("was-validated");
+              },
+              false
+            );
+          });
+        },
+        false
+      );
+    },
+    sentStep1() {
+      const vm = this;
+      const url = `${process.env.VUE_APP_DEFAULT_SRC}/api/teisha/order`;
+      
+      // 這邊都會直接跳過
+      this.$http.post(url, { data: vm.form })
+      .then((response) => {
+          if (response.data.success) {
+            //換路由到確認訂單的頁面
+            vm.$router.push(`/cart/${response.data.orderId}`);
+            this.$emit('nextStep',2); // 父層step更改
+          }
+      });
+    },
+```
+
+### 解決問題 1.不用整頁刷新就可以使用 validate 表單驗證功能。
+使用生命週期 mounted 
+
+原本下面我是放在 created (因為看到 load )，後來換成 mounted 就解決了。 
+```
+mounted() {
+    this.validateBootstrap();
+},
+```
+
+### 解決問題 2. 解決 Axios 跳過的問題。
