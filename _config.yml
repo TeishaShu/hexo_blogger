@@ -13,7 +13,7 @@ timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://teishashu.github.io/
+url: https://teishashu.github.io/hexo_blogger/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -104,4 +104,4 @@ theme: next
 deploy:
   type: git
   branch: gh-pages
-  repo: https://github.com/TeishaShu/hexo_blogger_2021.git
+  repo: https://github.com/TeishaShu/hexo_blogger.git

@@ -1,0 +1,43 @@
+---
+title: React 0-學習資源
+tags: 
+- JavaScript
+- React
+categories:
+- JavaScript
+- React
+---
+### 技能里程
+先備知識：HTML、CSS、Javascript、ES6
+如果對 js 不夠熟悉，可以先從 Vue 這框架開始，再轉到 React 會學更快。
+- JSX
+- Component
+- state、props、refs
+- 生命週期
+- Hook: useState、useEffect、useRef、useContext、useReducer 
+- React Router
+- Redux 資料的傳遞方式(算是從 state、props、refs 更多演變進階的)
+- React Testing (https://testing-library.com/docs/react-testing-library/intro/)
+- Web App 手機版
+
+
+tip:
+練習思考不同程式出現的目的是什麼，用和不用它的好處、壞處。
+(很多程式的出現都是為了解決當時遇到的某個狀況，所以才會很類似感覺寫法不同做一樣的事情。)
+
+
+### 網路資源
+我自己是從 Vue 轉到 React，由前面2個資訊學有基本概念在讀官方的。
+-[從 Hooks 開始，讓你的網頁 React 起來 - pjchender](https://ithelp.ithome.com.tw/users/20103315/ironman/2668?sc=hot)
+可以先有個全面的概念，透過實作來了解程式
+-[尚硅谷 React 全家桶](https://www.youtube.com/watch?v=Uz_EhDwUnRg&list=PLmOn9nNkQxJFJXLvkNsGsoCUxJLqyLGxu)
+如果需要中文的影片這個很完整，而且也講得很仔細很好吸收。
+-[從零開始學 ReactJS - KD Chang](https://github.com/kdchang/reactjs101)
+讀不同人寫的，可以再複習確認自己吸收狀況。
+-[官方文件](https://zh-hant.reactjs.org/docs)
+一開始自己讀官方不是很懂，所以透過其他先有概念後，最終還是要回來看看補齊知識。
+-[Codecademy](https://www.codecademy.com/learn/react-101)
+
+### 確認學習狀況
+1. 讀 React 面試題
+2. 寫小專案作品 

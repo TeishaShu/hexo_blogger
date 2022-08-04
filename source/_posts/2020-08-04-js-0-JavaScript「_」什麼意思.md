@@ -7,6 +7,7 @@ categories: JavaScript
 ---
 練習 React 的過程中，看到一行這樣的程式
 透過第一行建立新陣列，在透過下面的 map 把標籤<li>跑迴圈複製出來。過程中我發現 map 的第一個值「_」很奇怪
+<!-- more -->
 ```
 const lists = Array.from({length:3}); //[undefined, undefined, undefined]
 
