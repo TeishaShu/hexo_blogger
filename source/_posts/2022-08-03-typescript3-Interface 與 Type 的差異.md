@@ -1,24 +1,22 @@
 ---
-title: TypeScript1-Interface 與 Type 的差異
+title: TypeScript3-Interface 與 Type 的差異
 tags: TypeScript
 categories: JavaScript
 ---
-TypeScript 中為型別命名有2種方式:
-介面 ( interface ) 和型別 ( type ) 
-今天來討論差異性
+TypeScript 中為型別命名有2種方式: 介面 ( interface ) 和型別 ( type ) 
+這篇討論差異性
 <!--more-->
 
 ### type
 1. type 右邊可以進行任何運算
+通常定義資料 ( 交集、聯集 )
 ```
 type A = number;
 type B = A & string;
 type C = B | boolean;
 ```
-2. 通常定義資料 ( 交集、聯集 )
 
-
-1. 定義類型.來重複使用
+2. 定義類型.來重複使用
 ```
 type A = number | string;
 type B = boolean | string;
@@ -31,10 +29,8 @@ let b1: B
 b1 = true
 ```
 
-2. 不能重複宣告(比較：下面 interface 可以擴充)
-
-
-3. 也可以使用 type 定義物件內容
+3. 不能重複宣告
+(比較：下面 interface 可以擴充)
 ```
 type User = {
   name: string
@@ -46,9 +42,9 @@ type User = {  // --->這邊顯示錯誤
 }
 ```
 
--------------------------------------
+
 ### interface
-常以I作為開頭
+常以 I 作為開頭
 
 1. interface 右邊是固定型態
 ```
@@ -79,13 +75,12 @@ const obj: User = {
 }
 ```
 
-假設設定 User 的資料
-- 擴充的類型。繼承原本有的內容再新增
-(比較：type 不能重複宣告)
-- 跟class繼承有些補充(下一頁內容)
-- 可以使用 interface 定義物件內容
+上例說明: 假設設定 User 的資料
+1.擴充的類型。繼承原本有的內容再新增 (比較：type 不能重複宣告)
+2.跟 class 繼承有些補充
+3.可以使用 interface 定義物件內容
 
-#### object 
+#### Object 
 假設設定 User 的資料
 說明：type 用物件方式定義好後，之後使用這類型，「編譯器會提醒需要什麼資料」。實作上如果一開始寫空的，編譯器不會提示裡面需要什麼。
 ```
@@ -96,9 +91,8 @@ type User = {
 const obj: User = {} //這邊會提示需要什麼資料寫進去
 ```
 
--------------------------------------
 ### 比較 Interface 與 Type
-- Type: 靜態的資料格式.無法延展 ex: 像 Interface 使用 extends
+Type: 靜態的資料格式.無法延展 ex: 像 Interface 使用 extends
 ```
 interface AnimalType {
   feetNumber: number,
@@ -117,8 +111,7 @@ interface MyDog extends AnimalType, DogType {
 ```
 
 解釋上例:
-想要時做出 MyDog 的介面時，除了它本身的屬性外，還要符合 AnimalType、DogType 這2者介面定義出來的屬性與功能
-透過這種方式可以減少重複的部分，以增進彈性和複用性
+想要時做出 MyDog 的介面時，除了它本身的屬性外，還要符合 AnimalType、DogType 這2者介面定義出來的屬性與功能，透過這種方式可以減少重複的部分，以增進彈性和複用性
 
 ```
 type AnimalType {
@@ -141,14 +134,12 @@ type MyDog extends AnimalType, DogType {
 MyDog 的靜態資料格式是由 AnimalType、DogType 2者組成的。
 
 
-
-
-https://happyjayxin.medium.com/typescript-interface-%E5%92%8C-type-%E5%B7%AE%E5%9C%A8%E5%93%AA%E8%A3%A1-7467e5f07392 
--------------------------------------------------------------------
 ### 結論
-type、interface 差異: interface 能擴展.開發上通常怎麼使用?
-主要寫 type，物件在使用可以擴展、更彈性、堆疊其他屬性的 interface 嗎?
+type、interface 差異: interface 能擴展
+<!-- 開發上通常怎麼使用? -->
+<!-- 主要寫 type，物件在使用可以擴展、更彈性、堆疊其他屬性的 interface 嗎? -->
 
+累加屬性的程式寫法不同:
 type: A屬性+B屬性
 interface: 有自己的屬性+A屬性+B屬性，屬性是堆疊全部都要符合
 

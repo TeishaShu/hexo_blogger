@@ -1,5 +1,5 @@
 ---
-title: TypeScript2- 函式、void、never
+title: TypeScript5- 函式、void、never
 tags: TypeScript
 categories: JavaScript
 ---
@@ -43,7 +43,6 @@ let myFun: (x: number, y: number) => number = function (x: number, y: number): n
 };
 ```
 
-------------------------------------------------------
 ### void
 表示: 空的，沒有返回值
 ```

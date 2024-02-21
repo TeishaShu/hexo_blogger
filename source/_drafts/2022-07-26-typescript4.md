@@ -16,6 +16,21 @@ protected 受保護
 
 1.19.27
 1.44.17泛型 -->
+--------------------------------------
+##### 泛型
+- function、class 都可以用(class下一頁說明)
+一個變數可能有不同類型，使用時才會知道他的類型
+下圖寫法：<類型名稱>，後面()中把類型放進去
+```
+function print<T> (data: T) {
+  console.log(data)
+}
+
+print<number>(123)
+print<number>("ttt") //報錯
+print<string>("ttt")
+print<boolean>(true)
+```
 
 ---------------------------------------
 #### utility

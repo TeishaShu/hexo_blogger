@@ -1,11 +1,11 @@
 ---
-title: TypeScript2- any、unknown、斷言
+title: TypeScript4- any、unknown、斷言
 tags: TypeScript
 categories: JavaScript
 ---
 ### any
 1. 代表: 任何類型，放什麼類型都不會出錯 (ex: string、number....)
-2. 注意! 使用等於關閉 TS 類型檢測，因此盡量少用，或是 debug 時用。
+2. 注意‼️ 使用等於關閉 TS 類型檢測，因此盡量少用，或是 debug 時用。
 3. 定義變數時，沒有設定型別時 TS 自動判斷為 any。
 
 ### unknown
@@ -41,9 +41,10 @@ bbb = <string>aaaa; //解法二: 斷言.語法2(下面內容)
 
 ### 斷言
 鐵口直斷，告訴變數實際的類型。(可以手動指定一個值的型別)
-語法2種:
-1. 「變數 as 型別」，使用 as 固定資料的型別
-2. 「<型別>變數」
+- 語法2種:
+  1.「變數 as 型別」，使用 as 固定資料的型別
+  2.「<型別>變數」
+
 ```
 // A.先寫 type 定義類型。
 type Data = {

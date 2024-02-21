@@ -1,10 +1,10 @@
 ---
-title: TypeScript3 物件、陣列型別
+title: TypeScript6-物件型別、陣列型別
 tags: TypeScript
 categories: JavaScript
 ---
 ### 物件型別
-#### 任意屬性
+#### A.任意屬性
 定義任意屬性是 any 彈性比較大。
 ```
 interface Dog {
@@ -37,7 +37,7 @@ let ann: Dog = {
 
 上例中，任意屬性定義是 string，但 age 屬性是 number 不是 string 所以報錯
 
-#### 唯獨屬性
+#### B.唯獨屬性
 只能在建立時被賦予值
 ```
 interface Dog {
@@ -57,7 +57,6 @@ let ann: Dog = {
 ann.id = 12345; // 報錯:初始化後又被賦予值
 ```
 
-------------------------------------
 ### 陣列型別
 1. 設定陣列裡面的型別
 JS 中陣列裡面可以放任何類型，使用 TS 希望陣列裡面的類型都一樣

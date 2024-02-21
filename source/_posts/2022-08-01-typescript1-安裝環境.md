@@ -3,7 +3,6 @@ title: TypeScript1-安裝環境
 tags: TypeScript
 categories: JavaScript
 ---
-### 簡介
 1. 加強版的 JavaScript，強化了 type 型別。可以了解變數的屬性是 string、number...。
 2. 協助開發時更快的閱讀性、維護性，減少因為型別造成的錯誤。
 3. 適用於前、後端開發(react、express)
@@ -45,14 +44,13 @@ tsc index.ts
 // 3.完成後顯示一個js檔案，新檔案會轉換，回原本 ts 會顯示不能重複定義，那是偵測到編譯後的檔案才報錯
 ```
 
-------------------------------------------------------------------------
 ### tsconfig 設定檔
-建立設定檔
+#### 建立設定檔
 ```
 tsc --init
 ```
 
-#### include
+#### A. include 
 指定哪些檔案夾的 TS 文件需要被編譯
 ```
 {
@@ -60,7 +58,7 @@ tsc --init
 }
 ```
 
-#### files
+#### B. files
 類似 include 差別在是要寫所有要編譯的檔案，不是資料夾所以會寫很多。通常用在很小的專案上
 ```
 {
@@ -72,7 +70,7 @@ tsc --init
 第一個「.」跟目錄
 上例說明: 跟目錄下的 -> src 目錄下的 -> 任意目錄下的 -> 任意文件。都會被編譯
 
-#### exclude
+#### C. exclude
 有些文件不想被編譯
 ```
 {
@@ -84,7 +82,7 @@ tsc --init
 上例說明: stop 目錄下的文件都不會被編譯
 通常不需要改，通常預設值:["node_modules", "bower_components", "jspm_packages"]
 
-#### extends
+#### D. extends
 繼承.類似引入外部文件 
 ```
 {
@@ -92,7 +90,7 @@ tsc --init
 }
 ```
 
-#### compilerOptions (最重要)
+#### E. compilerOptions (最重要)
 決定編譯器如何編譯
 不知道裡面怎麼填可以打標題: 後面寫錯誤的值，在終端機執行 tsc，會顯示可以輸入的值。
 ```
@@ -118,7 +116,7 @@ tsc --init
 - noEmit: 編譯後不要產生文件(預設是 false)。(true: dist 裡面會空空的)，不常用.希望產生資料的方式不是透過 TS 可以關掉
 - noEmitOnError: 有錯誤不要編譯後的文件(預設是 false，即使有錯都可以編譯)。(true: 更嚴格可以避免安全隱患)
 
-編譯、語法檢查相關項目
+##### 編譯、語法檢查相關項目
 - strict: 所有嚴格檢查總開關，有設置下面檢查都不用另外設定
 - alwaysStrict: 嚴格模式(預設是 false)，"編譯後"的文件是否是嚴格模式。等於每個頁面都用 "use strict"。
 - noImplicitAny: 變數不允許預設 any 狀況。變數沒有定義型別下預設是 any。(使用any會關閉使用 ts 的效果，所以會想開啟檢查的效果)
