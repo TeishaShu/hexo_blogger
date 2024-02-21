@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo_blogger/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo_blogger/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo_blogger/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/hexo_blogger/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/hexo_blogger/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"teishashu.github.io","root":"/hexo_blogger/","images":"/hexo_blogger/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/hexo_blogger/js/config.js"></script>
+<meta name="description" content="Getter目的: 資料呈現前調整(類似 computed )。資料出現在網頁上之前做一些過濾、加減">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VueX - 3. Getter、Modules 簡化與模組化">
+<meta property="og:url" content="https://teishashu.github.io/hexo_blogger/2020/08/07/vuex-3%E7%B0%A1%E5%8C%96%E6%A8%A1%E7%B5%84/index.html">
+<meta property="og:site_name" content="亭夏 Teisha - 邁向前端">
+<meta property="og:description" content="Getter目的: 資料呈現前調整(類似 computed )。資料出現在網頁上之前做一些過濾、加減">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-08-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-02-25T05:19:05.291Z">
+<meta property="article:author" content="Teisha HSU">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="VueX">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://teishashu.github.io/hexo_blogger/2020/08/07/vuex-3%E7%B0%A1%E5%8C%96%E6%A8%A1%E7%B5%84/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://teishashu.github.io/hexo_blogger/2020/08/07/vuex-3%E7%B0%A1%E5%8C%96%E6%A8%A1%E7%B5%84/","path":"2020/08/07/vuex-3簡化模組/","title":"VueX - 3. Getter、Modules 簡化與模組化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>VueX - 3. Getter、Modules 簡化與模組化 | 亭夏 Teisha - 邁向前端</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/hexo_blogger/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo_blogger/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">亭夏 Teisha - 邁向前端</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/hexo_blogger/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li>
+        <li class="menu-item menu-item-about"><a href="/hexo_blogger/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li>
+        <li class="menu-item menu-item-tags"><a href="/hexo_blogger/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+        <li class="menu-item menu-item-categories"><a href="/hexo_blogger/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li>
+        <li class="menu-item menu-item-archives"><a href="/hexo_blogger/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Getter"><span class="nav-number">1.</span> <span class="nav-text">Getter</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AA%BF%E6%95%B4%E8%B3%87%E6%96%99-%E9%A1%9E%E4%BC%BC-computed"><span class="nav-number">1.1.</span> <span class="nav-text">調整資料(類似 computed )</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9E%E5%82%B3%E5%80%BC"><span class="nav-number">1.2.</span> <span class="nav-text">回傳值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mapGetters-%E9%87%9D%E5%B0%8D-computed-%E7%B0%A1%E5%8C%96-%E6%88%96%E5%8F%96-getters-%E8%B3%87%E6%96%99"><span class="nav-number">1.3.</span> <span class="nav-text">mapGetters 針對 computed 簡化 或取 getters 資料</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Modules"><span class="nav-number">2.</span> <span class="nav-text">Modules</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#VueX-%E6%AA%94%E6%A1%88%E6%A8%A1%E7%B5%84%E5%8C%96"><span class="nav-number">2.1.</span> <span class="nav-text">VueX 檔案模組化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E6%83%85%E6%B3%81%E7%9A%84%E5%8D%80%E5%9F%9F%E3%80%81%E5%85%A8%E5%9F%9F%E7%8B%80%E6%B3%81"><span class="nav-number">2.2.</span> <span class="nav-text">一般情況的區域、全域狀況</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E5%85%A8%E9%83%A8%E6%94%B9%E6%88%90%E5%8D%80%E5%9F%9F%E8%AE%8A%E6%95%B8-namespaced"><span class="nav-number">2.2.1.</span> <span class="nav-text">1. 全部改成區域變數 namespaced</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E6%A8%A1%E7%B5%84%E5%8C%96%E5%BE%8C%E8%AA%BF%E7%94%A8%E5%85%B6%E4%BB%96%E6%A8%A1%E7%B5%84%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.2.</span> <span class="nav-text">2. 模組化後調用其他模組的方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-component-%E4%B8%AD"><span class="nav-number">2.2.3.</span> <span class="nav-text">2-1. component 中</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#A-%E6%9B%B4%E6%94%B9-computed"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">A. 更改 computed</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#B-%E4%BD%BF%E7%94%A8-getter%E3%80%81state"><span class="nav-number">2.2.3.2.</span> <span class="nav-text">B. 使用 getter、state</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#C-methods-%E4%B8%AD%E4%BD%BF%E7%94%A8"><span class="nav-number">2.2.3.3.</span> <span class="nav-text">C. methods 中使用</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-store-%E4%B8%AD"><span class="nav-number">2.2.4.</span> <span class="nav-text">2-2. store 中</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#A-%E5%8A%A0%E5%85%A5-root-true"><span class="nav-number">2.2.4.1.</span> <span class="nav-text">A. 加入 { root: true }</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#B-%E5%85%B6%E4%BB%96%E6%A8%A1%E7%B5%84%E7%9A%84-state%E3%80%81getter"><span class="nav-number">2.2.4.2.</span> <span class="nav-text">B. 其他模組的 state、getter</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Teisha HSU</p>
+  <div class="site-description" itemprop="description">前端學習筆記紀錄</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/hexo_blogger/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/hexo_blogger/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/hexo_blogger/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:colorfulspirit@gmail.com" title="E-Mail → mailto:colorfulspirit@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://teishashu.github.io/hexo_blogger/2020/08/07/vuex-3%E7%B0%A1%E5%8C%96%E6%A8%A1%E7%B5%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo_blogger/images/avatar.gif">
+      <meta itemprop="name" content="Teisha HSU">
+      <meta itemprop="description" content="前端學習筆記紀錄">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="亭夏 Teisha - 邁向前端">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          VueX - 3. Getter、Modules 簡化與模組化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2020-08-07 00:00:00" itemprop="dateCreated datePublished" datetime="2020-08-07T00:00:00+08:00">2020-08-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2023-02-25 13:19:05" itemprop="dateModified" datetime="2023-02-25T13:19:05+08:00">2023-02-25</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo_blogger/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="Getter"><a href="#Getter" class="headerlink" title="Getter"></a>Getter</h3><p>目的: 資料呈現前調整(類似 computed )。<br>資料出現在網頁上之前做一些過濾、加減</p>
+<span id="more"></span>
+
+<h4 id="調整資料-類似-computed"><a href="#調整資料-類似-computed" class="headerlink" title="調整資料(類似 computed )"></a>調整資料(類似 computed )</h4><p>這塊<a target="_blank" rel="noopener" href="https://vuex.vuejs.org/zh/guide/getters.html">官網</a>也得很清楚</p>
+<ul>
+<li>整理 state 資料<br>把需要從 state 叫出來的資料在 computed 塞選過濾的方式<br>可以在 getter 中處理好。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">const store = new Vuex.Store(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line">    todos: [</span><br><span class="line">      &#123; id: 1, text: &#x27;...&#x27;, done: true &#125;,</span><br><span class="line">      &#123; id: 2, text: &#x27;...&#x27;, done: false &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  getters: &#123;</span><br><span class="line">    doneTodos(state, getter) &#123;</span><br><span class="line">      return state.todos.filter(todo =&gt; todo.done)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">//在 component 中使用下面 code 可抓到資料</span><br><span class="line">computed: &#123;</span><br><span class="line">  doneTodosFilter () &#123;</span><br><span class="line">    return this.$store.getters.doneTodos;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+如果是在其他模組裡面的要用 mapGetters</li>
+</ul>
+<h4 id="回傳值"><a href="#回傳值" class="headerlink" title="回傳值"></a>回傳值</h4><p>官網範例筆記一下<br>注意: 每次都會去進行調用，不會缓存结果。<br>(有帶參數的範例) </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">getters: &#123;</span><br><span class="line">  getTodoById: (state) =&gt; (id) =&gt; &#123;</span><br><span class="line">    return state.todos.find(todo =&gt; todo.id === id)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">store.getters.getTodoById(2) // -&gt; &#123; id: 2, text: &#x27;...&#x27;, done: false &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="mapGetters-針對-computed-簡化-或取-getters-資料"><a href="#mapGetters-針對-computed-簡化-或取-getters-資料" class="headerlink" title="mapGetters 針對 computed 簡化 或取 getters 資料"></a>mapGetters 針對 computed 簡化 或取 getters 資料</h4><p>相關行為從 store 讀出來，有 mapGetters、mapActions 這 2 個簡化程式方式差不多。<br>mapGetters 針對 computed 簡化；mapActions 針對 methods 簡化(這個寫在上一篇)</p>
+<p>使用狀況:<br>computed 程式感覺重複太多 or 其他頁也會一值使用，因此改成在 vuex 中的 getter 寫法。</p>
+<ul>
+<li><p>原本 component 中程式的樣子</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">computed: &#123;</span><br><span class="line">  isLoading()&#123;</span><br><span class="line">    return this.$store.state.isLoading;</span><br><span class="line">  &#125;,</span><br><span class="line">  cart()&#123;</span><br><span class="line">    return this.$store.state.cart;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></li>
+<li><p>修改 step 1 :設定 getters<br>把 computed 中使用到 vuex 的部分移動到 getter 中 (也是要 return 回傳資料)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">getters:&#123;</span><br><span class="line">  isLoading(state)&#123;</span><br><span class="line">    return state.isLoading;</span><br><span class="line">  &#125;,</span><br><span class="line">  cart(state)&#123;</span><br><span class="line">    return state.cart;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>修改 step 2 :引入並使用 mapGetters<br>注意 { mapGetters } 是物件形式.不要忘了加!</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; mapGetters &#125; from &#x27;vuex&#x27;; // step 2-1 引入 mapGetters</span><br><span class="line">export default &#123;</span><br><span class="line">  computed: &#123;</span><br><span class="line">    ...mapGetters([&#x27;isLoading&#x27;, &#x27;cart&#x27;]) // step 2-2 修改成 mapGetters</span><br><span class="line">    ...mapGetters(&#x27;productsModules&#x27;, [&#x27;isLoading&#x27;, &#x27;cart&#x27;]) // 加入群組的名稱</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h3 id="Modules"><a href="#Modules" class="headerlink" title="Modules"></a>Modules</h3><h4 id="VueX-檔案模組化"><a href="#VueX-檔案模組化" class="headerlink" title="VueX 檔案模組化"></a>VueX 檔案模組化</h4><p>分成幾個檔案.引入加上來的地方。</p>
+<ol>
+<li>新增模板並把相關資料移動進去<br>index.js 這檔案是先建立一個 vuex<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import axios from &#x27;axios&#x27;; // 如果需要axios在增加</span><br><span class="line">export default:&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>  在把 index.js 中 state、mutations、actions、getters 一起複製過去<br>  增加刪減</p>
+<p>  這邊當時卡了一下.因為一開始複製整個 index.js 過去改<br>  vuex 重複 2 次創建.所以產生錯誤查到下面文章解決<br>  <a target="_blank" rel="noopener" href="https://github.com/vuejs/vuex/issues/1748">[vuex] getters should be function but</a></p>
+<ol start="2">
+<li>在 store/index.js 中引入<br>A. import 進來模板<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &#x27;vue&#x27;</span><br><span class="line">import Vuex from &#x27;vuex&#x27;</span><br><span class="line">import axios from &#x27;axios&#x27;;</span><br><span class="line"></span><br><span class="line">import productsModules from &quot;./products&quot;; // 這邊加入這段引用進來(注意命名的名稱會時常使用)</span><br><span class="line"></span><br><span class="line">Vue.use(Vuex)  //這邊 vuex 啟用</span><br><span class="line">export default new Vuex.Store(&#123;.....&#125;)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>  B. 增加 modules<br>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">export default new Vuex.Store(&#123;</span><br><span class="line">  strict: true,</span><br><span class="line">  state: &#123;...&#125;,</span><br><span class="line">  mutations: &#123;...&#125;,</span><br><span class="line">  actions: &#123;...&#125;,</span><br><span class="line">  getters:&#123;...&#125;,</span><br><span class="line">  modules: &#123; //其他模板引入</span><br><span class="line">    productsModules,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>  改到這邊檔案是沒問題的</p>
+<h4 id="一般情況的區域、全域狀況"><a href="#一般情況的區域、全域狀況" class="headerlink" title="一般情況的區域、全域狀況"></a>一般情況的區域、全域狀況</h4><ul>
+<li>state 區域變數</li>
+<li>actions、mutations、getters 全域變數<br>(全域擔心的是跟其他檔案的名稱一樣造成衝突不好管理)</li>
+</ul>
+<h5 id="1-全部改成區域變數-namespaced"><a href="#1-全部改成區域變數-namespaced" class="headerlink" title="1. 全部改成區域變數 namespaced"></a>1. 全部改成區域變數 namespaced</h5><p>設定 <code>namespaced: true,</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export default &#123;</span><br><span class="line">namespaced: true,</span><br><span class="line">state: &#123;..&#125;,</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-模組化後調用其他模組的方法"><a href="#2-模組化後調用其他模組的方法" class="headerlink" title="2. 模組化後調用其他模組的方法"></a>2. 模組化後調用其他模組的方法</h5><p>沒用會報錯 <code> [vuex] unknown action type:</code><br>注意: 一開始在 store/index.js 中引入的其他 modules 名稱.<br>是使用引入名稱.不是檔案名稱。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 名稱是 productModules 不是 products</span><br><span class="line">import productModules from &quot;./products&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>參考<br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/5c467a3e1ca9">vuex 模块化之后如何调用其他模块的方法和属性</a><br><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10209719">modules 1 </a><br><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10209848">modules 2</a></p>
+<hr>
+<p>分成在 component、store 兩個部分的寫法。</p>
+<h5 id="2-1-component-中"><a href="#2-1-component-中" class="headerlink" title="2-1. component 中"></a>2-1. component 中</h5><h6 id="A-更改-computed"><a href="#A-更改-computed" class="headerlink" title="A. 更改 computed"></a>A. 更改 computed</h6><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">products() &#123;</span><br><span class="line">  //原本-根目錄的</span><br><span class="line">  return this.$store.state.products;</span><br><span class="line"></span><br><span class="line">  //更改</span><br><span class="line">  return this.$store.state.productModules.products;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h6 id="B-使用-getter、state"><a href="#B-使用-getter、state" class="headerlink" title="B. 使用 getter、state"></a>B. 使用 getter、state</h6><p>使用 mapGetters、mapActions</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import &#123;mapStates, mapGetters&#125; from &#x27;vuex&#x27;;</span><br><span class="line">export default &#123;</span><br><span class="line">  computed:&#123;</span><br><span class="line">    ...mapStates([&#x27;todos&#x27;]),</span><br><span class="line">    ...mapGetters([&#x27;itemNotDone&#x27;,&#x27;itemWithID&#x27;]),</span><br><span class="line">    ...mapGetters(&#x27;productModules&#x27;,[&#x27;itemNotDone&#x27;,&#x27;itemWithID&#x27;]), // 使用到其他 modules 時.要加檔案引入名稱</span><br><span class="line">  &#125;,</span><br><span class="line">  methods:&#123;</span><br><span class="line">    test()&#123;</span><br><span class="line">      this.itemWithID(&#x27;123&#x27;);</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h6 id="C-methods-中使用"><a href="#C-methods-中使用" class="headerlink" title="C. methods 中使用"></a>C. methods 中使用</h6><p>路徑需要更改 (文件引入index.js的名稱/actions 下的方法)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.$store.dispatch(&#x27;productModules/selectCategory&#x27;, &#123;style,isPageClick&#125;);</span><br></pre></td></tr></table></figure>
+<p>需要用 getter、state 的要用上面的 computed (跨 modules 要用 mapGetters)</p>
+<hr>
+<h5 id="2-2-store-中"><a href="#2-2-store-中" class="headerlink" title="2-2. store 中"></a>2-2. store 中</h5><h6 id="A-加入-root-true"><a href="#A-加入-root-true" class="headerlink" title="A. 加入 { root: true }"></a>A. 加入 { root: true }</h6><p><span style="color:red;"> 注意: store 的檔案中需要，component 的檔案不需要</span><br>使用到其他模組的 mutation、action，需要在 dispatch、commit 的第三個參數帶入 <code>&#123; root: true &#125;</code>，表示這個 mutation、action 不是目前模組的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">context.commit(&#x27;LOADING&#x27;, true); // 自己檔案的 LOADING</span><br><span class="line">context.commit(&#x27;LOADING&#x27;, true, &#123;root: true&#125;); // 根目錄的 LOADING</span><br><span class="line">context.commit(&#x27;productModules/LOADING&#x27;, true, &#123;root: true&#125;); // productModules 檔案的 LOADING</span><br></pre></td></tr></table></figure>
+
+<h6 id="B-其他模組的-state、getter"><a href="#B-其他模組的-state、getter" class="headerlink" title="B. 其他模組的 state、getter"></a>B. 其他模組的 state、getter</h6><p>action 中需要使用 context 屬性<br>modules 跨模組才有 rootState、rootGetters</p>
+<ul>
+<li>rootState  // 等同於 <code>store.state</code>，只存在於模版中</li>
+<li>rootGetters // 等同於 <code>store.getters</code>，只存在於模版中</li>
+</ul>
+<p>可以使用 context 或分開寫</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 使用 context</span><br><span class="line">addCartProductIn(context) &#123;</span><br><span class="line">  context.commit(&#x27;productModules/LOADING&#x27;, true, &#123;root: true&#125;); // 使用其他模組的 mutation</span><br><span class="line">  context.dispatch(&#x27;productModules/cartBtnApi&#x27;, &#123;&#125;, &#123;root: true&#125;); // 使用其他模組的 action</span><br><span class="line">  context.rootState.productModules.selectNum; // 獲取其他模組的 state</span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line">// 分開寫 (要用物件形式)</span><br><span class="line">addCartProductIn(&#123;commit, rootState, dispatch&#125;) &#123;</span><br><span class="line">  commit(&#x27;productModules/LOADING&#x27;, true, &#123;root: true&#125;);</span><br><span class="line">  dispatch(&#x27;productModules/cartBtnApi&#x27;, &#123;&#125;, &#123;root: true&#125;);</span><br><span class="line"></span><br><span class="line">  rootState.productModules.selectNum;</span><br><span class="line">  rootState[&#x27;productModules/selectNum&#x27;]; // 也可以這個</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>官網還有很多其他 Modules 的應用</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/hexo_blogger/tags/Vue/" rel="tag"># Vue</a>
+              <a href="/hexo_blogger/tags/VueX/" rel="tag"># VueX</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2020/08/06/vuex-2%E5%B1%AC%E6%80%A7/" rel="prev" title="VueX - 2. State、Mutations、Actions 狀態">
+                  <i class="fa fa-chevron-left"></i> VueX - 2. State、Mutations、Actions 狀態
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2020/08/21/vue-env/" rel="next" title="Vue CLI 3.0 環境變數 env">
+                  Vue CLI 3.0 環境變數 env <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Teisha HSU</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/hexo_blogger/js/comments.js"></script><script src="/hexo_blogger/js/utils.js"></script><script src="/hexo_blogger/js/motion.js"></script><script src="/hexo_blogger/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

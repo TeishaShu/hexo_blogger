@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo_blogger/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo_blogger/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo_blogger/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/hexo_blogger/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/hexo_blogger/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"teishashu.github.io","root":"/hexo_blogger/","images":"/hexo_blogger/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/hexo_blogger/js/config.js"></script>
+<meta name="description" content="JSX 中使用陳述句(判斷式…)讓畫面元素消失的 3 種方法 js、class、style">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React(4) JSX 寫法">
+<meta property="og:url" content="https://teishashu.github.io/hexo_blogger/2022/07/06/react-4-JSX/index.html">
+<meta property="og:site_name" content="亭夏 Teisha - 邁向前端">
+<meta property="og:description" content="JSX 中使用陳述句(判斷式…)讓畫面元素消失的 3 種方法 js、class、style">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-07-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-02-25T05:19:05.314Z">
+<meta property="article:author" content="Teisha HSU">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://teishashu.github.io/hexo_blogger/2022/07/06/react-4-JSX/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://teishashu.github.io/hexo_blogger/2022/07/06/react-4-JSX/","path":"2022/07/06/react-4-JSX/","title":"React(4) JSX 寫法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>React(4) JSX 寫法 | 亭夏 Teisha - 邁向前端</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/hexo_blogger/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo_blogger/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">亭夏 Teisha - 邁向前端</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/hexo_blogger/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li>
+        <li class="menu-item menu-item-about"><a href="/hexo_blogger/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li>
+        <li class="menu-item menu-item-tags"><a href="/hexo_blogger/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+        <li class="menu-item menu-item-categories"><a href="/hexo_blogger/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li>
+        <li class="menu-item menu-item-archives"><a href="/hexo_blogger/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#js-%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">js 方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#style-%E6%96%B9%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">style 方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8B%95%E6%85%8B-class"><span class="nav-number">3.</span> <span class="nav-text">動態 class</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Teisha HSU</p>
+  <div class="site-description" itemprop="description">前端學習筆記紀錄</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/hexo_blogger/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/hexo_blogger/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/hexo_blogger/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:colorfulspirit@gmail.com" title="E-Mail → mailto:colorfulspirit@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://teishashu.github.io/hexo_blogger/2022/07/06/react-4-JSX/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo_blogger/images/avatar.gif">
+      <meta itemprop="name" content="Teisha HSU">
+      <meta itemprop="description" content="前端學習筆記紀錄">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="亭夏 Teisha - 邁向前端">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React(4) JSX 寫法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-07-06 00:00:00" itemprop="dateCreated datePublished" datetime="2022-07-06T00:00:00+08:00">2022-07-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2023-02-25 13:19:05" itemprop="dateModified" datetime="2023-02-25T13:19:05+08:00">2023-02-25</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo_blogger/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>JSX 中使用陳述句(判斷式…)<br>讓畫面元素消失的 3 種方法 js、class、style</p>
+<span id="more"></span>
+
+<h4 id="js-方式"><a href="#js-方式" class="headerlink" title="js 方式"></a>js 方式</h4><p>JSX 中 {} 內只能放「expressions 表達式」-有個值回應，statement 陳述句是呼叫不會有回應的值。<br>因此不能在 JSX 中使用 if…else..，需要換成使用<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Obsolete_Pages/Obsolete_Pages/Obsolete_Pages/%E9%81%8B%E7%AE%97%E5%AD%90/%E9%82%8F%E8%BC%AF%E9%81%8B%E7%AE%97%E5%AD%90">邏輯運算子 ||、&amp;&amp;</a>、<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/Conditional_Operator">三元判斷式 ?:</a></p>
+<p>邏輯運算子 ||、&amp;&amp; 判斷真假值<br>把 A、B 做比較，先判斷 A 值，不是 A、B 兩個值的比較<br>|| 前面是 false 就取後面的值<br>&amp;&amp; 前面是 true 就取後面的值</p>
+<p>用在 JSX 中，因為要寫表達式無法使用 if</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const &#123; useState &#125; = React;</span><br><span class="line">const Content = () =&gt; &#123;</span><br><span class="line">  const [math, setMath] = useState(5);</span><br><span class="line">  return (</span><br><span class="line">    math &gt; 0 &amp;&amp; (&lt;div&gt;&#123;&#123;math&#125;&#125;&lt;/div&gt;); // 大於0時顯示後面的數字資料，後面因為是一長串當變數所以括號起來</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line">ReactDOM.render(&lt;Content /&gt;, document.getElementById(&quot;root&quot;))</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="style-方式"><a href="#style-方式" class="headerlink" title="style 方式"></a>style 方式</h4><p>使用 display: none; 或 visibility: hidden; 都是消失在畫面上。<br>display: none; 整個移除，如果位置很重要會影響其他的要用另一個。<br>visibility: hidden; 隱藏位置空間還在，開 f12 察看也還看的到。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const &#123; useState &#125; = React;</span><br><span class="line">const Content = () =&gt; &#123;</span><br><span class="line">  const [math, setMath] = useState(5);</span><br><span class="line">  return (</span><br><span class="line">    &lt;div style=&#123;&#123;</span><br><span class="line">      visibility: math &lt;= 0 &amp;&amp; &#x27;hidden&#x27;</span><br><span class="line">    &#125;&#125;&gt;&#123;&#123;math&#125;&#125;&lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line">ReactDOM.render(&lt;Content /&gt;, document.getElementById(&quot;root&quot;))</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h4 id="動態-class"><a href="#動態-class" class="headerlink" title="動態 class"></a>動態 class</h4><p>先有個 class 的樣式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.v-hide&#123;</span><br><span class="line">  visibility: hidden;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const &#123; useState &#125; = React;</span><br><span class="line">const Content = () =&gt; &#123;</span><br><span class="line">  const [math, setMath] = useState(5);</span><br><span class="line">  return (</span><br><span class="line">    &lt;div className=&#123;`color-red $&#123;math &lt;= 0 &amp;&amp; &#x27;v-hide&#x27; &#125;`&#125;&gt;&#123;&#123;math&#125;&#125;&lt;/div&gt; // 使用樣板字面值，裡面的變數前面要加$</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line">ReactDOM.render(&lt;Content /&gt;, document.getElementById(&quot;root&quot;))</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/hexo_blogger/tags/React/" rel="tag"># React</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2022/07/05/react-3-event/" rel="prev" title="React(3) Event 事件">
+                  <i class="fa fa-chevron-left"></i> React(3) Event 事件
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2022/07/07/react-5-%E5%87%BD%E5%BC%8F%E7%B5%84%E4%BB%B6/" rel="next" title="React(5) Function Component 函式組件">
+                  React(5) Function Component 函式組件 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Teisha HSU</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/hexo_blogger/js/comments.js"></script><script src="/hexo_blogger/js/utils.js"></script><script src="/hexo_blogger/js/motion.js"></script><script src="/hexo_blogger/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo_blogger/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo_blogger/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo_blogger/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/hexo_blogger/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/hexo_blogger/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"teishashu.github.io","root":"/hexo_blogger/","images":"/hexo_blogger/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/hexo_blogger/js/config.js"></script>
+<meta name="description" content="前言製作網頁的動畫、特效以前是用 JavaScript、Flash，後來 css3 增加了一些屬性，變成開發時間可以縮短，透過 css 交給瀏覽器處理也比較不吃資源。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="網頁動畫、特效(1) - Animation、Transition">
+<meta property="og:url" content="https://teishashu.github.io/hexo_blogger/2020/07/15/animate-animation-transition/index.html">
+<meta property="og:site_name" content="亭夏 Teisha - 邁向前端">
+<meta property="og:description" content="前言製作網頁的動畫、特效以前是用 JavaScript、Flash，後來 css3 增加了一些屬性，變成開發時間可以縮短，透過 css 交給瀏覽器處理也比較不吃資源。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-07-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-02-25T05:19:05.250Z">
+<meta property="article:author" content="Teisha HSU">
+<meta property="article:tag" content="CSS">
+<meta property="article:tag" content="網頁特效">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://teishashu.github.io/hexo_blogger/2020/07/15/animate-animation-transition/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://teishashu.github.io/hexo_blogger/2020/07/15/animate-animation-transition/","path":"2020/07/15/animate-animation-transition/","title":"網頁動畫、特效(1) - Animation、Transition"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>網頁動畫、特效(1) - Animation、Transition | 亭夏 Teisha - 邁向前端</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/hexo_blogger/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo_blogger/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">亭夏 Teisha - 邁向前端</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/hexo_blogger/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li>
+        <li class="menu-item menu-item-about"><a href="/hexo_blogger/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li>
+        <li class="menu-item menu-item-tags"><a href="/hexo_blogger/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+        <li class="menu-item menu-item-categories"><a href="/hexo_blogger/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li>
+        <li class="menu-item menu-item-archives"><a href="/hexo_blogger/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS3-Animation"><span class="nav-number">2.</span> <span class="nav-text">CSS3 Animation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AA%9E%E6%B3%95%E7%B0%A1%E5%AF%AB%E9%A0%86%E5%BA%8F"><span class="nav-number">2.1.</span> <span class="nav-text">語法簡寫順序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#keyframes-%E9%97%9C%E9%8D%B5%E5%BD%B1%E6%A0%BC%E8%A8%AD%E5%AE%9A%E6%96%B9%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">@keyframes 關鍵影格設定方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A5%97%E7%94%A8%E6%95%88%E6%9E%9C"><span class="nav-number">2.3.</span> <span class="nav-text">套用效果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Animate-css"><span class="nav-number">2.4.</span> <span class="nav-text">Animate.css</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS3-Transition-%E8%AA%9E%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">CSS3 Transition 語法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AA%9E%E6%B3%95%E7%B0%A1%E5%AF%AB%E9%A0%86%E5%BA%8F-1"><span class="nav-number">3.1.</span> <span class="nav-text">語法簡寫順序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#transition-timing-function-%E6%BC%B8%E8%AE%8A%E5%87%BD%E5%BC%8F"><span class="nav-number">3.2.</span> <span class="nav-text">transition-timing-function 漸變函式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A5%97%E7%94%A8%E6%95%88%E6%9E%9C-1"><span class="nav-number">3.3.</span> <span class="nav-text">套用效果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AF%94%E8%BC%83-Animation%E3%80%81Transition-%E5%B7%AE%E7%95%B0"><span class="nav-number">4.</span> <span class="nav-text">比較 Animation、Transition 差異</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Teisha HSU</p>
+  <div class="site-description" itemprop="description">前端學習筆記紀錄</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/hexo_blogger/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/hexo_blogger/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/hexo_blogger/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:colorfulspirit@gmail.com" title="E-Mail → mailto:colorfulspirit@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://teishashu.github.io/hexo_blogger/2020/07/15/animate-animation-transition/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo_blogger/images/avatar.gif">
+      <meta itemprop="name" content="Teisha HSU">
+      <meta itemprop="description" content="前端學習筆記紀錄">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="亭夏 Teisha - 邁向前端">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          網頁動畫、特效(1) - Animation、Transition
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2020-07-15 00:00:00" itemprop="dateCreated datePublished" datetime="2020-07-15T00:00:00+08:00">2020-07-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2023-02-25 13:19:05" itemprop="dateModified" datetime="2023-02-25T13:19:05+08:00">2023-02-25</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo_blogger/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>製作網頁的動畫、特效以前是用 JavaScript、Flash，後來 css3 增加了一些屬性，變成開發時間可以縮短，透過 css 交給瀏覽器處理也比較不吃資源。</p>
+<span id="more"></span>
+<p>要把效果做好有幾個關鍵字可以研究：</p>
+<ul>
+<li>動畫：css Animation</li>
+<li>過度、轉場：css Transition</li>
+<li>變形：transform 2D、transform 3D<br>基本的有概念後就可以開始找範例解析試模仿寫看看。</li>
+</ul>
+<p>這次紀錄研究 Animation、Transition 後，搭配 scrollmagic、gsap，<br>讓網頁使用起來多點效果不那麼死硬的過程，<br>transform 這次比較用不到所以先跳過。</p>
+<hr>
+<h3 id="CSS3-Animation"><a href="#CSS3-Animation" class="headerlink" title="CSS3 Animation"></a>CSS3 Animation</h3><p>動畫也稱為影格動畫，可以設定比較細緻的效果。<br>動畫是直接執行的。</p>
+<h4 id="語法簡寫順序"><a href="#語法簡寫順序" class="headerlink" title="語法簡寫順序"></a>語法簡寫順序</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">animation: [name 名稱] [duration 時間] | [timing-function 執行效果] | [delay 延遲] | [iteration-count 重複次數] | [direction 方向] | [fill-mode 播放前後模式] | [play-state 播放狀態];</span><br></pre></td></tr></table></figure>
+<p>要搭配關鍵影格 @keyframes 才可以用，畢竟沒有時間設定開始結束做什麼無法跑呀。</p>
+<table>
+<thead>
+<tr>
+<th>屬性</th>
+<th>說明</th>
+<th>補充</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>animation-name</td>
+<td>名稱。@keyframes 後面的名稱</td>
+<td>@keyframes 搭配 from、to。</td>
+</tr>
+<tr>
+<td>animation-duration</td>
+<td>執行時間(s 秒或 ms 毫秒)，預設0</td>
+<td></td>
+</tr>
+<tr>
+<td>animation-timing-function</td>
+<td>執行效果(速度曲線)</td>
+<td><a target="_blank" rel="noopener" href="https://www.w3schools.com/cssref/css3_pr_animation-timing-function.asp">w3schools</a></td>
+</tr>
+<tr>
+<td>animation-delay</td>
+<td>延遲(間隔多久後開始)，預設0</td>
+<td></td>
+</tr>
+<tr>
+<td>animation-iteration-count</td>
+<td>重覆執行次數，預設 1</td>
+<td>infinite 無限次</td>
+</tr>
+<tr>
+<td>animation-direction</td>
+<td>執行方向。預設 normal</td>
+<td>reverse 反向、alternate 先正後反、alternate-reverse先反後正</td>
+</tr>
+<tr>
+<td>animation-fill-mode</td>
+<td>播放前後模式，預設 none</td>
+<td>forwards、backwards、both</td>
+</tr>
+<tr>
+<td>animation-play-state</td>
+<td>播放或暫停狀態，預設 running</td>
+<td>paused 暫停</td>
+</tr>
+</tbody></table>
+<h4 id="keyframes-關鍵影格設定方式"><a href="#keyframes-關鍵影格設定方式" class="headerlink" title="@keyframes 關鍵影格設定方式"></a>@keyframes 關鍵影格設定方式</h4><ul>
+<li><p>公式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@keyframes 動畫名稱 &#123;</span><br><span class="line">  時間1 &#123;css 樣式&#125;</span><br><span class="line">  時間2 &#123;css 樣式&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>注意動畫名稱大小寫，不同大小寫是不同字。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 下面2個是不同的動畫</span><br><span class="line">@keyframes Abc&#123;&#125;</span><br><span class="line">@keyframes ABC&#123;&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>設定時間有2種方式:</p>
+<ol>
+<li>from、to : 一開始和最後的效果( 0%、100% )<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@keyframes animate1 &#123;</span><br><span class="line">  from &#123;background-color:red; margin-left:0;&#125;</span><br><span class="line">  to &#123;background-color:black; margin-left:50px;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>0-100% : 幾 % 時做什麼事<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@keyframes animate2 &#123;</span><br><span class="line">  0% &#123;background-color:red; margin-left:0;&#125;</span><br><span class="line">  50% &#123;background-color:blue; margin-left:100px;&#125;</span><br><span class="line">  100% &#123;background-color:black; margin-left:50px;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ul>
+<h4 id="套用效果"><a href="#套用效果" class="headerlink" title="套用效果"></a>套用效果</h4><style>
+  .animate123{
+    width:50px;
+    height:50px;
+    animation: animate2 3s ease 1s infinite alternate;
+    background-color:red;
+    margin-bottom:10px;
+  }
+  @keyframes animate2 {
+    0% {background-color:red; margin-left:0;}
+    50% {background-color:blue; margin-left:100px;}
+    100% {background-color:black; margin-left:50px;}
+  }
+</style>
+<div class="animate123"></div>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">div&#123;</span><br><span class="line">  width:50px;</span><br><span class="line">  height:50px;</span><br><span class="line">  animation: animate2 3s ease 1s infinite alternate;</span><br><span class="line">  background-color:red;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@keyframes animate2 &#123;</span><br><span class="line">  0% &#123;background-color:red; margin-left:0;&#125;</span><br><span class="line">  50% &#123;background-color:blue; margin-left:100px;&#125;</span><br><span class="line">  100% &#123;background-color:black; margin-left:50px;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.oxxostudio.tw/articles/201803/css-animation.html">完整解析 CSS 動畫</a></p>
+<h4 id="Animate-css"><a href="#Animate-css" class="headerlink" title="Animate.css"></a>Animate.css</h4><p>CSS3 Animate 有太多要設定，有人整理成一個 css 檔方便使用，只要會引用、使用就可以操作。<br><a target="_blank" rel="noopener" href="https://animate.style/">Animate.css</a></p>
+<p>Vue.js中使用方式<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39009348/article/details/81144296">animate.css在vue项目中的使用</a></p>
+<p>操作流程:</p>
+<ol>
+<li>下載安裝</li>
+<li>在想要動畫的地方放 css，每個想要的特效前面都要加 <code>animate__animated</code>。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1 class=&quot;title animate__animated animate__bounce&quot;&gt;title&lt;/h1&gt;</span><br></pre></td></tr></table></figure></li>
+<li>如果希望可以調整的更多.有2種方式:<br>a. 在設定的 css 上面寫 animation 就可以控制<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;style&gt;</span><br><span class="line">  .title&#123;</span><br><span class="line">    animation-duration: 2s;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>  b. 也可以在原本的地方增加其他 css 屬性<br>  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1 class=&quot;title animate__animated animate__bounce animate__faster&quot;&gt;title&lt;/h1&gt;</span><br></pre></td></tr></table></figure><br>  | 效果 | 屬性名稱 | 成效                              |<br>  |—-|——|———————————|<br>  | 延遲 | animate__delay-2s<br>animate__delay-3s<br>animate__delay-4s<br>animate__delay-5s     | 2s<br>3s<br>4s<br>5s            |<br>  | 速度 | animate__slow<br>animate__slower<br>animate__fast<br>animate__faster      | 2s<br>3s<br>800ms<br>500ms      |<br>  | 重複 | animate__repeat-1<br>animate__repeat-2<br>animate__repeat-3<br>animate__infinite     | 1<br>2<br>3<br>infinite(無限重複) |</p>
+<hr>
+<h3 id="CSS3-Transition-語法"><a href="#CSS3-Transition-語法" class="headerlink" title="CSS3 Transition 語法"></a>CSS3 Transition 語法</h3><p>動畫效果需要觸發、只能跑一次，適合用在頁面轉場。</p>
+<h4 id="語法簡寫順序-1"><a href="#語法簡寫順序-1" class="headerlink" title="語法簡寫順序"></a>語法簡寫順序</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">transition: [property 名稱] [duration 時間] [timing-function 特效] [delay 延遲] ;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>屬性</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>transition-property</td>
+<td>名稱 (放要變的class名稱)</td>
+</tr>
+<tr>
+<td>transition-duration</td>
+<td>執行時間</td>
+</tr>
+<tr>
+<td>transition-timing-function</td>
+<td>執行的速度曲線</td>
+</tr>
+<tr>
+<td>transition-delay</td>
+<td>延遲，多久後執行 transition</td>
+</tr>
+</tbody></table>
+<h4 id="transition-timing-function-漸變函式"><a href="#transition-timing-function-漸變函式" class="headerlink" title="transition-timing-function 漸變函式"></a>transition-timing-function 漸變函式</h4><p>動畫變換的速度</p>
+<table>
+<thead>
+<tr>
+<th>漸變函式</th>
+<th>貝茲曲線</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ease</td>
+<td>cubic-bezier (0.25, 0.1, 0.25, 1.0)</td>
+<td>慢(剛起跑緩衝) &gt; 快 &gt; 慢(剎車感)</td>
+</tr>
+<tr>
+<td>linear</td>
+<td>cubic-bezier (0.0, 0.0, 1.0, 1.0)</td>
+<td>速度不變.平平的</td>
+</tr>
+<tr>
+<td>ease-in</td>
+<td>cubic-bezier (0.42, 0, 1.0, 1.0)</td>
+<td>慢(吃力的起床) &gt; 快(快遲到了)</td>
+</tr>
+<tr>
+<td>ease-out</td>
+<td>cubic-bezier (0, 0, 0.58, 1.0)</td>
+<td>快 &gt; 慢(剎車感)</td>
+</tr>
+<tr>
+<td>ease-in-out</td>
+<td>cubic-bezier (0.42, 0, 0.58, 1.0)</td>
+<td>慢(吃力的起床) &gt; 快 &gt; 慢(剎車感)</td>
+</tr>
+</tbody></table>
+<p>想要其他的線性可以使用下面的網站自己調看看<br>4 個數字組成， 0~1 之間<br><a target="_blank" rel="noopener" href="https://cubic-bezier.com/">貝茲曲線</a></p>
+<h4 id="套用效果-1"><a href="#套用效果-1" class="headerlink" title="套用效果"></a>套用效果</h4><style>
+  .transition123{
+    width:50px;
+    height:50px;
+    background-color:red;
+    margin-bottom:10px;
+  }
+  .transition123:hover{
+    background-color:blue;
+    margin-left:30px;
+    transition: background-color 3s;
+    transition: margin-left 3s;
+  }
+</style>
+<p>(滑鼠請移到方塊上)</p>
+<div class="transition123"></div>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">div&#123;</span><br><span class="line">  width:50px;</span><br><span class="line">  height:50px;</span><br><span class="line">  background-color:red;</span><br><span class="line">  margin-bottom:10px;</span><br><span class="line">&#125;</span><br><span class="line">div:hover&#123;</span><br><span class="line">  background-color:blue;</span><br><span class="line">  margin-left:30px;</span><br><span class="line">  transition: background-color 3s;</span><br><span class="line">  transition: margin-left 3s;</span><br><span class="line">&#125;</span><br><span class="line">//寫很多屬性時可以下面這樣</span><br><span class="line">div:hover&#123;</span><br><span class="line">  background-color:blue;</span><br><span class="line">  margin-left:30px;</span><br><span class="line">  transition-property: background-color, margin-left;</span><br><span class="line">  transition-duration: 3s, 1s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions">更多 Transition 的搭配使用</a></p>
+<hr>
+<h3 id="比較-Animation、Transition-差異"><a href="#比較-Animation、Transition-差異" class="headerlink" title="比較 Animation、Transition 差異"></a>比較 Animation、Transition 差異</h3><table>
+<thead>
+<tr>
+<th>屬性</th>
+<th>特色差異</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Animation</td>
+<td>1. 網頁載入直接執行特效。<br>2. 可設定較細的動畫效果(關鍵影格.設定很多時間點)</td>
+</tr>
+<tr>
+<td>Transition</td>
+<td>1. 需要事件觸發才能執行特效。(滑鼠、鍵盤事件) <br>2. 只能設定一開始跟結束的效果中間無法。<br>3. 一次性無法重複 (除非一直觸發才能重複)</td>
+</tr>
+</tbody></table>
+<p>他們簡寫的前 4 個順序一樣，但只要寫前面2個就可以跑了。</p>
+<ul>
+<li><p>animation:<br>name duration timing-function delay<br>iteration-count direction fill-mode play-state;</p>
+</li>
+<li><p>transition:<br>property duration timing-function delay;</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/hexo_blogger/tags/CSS/" rel="tag"># CSS</a>
+              <a href="/hexo_blogger/tags/%E7%B6%B2%E9%A0%81%E7%89%B9%E6%95%88/" rel="tag"># 網頁特效</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2020/07/04/AJAX-3%E7%A8%AE%E6%96%B9%E5%BC%8F%E6%AF%94%E8%BC%83/" rel="prev" title="Ajax 取資料的 3 種方式比較 Xmlhttprequest、Fetch、Axios">
+                  <i class="fa fa-chevron-left"></i> Ajax 取資料的 3 種方式比較 Xmlhttprequest、Fetch、Axios
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2020/07/17/animate-gasp/" rel="next" title="網頁動畫、特效(2) - Gsap3 + Vue.js">
+                  網頁動畫、特效(2) - Gsap3 + Vue.js <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Teisha HSU</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/hexo_blogger/js/comments.js"></script><script src="/hexo_blogger/js/utils.js"></script><script src="/hexo_blogger/js/motion.js"></script><script src="/hexo_blogger/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

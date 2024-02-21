@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo_blogger/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo_blogger/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo_blogger/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/hexo_blogger/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/hexo_blogger/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"teishashu.github.io","root":"/hexo_blogger/","images":"/hexo_blogger/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/hexo_blogger/js/config.js"></script>
+<meta name="description" content="物件調整屬性特徵針對物件裡的屬性作額外的特徵設定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 物件(5) - 屬性特徵">
+<meta property="og:url" content="https://teishashu.github.io/hexo_blogger/2020/08/04/js-1-object5/index.html">
+<meta property="og:site_name" content="亭夏 Teisha - 邁向前端">
+<meta property="og:description" content="物件調整屬性特徵針對物件裡的屬性作額外的特徵設定">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-08-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-02-25T05:19:05.266Z">
+<meta property="article:author" content="Teisha HSU">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://teishashu.github.io/hexo_blogger/2020/08/04/js-1-object5/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://teishashu.github.io/hexo_blogger/2020/08/04/js-1-object5/","path":"2020/08/04/js-1-object5/","title":"JavaScript 物件(5) - 屬性特徵"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JavaScript 物件(5) - 屬性特徵 | 亭夏 Teisha - 邁向前端</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/hexo_blogger/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo_blogger/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">亭夏 Teisha - 邁向前端</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/hexo_blogger/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li>
+        <li class="menu-item menu-item-about"><a href="/hexo_blogger/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li>
+        <li class="menu-item menu-item-tags"><a href="/hexo_blogger/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+        <li class="menu-item menu-item-categories"><a href="/hexo_blogger/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li>
+        <li class="menu-item menu-item-archives"><a href="/hexo_blogger/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E4%BB%B6%E8%AA%BF%E6%95%B4%E5%B1%AC%E6%80%A7%E7%89%B9%E5%BE%B5"><span class="nav-number">1.</span> <span class="nav-text">物件調整屬性特徵</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#defineProperties-%E8%AA%BF%E6%95%B4%E5%A4%A7%E9%87%8F%E7%89%A9%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">defineProperties 調整大量物件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A-value-%E5%80%BC"><span class="nav-number">1.2.</span> <span class="nav-text">A. value 值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-writable-%E5%8F%AF%E5%90%A6%E5%AF%AB%E5%85%A5"><span class="nav-number">1.3.</span> <span class="nav-text">B. writable 可否寫入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-configurable-%E5%8F%AF%E5%90%A6%E8%A2%AB%E5%88%AA%E9%99%A4"><span class="nav-number">1.4.</span> <span class="nav-text">C. configurable 可否被刪除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#D-enumerable-%E5%8F%AF%E5%90%A6%E8%A2%AB%E5%88%97%E8%88%89"><span class="nav-number">1.5.</span> <span class="nav-text">D. enumerable 可否被列舉</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%9D%E5%B0%8D%E7%89%A9%E4%BB%B6-3-%E5%80%8B%E6%87%89%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">針對物件 3 個應用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#preventExtensions-%E9%98%B2%E6%AD%A2%E6%93%B4%E5%85%85"><span class="nav-number">2.1.</span> <span class="nav-text">preventExtensions 防止擴充</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#seal-%E5%B0%81%E8%A3%9D"><span class="nav-number">2.2.</span> <span class="nav-text">seal 封裝</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#freeze-%E5%87%8D%E7%B5%90"><span class="nav-number">2.3.</span> <span class="nav-text">freeze 凍結</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Teisha HSU</p>
+  <div class="site-description" itemprop="description">前端學習筆記紀錄</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/hexo_blogger/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/hexo_blogger/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/hexo_blogger/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:colorfulspirit@gmail.com" title="E-Mail → mailto:colorfulspirit@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://teishashu.github.io/hexo_blogger/2020/08/04/js-1-object5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo_blogger/images/avatar.gif">
+      <meta itemprop="name" content="Teisha HSU">
+      <meta itemprop="description" content="前端學習筆記紀錄">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="亭夏 Teisha - 邁向前端">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript 物件(5) - 屬性特徵
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2020-08-04 00:00:00" itemprop="dateCreated datePublished" datetime="2020-08-04T00:00:00+08:00">2020-08-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2023-02-25 13:19:05" itemprop="dateModified" datetime="2023-02-25T13:19:05+08:00">2023-02-25</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo_blogger/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="物件調整屬性特徵"><a href="#物件調整屬性特徵" class="headerlink" title="物件調整屬性特徵"></a>物件調整屬性特徵</h3><p>針對物件裡的屬性作額外的特徵設定</p>
+<span id="more"></span>
+<p>Object.defineProperty(物件, 屬性, 參數)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var food = &#123;</span><br><span class="line">  drink: &#x27;milk&#x27;,</span><br><span class="line">  meat: &#x27;beef&#x27;,</span><br><span class="line">&#125;</span><br><span class="line">Object.defineProperty(food, &#x27;drink&#x27;, &#123;</span><br><span class="line">  value: 5,</span><br><span class="line">  writable: true,</span><br><span class="line">  configurable: true,</span><br><span class="line">  enumerable: true </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="defineProperties-調整大量物件"><a href="#defineProperties-調整大量物件" class="headerlink" title="defineProperties 調整大量物件"></a>defineProperties 調整大量物件</h4><p>上面只能一個，這邊可以大量設定<br>Object.defineProperties</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Object.defineProperties(&#123;</span><br><span class="line">  drink: &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;,</span><br><span class="line">  meat: &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<!--more-->
+<h4 id="A-value-值"><a href="#A-value-值" class="headerlink" title="A. value 值"></a>A. value 值</h4><p>可以重新定義原本物件屬性的值。</p>
+<h4 id="B-writable-可否寫入"><a href="#B-writable-可否寫入" class="headerlink" title="B. writable 可否寫入"></a>B. writable 可否寫入</h4><ol>
+<li>預設都是 true。</li>
+<li>false 無法更改值，如果硬改不會跳錯(靜默錯誤-後面的程式可以繼續跑)，值依舊無法改，但是如果在嚴格模式下會跳錯導致後面的程式無法跑。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var food = &#123;</span><br><span class="line">  drink: &#x27;milk&#x27;,</span><br><span class="line">  meat: &#x27;beef&#x27;,</span><br><span class="line">&#125;</span><br><span class="line">Object.defineProperty(food, &#x27;drink&#x27;, &#123;</span><br><span class="line">  writable: false,</span><br><span class="line">&#125;)</span><br><span class="line">food.drink = 5; // 不會跳錯</span><br><span class="line">(function() &#123;</span><br><span class="line">  &#x27;use strict&#x27;;</span><br><span class="line">  food.drink = 5;</span><br><span class="line">&#125;)() // Cannot assign to read only property &#x27;drink&#x27; of object &#x27;#&lt;Object&gt;&#x27;</span><br></pre></td></tr></table></figure></li>
+<li>淺層保護<br>只有第一層可以限制不能改，如果是物件裡面的屬性、值可以改動。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var food = &#123;</span><br><span class="line">  drink: &#x27;milk&#x27;,</span><br><span class="line">  meat: &#x27;beef&#x27;,</span><br><span class="line">&#125;</span><br><span class="line">Object.defineProperty(food, &#x27;dinner&#x27;, &#123;</span><br><span class="line">  value: &#123;&#125;,</span><br><span class="line">  writable: false,</span><br><span class="line">&#125;);</span><br><span class="line">food.dinner.a = 6;</span><br><span class="line">console.log(food)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="C-configurable-可否被刪除"><a href="#C-configurable-可否被刪除" class="headerlink" title="C. configurable 可否被刪除"></a>C. configurable 可否被刪除</h4><p>預設都是 true。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var food = &#123;</span><br><span class="line">  drink: &#x27;milk&#x27;,</span><br><span class="line">  meat: &#x27;beef&#x27;,</span><br><span class="line">  fruit: &#x27;banner&#x27; </span><br><span class="line">&#125;</span><br><span class="line">Object.defineProperty(food, &#x27;meat&#x27;, &#123;</span><br><span class="line">  configurable: false,</span><br><span class="line">&#125;)</span><br><span class="line">delete food.drink;</span><br><span class="line">delete food.meat;</span><br><span class="line">console.log(food); // 只有 drink 被刪掉</span><br></pre></td></tr></table></figure>
+
+<h4 id="D-enumerable-可否被列舉"><a href="#D-enumerable-可否被列舉" class="headerlink" title="D. enumerable 可否被列舉"></a>D. enumerable 可否被列舉</h4><ul>
+<li>預設都是 true。<br>物件下有很多屬性，透過 for…in 依依讀出來，如果設定成不可被列舉這屬性就被禁止無法讀出來。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var food = &#123;</span><br><span class="line">  drink: &#x27;milk&#x27;,</span><br><span class="line">  meat: &#x27;beef&#x27;,</span><br><span class="line">  fruit: &#x27;banner&#x27; </span><br><span class="line">&#125;</span><br><span class="line">Object.defineProperty(food, &#x27;meat&#x27;, &#123;</span><br><span class="line">  enumerable: false,</span><br><span class="line">&#125;);</span><br><span class="line">for(var key in food) &#123;</span><br><span class="line">  console.log(key);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>hasOwnProperty(物件屬性); 查看當前是否有這屬性</li>
+<li>無法讀出來的 console 下是淺粉色的字<br>使用建構函式出來的物件包含原型的屬性，如果不想要可以設定一下。<br>如果原型的屬性是可以列舉的，使用 for…in 也可以印出原型的屬性<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function Food() &#123;&#125;;</span><br><span class="line">Food.prototype.full = &#x27;飽了&#x27;;</span><br><span class="line"></span><br><span class="line">var jean = new Food();</span><br><span class="line">jean.first = &#x27;奶凍&#x27;;</span><br><span class="line">console.log(jean); // 在 __proto__ 裡面的 full 屬性不是淺粉色。</span><br><span class="line"></span><br><span class="line">jean.hasOwnProperty(&#x27;first&#x27;); // true</span><br><span class="line">jean.hasOwnProperty(&#x27;full&#x27;); // false</span><br><span class="line"></span><br><span class="line">for(var key in jean) &#123;</span><br><span class="line">  console.log(key)</span><br><span class="line">&#125; // first、full 。會顯示原型和自己的屬性</span><br><span class="line"></span><br><span class="line">// 查看 Food.__proto__、Food.__proto__.__proto__ 的屬性特徵差別</span><br><span class="line">// 只有 enumerable 可否被列舉不一樣</span><br><span class="line">Object.getOwnPropertyDescriptor(Food.__proto__)</span><br></pre></td></tr></table></figure>
+改變原型的屬性特徵<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function Food() &#123;&#125;;</span><br><span class="line">Food.prototype.full = &#x27;飽了&#x27;;</span><br><span class="line"></span><br><span class="line">// 增加這段，使 for..in 時不會被物件原型的屬性影響</span><br><span class="line">Object.defineProperty(Food.prototype, &#x27;full&#x27;, &#123;</span><br><span class="line">  enumerable: false</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">var jean = new Food();</span><br><span class="line">jean.first = &#x27;奶凍&#x27;;</span><br><span class="line">console.log(jean); // 在 __proto__ 裡面的 full 屬性是淺粉色。</span><br></pre></td></tr></table></figure>
+結論：自動原型跟原生原型特徵不一樣，差異在 enumerable 可否被列舉，為了壁面可以使用下面判斷式<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function Food() &#123;&#125;;</span><br><span class="line">Food.prototype.full = &#x27;飽了&#x27;;</span><br><span class="line"></span><br><span class="line">var jean = new Food();</span><br><span class="line">jean.first = &#x27;奶凍&#x27;;</span><br><span class="line"></span><br><span class="line">for (var key in jean) &#123;</span><br><span class="line">  if(jean.hasOwnProperty(key)) &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h3 id="針對物件-3-個應用方法"><a href="#針對物件-3-個應用方法" class="headerlink" title="針對物件 3 個應用方法"></a>針對物件 3 個應用方法</h3><p>針對物件本身操作，將物件屬性的特徵調整<br>也用其他方法驗證是否：被擴充、被封裝、被結凍</p>
+<h4 id="preventExtensions-防止擴充"><a href="#preventExtensions-防止擴充" class="headerlink" title="preventExtensions 防止擴充"></a>preventExtensions 防止擴充</h4><ul>
+<li>無法擴充、新增屬性：Object.preventExtensions();</li>
+<li>驗證是否可以被擴充：Object.isExtensible();</li>
+<li>查看屬性特徵：Object.getOwnPropertyDescriptor(物件, 物件的屬性)</li>
+<li>屬性特徵都是 true。<br>(writable 可否寫入、configurable 可否被刪除、enumerable 可否被列舉)<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var food = &#123;</span><br><span class="line">  drink: &#x27;milk&#x27;,</span><br><span class="line">  meat: &#x27;beef&#x27;,</span><br><span class="line">  dinner: &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">Object.preventExtensions(food); //防止擴充</span><br><span class="line">console.log(&#x27;驗證是否可以被擴充&#x27;, Object.isExtensible(food));</span><br><span class="line">console.log(&#x27;查看屬性 drink 特徵&#x27;, Object.getOwnPropertyDescriptor(food, &#x27;drink&#x27;))</span><br><span class="line"></span><br><span class="line">// 調整</span><br><span class="line">food.drink = &#x27;tea&#x27;; // 可以變</span><br><span class="line">food.vegetable = &#x27;高麗菜&#x27;; // 無法擴充新增</span><br><span class="line">food.dinner.way = &#x27;自己煮&#x27;; // 裡面物件可以變</span><br><span class="line">console.log(food); // &#123;dinner: &#123;way: &quot;自己煮&quot;&#125;, drink: &quot;tea&quot;, meat: &quot;beef&quot;&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="seal-封裝"><a href="#seal-封裝" class="headerlink" title="seal 封裝"></a>seal 封裝</h4><p>物件屬性無法新增、刪除、擴充，但可以調整屬性值</p>
+<ul>
+<li>預設有加入 preventExtensions 防止擴充</li>
+<li>是否被封裝：Object.isSealed()</li>
+<li>屬性特徵：configurable: false (可否被刪除) <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">var food = &#123;</span><br><span class="line">  drink: &#x27;milk&#x27;,</span><br><span class="line">  meat: &#x27;beef&#x27;,</span><br><span class="line">  dinner: &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">Object.seal(food);</span><br><span class="line">console.log(&#x27;驗證是否被封裝&#x27;, Object.isSealed(food));</span><br><span class="line">console.log(&#x27;查看屬性 drink 特徵&#x27;, Object.getOwnPropertyDescriptor(food, &#x27;drink&#x27;))</span><br><span class="line"></span><br><span class="line">// 調整</span><br><span class="line">food.drink = &#x27;tea&#x27;; // 可以變</span><br><span class="line">food.vegetable = &#x27;高麗菜&#x27;; // 無法擴充</span><br><span class="line">food.dinner.way = &#x27;自己煮&#x27;; // 裡面物件可以變</span><br><span class="line">console.log(food); // &#123;dinner: &#123;way: &quot;自己煮&quot;&#125;, drink: &quot;tea&quot;, meat: &quot;beef&quot;&#125;</span><br><span class="line">Object.defineProperty(food, &#x27;drink&#x27;, &#123;</span><br><span class="line">  configurable: true</span><br><span class="line">&#125;) // Cannot redefine property: drink</span><br><span class="line">delete food.meat; // false 無法刪除</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="freeze-凍結"><a href="#freeze-凍結" class="headerlink" title="freeze 凍結"></a>freeze 凍結</h4><p>Object.freeze();</p>
+<ul>
+<li>預設物件有加入 seal 但無法調整值</li>
+<li>是否被封裝：Object.isFrozen()</li>
+<li>屬性特徵：configurable: false (不能被刪除)、writable: false (不能被寫入)</li>
+<li>無法調整物件屬性特徵<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">var food = &#123;</span><br><span class="line">  drink: &#x27;milk&#x27;,</span><br><span class="line">  meat: &#x27;beef&#x27;,</span><br><span class="line">  dinner: &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">Object.freeze(food);</span><br><span class="line">console.log(&#x27;驗證是否被封裝&#x27;, Object.isFrozen(food));</span><br><span class="line">console.log(&#x27;查看屬性 drink 特徵&#x27;, Object.getOwnPropertyDescriptor(food, &#x27;drink&#x27;))</span><br><span class="line"></span><br><span class="line">// 調整</span><br><span class="line">food.drink = &#x27;tea&#x27;; // 無法改值</span><br><span class="line">food.vegetable = &#x27;高麗菜&#x27;; // 無法擴充</span><br><span class="line">food.dinner.way = &#x27;自己煮&#x27;; // 裡面物件可以變</span><br><span class="line">console.log(food); // &#123;dinner: &#123;way: &quot;自己煮&quot;&#125;, drink: &quot;tea&quot;, meat: &quot;beef&quot;&#125;</span><br><span class="line">Object.defineProperty(food, &#x27;drink&#x27;, &#123;</span><br><span class="line">  configurable: true</span><br><span class="line">&#125;) // Cannot redefine property: drink</span><br><span class="line">delete food.meat; // false 無法刪除</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/hexo_blogger/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2020/08/04/js-1-this/" rel="prev" title="JavaScript 的 this 狀況介紹">
+                  <i class="fa fa-chevron-left"></i> JavaScript 的 this 狀況介紹
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2020/08/04/js-1-object3/" rel="next" title="JavaScript 物件(3) - 比較 陣列、JSON">
+                  JavaScript 物件(3) - 比較 陣列、JSON <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Teisha HSU</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/hexo_blogger/js/comments.js"></script><script src="/hexo_blogger/js/utils.js"></script><script src="/hexo_blogger/js/motion.js"></script><script src="/hexo_blogger/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

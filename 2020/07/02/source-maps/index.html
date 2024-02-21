@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo_blogger/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo_blogger/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo_blogger/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/hexo_blogger/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/hexo_blogger/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"teishashu.github.io","root":"/hexo_blogger/","images":"/hexo_blogger/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/hexo_blogger/js/config.js"></script>
+<meta name="description" content="直播的筆記與其他的整理前端工程師不可不知的 Source Maps 應用技巧 什麼是 Source maps(原始碼地圖、來源對應)產生 *.map 的檔案">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Source maps 筆記">
+<meta property="og:url" content="https://teishashu.github.io/hexo_blogger/2020/07/02/source-maps/index.html">
+<meta property="og:site_name" content="亭夏 Teisha - 邁向前端">
+<meta property="og:description" content="直播的筆記與其他的整理前端工程師不可不知的 Source Maps 應用技巧 什麼是 Source maps(原始碼地圖、來源對應)產生 *.map 的檔案">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://lh3.googleusercontent.com/xGYFnx7QNmqWf63dEKrBHPTdhKK49dLYKmo376aiN4-fM0lR_0lxiXtJrFZOVjFzhuWN8HuasA=w440-h280-e365">
+<meta property="article:published_time" content="2020-07-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-02-25T05:19:05.235Z">
+<meta property="article:author" content="Teisha HSU">
+<meta property="article:tag" content="source maps">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lh3.googleusercontent.com/xGYFnx7QNmqWf63dEKrBHPTdhKK49dLYKmo376aiN4-fM0lR_0lxiXtJrFZOVjFzhuWN8HuasA=w440-h280-e365">
+
+
+<link rel="canonical" href="https://teishashu.github.io/hexo_blogger/2020/07/02/source-maps/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://teishashu.github.io/hexo_blogger/2020/07/02/source-maps/","path":"2020/07/02/source-maps/","title":"Source maps 筆記"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Source maps 筆記 | 亭夏 Teisha - 邁向前端</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/hexo_blogger/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo_blogger/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">亭夏 Teisha - 邁向前端</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/hexo_blogger/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li>
+        <li class="menu-item menu-item-about"><a href="/hexo_blogger/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li>
+        <li class="menu-item menu-item-tags"><a href="/hexo_blogger/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+        <li class="menu-item menu-item-categories"><a href="/hexo_blogger/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li>
+        <li class="menu-item menu-item-archives"><a href="/hexo_blogger/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-Source-maps"><span class="nav-number">1.</span> <span class="nav-text">什麼是 Source maps</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%80%8F%E8%A6%BD%E5%99%A8%E5%B0%8D%E5%A3%93%E7%B8%AE%E6%9C%80%E4%BD%B3%E5%8C%96%E7%9A%84-js-%E8%A7%A3%E5%A3%93%E7%B8%AE"><span class="nav-number">2.</span> <span class="nav-text">瀏覽器對壓縮最佳化的 js 解壓縮</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Source-maps-%E6%96%B9%E5%BC%8F-%E5%81%B5%E9%8C%AF%E6%99%82%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">Source maps 方式 (偵錯時使用)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80-%E5%A3%93%E7%B8%AE%E6%AA%94%E8%88%87-map-%E9%80%A3%E7%B5%90"><span class="nav-number">3.1.</span> <span class="nav-text">(方法一) 壓縮檔與 map 連結</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C-%E5%9C%A8-http-header-%E5%8A%A0%E5%85%A5%E7%A8%8B%E5%BC%8F%E7%A2%BC"><span class="nav-number">3.2.</span> <span class="nav-text">(方法二) 在 http header 加入程式碼</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E5%AE%8C%E5%8E%9F%E5%A7%8B%E7%9A%84-js-%E5%BE%8C"><span class="nav-number">4.</span> <span class="nav-text">更改完原始的 js 後</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AA%94%E6%A1%88%E5%A3%93%E7%B8%AE%E6%98%AF%E7%82%BA%E4%BA%86%E7%B6%B2%E9%A0%81%E7%9A%84%E6%95%88%E8%83%BD"><span class="nav-number">5.</span> <span class="nav-text">檔案壓縮是為了網頁的效能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">6.</span> <span class="nav-text">其他</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Teisha HSU</p>
+  <div class="site-description" itemprop="description">前端學習筆記紀錄</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/hexo_blogger/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/hexo_blogger/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/hexo_blogger/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:colorfulspirit@gmail.com" title="E-Mail → mailto:colorfulspirit@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://teishashu.github.io/hexo_blogger/2020/07/02/source-maps/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo_blogger/images/avatar.gif">
+      <meta itemprop="name" content="Teisha HSU">
+      <meta itemprop="description" content="前端學習筆記紀錄">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="亭夏 Teisha - 邁向前端">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Source maps 筆記
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2020-07-02 00:00:00" itemprop="dateCreated datePublished" datetime="2020-07-02T00:00:00+08:00">2020-07-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2023-02-25 13:19:05" itemprop="dateModified" datetime="2023-02-25T13:19:05+08:00">2023-02-25</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>直播的筆記與其他的整理<br><a target="_blank" rel="noopener" href="https://www.facebook.com/will.fans/videos/1834092806619855">前端工程師不可不知的 Source Maps 應用技巧</a></p>
+<h3 id="什麼是-Source-maps"><a href="#什麼是-Source-maps" class="headerlink" title="什麼是 Source maps"></a>什麼是 Source maps</h3><p>(原始碼地圖、來源對應)<br>產生 *.map 的檔案<span id="more"></span><br>會紀錄原始碼關鍵字和座標(第幾行的位置)。<br>css、js都支援 Source maps<br>主要給瀏覽器用 </p>
+<p>(用途)<br>網站上使用的 min 壓縮檔<br>透過 map 找到原始檔案的位置來修改維護。</p>
+<h3 id="瀏覽器對壓縮最佳化的-js-解壓縮"><a href="#瀏覽器對壓縮最佳化的-js-解壓縮" class="headerlink" title="瀏覽器對壓縮最佳化的 js 解壓縮"></a>瀏覽器對壓縮最佳化的 js 解壓縮</h3><ol>
+<li><p>自動格式化原始碼( google 擴充套建 PrettyPrint )<br>網頁左上角應用程式 -&gt; 現在應用程式商片 -&gt; 進去搜尋</p>
+<img src="https://lh3.googleusercontent.com/xGYFnx7QNmqWf63dEKrBHPTdhKK49dLYKmo376aiN4-fM0lR_0lxiXtJrFZOVjFzhuWN8HuasA=w440-h280-e365" width="200px"></li>
+<li><p>f12 的 Sources 點要使用的 min.js<br>再點『{}』就可以解析 (在程式碼那塊的左下角)</p>
+</li>
+</ol>
+<p>如果壓縮檔的名稱有壓過會變成很簡易的代號.不容易看懂.這時就需要使用 Source maps 來產生 *.map 檔跟原始檔連結</p>
+<h3 id="Source-maps-方式-偵錯時使用"><a href="#Source-maps-方式-偵錯時使用" class="headerlink" title="Source maps 方式 (偵錯時使用)"></a>Source maps 方式 (偵錯時使用)</h3><p>先下載要使用的工具(直播中使用 uglify-js )<br>再用下面的方式<br>成功在網頁上.會先讀入壓縮檔自動轉換成原始檔顯示</p>
+<h4 id="方法一-壓縮檔與-map-連結"><a href="#方法一-壓縮檔與-map-連結" class="headerlink" title="(方法一) 壓縮檔與 map 連結"></a>(方法一) 壓縮檔與 map 連結</h4><p>在壓縮檔 *.min.js 的最後一行打<br>(同樣位置)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//# sourceMappingURL=*.min.js.map</span><br></pre></td></tr></table></figure>
+<p>(不同位置)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//# sourceMappingURL=/path/to/*.min.js.map</span><br></pre></td></tr></table></figure>
+<p>缺點是要手動在 min.js 最後加入這個</p>
+<h4 id="方法二-在-http-header-加入程式碼"><a href="#方法二-在-http-header-加入程式碼" class="headerlink" title="(方法二) 在 http header 加入程式碼"></a>(方法二) 在 http header 加入程式碼</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X-SourceMap: /path/to/*.js.map</span><br></pre></td></tr></table></figure>
+
+<h3 id="更改完原始的-js-後"><a href="#更改完原始的-js-後" class="headerlink" title="更改完原始的 js 後"></a>更改完原始的 js 後</h3><p>要再重新產生新的壓縮 js 和 Source maps 才會生效</p>
+<h3 id="檔案壓縮是為了網頁的效能"><a href="#檔案壓縮是為了網頁的效能" class="headerlink" title="檔案壓縮是為了網頁的效能"></a>檔案壓縮是為了網頁的效能</h3><p>JS 最佳化:</p>
+<ol>
+<li>合併</li>
+</ol>
+<ul>
+<li>多個 js 檔合併一個(越多 js 檔網頁跑越慢)</li>
+<li>減少 HTTP 要求次數來提升瀏覽效率</li>
+</ul>
+<ol start="2">
+<li>壓縮</li>
+</ol>
+<ul>
+<li>js 中多餘的空白字刪除</li>
+<li>過長的區域變數變短<br>(改掉原本的名稱.所以需要用 Source maps. 只用 PrettyPrint 可能還會看不懂。 ex: event 變 n )</li>
+<li>縮小檔案加快檔案的下載速度</li>
+</ul>
+<ol start="3">
+<li>常用工具: uglify-js、webpack module bundler、TypeScript、Babel<br>cli 裡面也有</li>
+</ol>
+<p>目標:</p>
+<ul>
+<li>縮小檔案大小，降低網路流量</li>
+<li>讓變數及函式名稱變成無意義文字，讓別人不容易反推程式邏輯<br>( js 是送到用戶端，網站上線時需要加工處理。)</li>
+</ul>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p><code>debugger</code> js 會停下來.接下來一步步的執行<br>開發時不要用壓縮.上線在用.但通常上線才發現 bug!<br>才會需要用 Source maps</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/hexo_blogger/tags/source-maps/" rel="tag"># source maps</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2020/07/01/hexo-change-theme-2/" rel="prev" title="Hexo 建立部落格(4) - NexT 美化">
+                  <i class="fa fa-chevron-left"></i> Hexo 建立部落格(4) - NexT 美化
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2020/07/04/AJAX-3%E7%A8%AE%E6%96%B9%E5%BC%8F%E6%AF%94%E8%BC%83/" rel="next" title="Ajax 取資料的 3 種方式比較 Xmlhttprequest、Fetch、Axios">
+                  Ajax 取資料的 3 種方式比較 Xmlhttprequest、Fetch、Axios <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Teisha HSU</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/hexo_blogger/js/comments.js"></script><script src="/hexo_blogger/js/utils.js"></script><script src="/hexo_blogger/js/motion.js"></script><script src="/hexo_blogger/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

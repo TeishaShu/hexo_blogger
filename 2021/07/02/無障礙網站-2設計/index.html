@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo_blogger/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo_blogger/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo_blogger/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/hexo_blogger/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/hexo_blogger/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"teishashu.github.io","root":"/hexo_blogger/","images":"/hexo_blogger/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/hexo_blogger/js/config.js"></script>
+<meta name="description" content=".box{   border:2px solid #ccc;   padding: 5px; } h4{   font-weight:bold; } h5{   margin-top:3px;   margin-botton:5px; }  .blockBox{   display:inline-block;   text-align: center;   padding:10px; } .co">
+<meta property="og:type" content="article">
+<meta property="og:title" content="無障礙網站(2) - 網頁設計注意事項">
+<meta property="og:url" content="https://teishashu.github.io/hexo_blogger/2021/07/02/%E7%84%A1%E9%9A%9C%E7%A4%99%E7%B6%B2%E7%AB%99-2%E8%A8%AD%E8%A8%88/index.html">
+<meta property="og:site_name" content="亭夏 Teisha - 邁向前端">
+<meta property="og:description" content=".box{   border:2px solid #ccc;   padding: 5px; } h4{   font-weight:bold; } h5{   margin-top:3px;   margin-botton:5px; }  .blockBox{   display:inline-block;   text-align: center;   padding:10px; } .co">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://wcc723.gitbooks.io/google_design_translate/content/images/patterns/patterns_errors_userinput_keyline2.png">
+<meta property="og:image" content="https://wcc723.gitbooks.io/google_design_translate/content/images/components/components-recommendedthreelinelists-2_large_mdpi.png">
+<meta property="article:published_time" content="2021-07-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-02-17T03:56:30.969Z">
+<meta property="article:author" content="Teisha HSU">
+<meta property="article:tag" content="無障礙網站">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wcc723.gitbooks.io/google_design_translate/content/images/patterns/patterns_errors_userinput_keyline2.png">
+
+
+<link rel="canonical" href="https://teishashu.github.io/hexo_blogger/2021/07/02/%E7%84%A1%E9%9A%9C%E7%A4%99%E7%B6%B2%E7%AB%99-2%E8%A8%AD%E8%A8%88/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://teishashu.github.io/hexo_blogger/2021/07/02/%E7%84%A1%E9%9A%9C%E7%A4%99%E7%B6%B2%E7%AB%99-2%E8%A8%AD%E8%A8%88/","path":"2021/07/02/無障礙網站-2設計/","title":"無障礙網站(2) - 網頁設計注意事項"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>無障礙網站(2) - 網頁設計注意事項 | 亭夏 Teisha - 邁向前端</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/hexo_blogger/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo_blogger/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">亭夏 Teisha - 邁向前端</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/hexo_blogger/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li>
+        <li class="menu-item menu-item-about"><a href="/hexo_blogger/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li>
+        <li class="menu-item menu-item-tags"><a href="/hexo_blogger/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+        <li class="menu-item menu-item-categories"><a href="/hexo_blogger/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li>
+        <li class="menu-item menu-item-archives"><a href="/hexo_blogger/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A8%AD%E8%A8%88%E7%B4%B0%E7%AF%80"><span class="nav-number">2.</span> <span class="nav-text">設計細節</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%89%8D%E6%89%80%E8%99%95%E4%BD%8D%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">目前所處位置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A-%E9%A1%8F%E8%89%B2"><span class="nav-number">2.2.</span> <span class="nav-text">A. 顏色</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#a-%E8%89%B2%E7%A5%A8%E5%AE%9A%E7%BE%A9"><span class="nav-number">2.2.1.</span> <span class="nav-text">a. 色票定義</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#b-%E6%8F%90%E7%A4%BA%E8%A8%8A%E6%81%AF%E9%85%8D%E8%89%B2-%E9%80%9A%E5%B8%B8%E7%8B%80%E6%B3%81"><span class="nav-number">2.2.2.</span> <span class="nav-text">b. 提示訊息配色(通常狀況)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#c-Google-%E9%85%8D%E8%89%B2"><span class="nav-number">2.2.3.</span> <span class="nav-text">c. Google 配色</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">2.3.</span> <span class="nav-text">On light #FFF</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">2.3.1.</span> <span class="nav-text">Primary</span></a></li><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">2.3.2.</span> <span class="nav-text">Secondary</span></a></li><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">2.3.3.</span> <span class="nav-text">Disabled</span></a></li><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">2.3.4.</span> <span class="nav-text">Link</span></a></li><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">2.3.5.</span> <span class="nav-text">Positive </span></a></li><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">2.3.6.</span> <span class="nav-text">Negative</span></a></li><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">2.3.7.</span> <span class="nav-text">Warning</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">2.4.</span> <span class="nav-text">On dark #323232</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">2.4.1.</span> <span class="nav-text">Primary</span></a></li><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">2.4.2.</span> <span class="nav-text">Secondary</span></a></li><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">2.4.3.</span> <span class="nav-text">Disabled</span></a></li><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">2.4.4.</span> <span class="nav-text">Link</span></a></li><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">2.4.5.</span> <span class="nav-text">Positive </span></a></li><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">2.4.6.</span> <span class="nav-text">Negative</span></a></li><li class="nav-item nav-level-5"><a class="nav-link"><span class="nav-number">2.4.7.</span> <span class="nav-text">Warning</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-%E8%A1%A8%E5%96%AE"><span class="nav-number">2.5.</span> <span class="nav-text">B. 表單</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E5%AD%97"><span class="nav-number">2.6.</span> <span class="nav-text">文字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%89%E9%88%95"><span class="nav-number">2.7.</span> <span class="nav-text">按鈕</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%8B%E6%A9%9F%E6%9D%BF"><span class="nav-number">2.8.</span> <span class="nav-text">手機板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B6%B2%E7%AB%99%E5%B0%8E%E8%A6%BD%E9%A0%81"><span class="nav-number">2.9.</span> <span class="nav-text">網站導覽頁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#todo-%E7%B3%BB%E7%B5%B1%E5%8C%96%E7%9A%84%E8%A6%8F%E5%8A%83"><span class="nav-number">2.10.</span> <span class="nav-text">todo 系統化的規劃</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Teisha HSU</p>
+  <div class="site-description" itemprop="description">前端學習筆記紀錄</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/hexo_blogger/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/hexo_blogger/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/hexo_blogger/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:colorfulspirit@gmail.com" title="E-Mail → mailto:colorfulspirit@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://teishashu.github.io/hexo_blogger/2021/07/02/%E7%84%A1%E9%9A%9C%E7%A4%99%E7%B6%B2%E7%AB%99-2%E8%A8%AD%E8%A8%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo_blogger/images/avatar.gif">
+      <meta itemprop="name" content="Teisha HSU">
+      <meta itemprop="description" content="前端學習筆記紀錄">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="亭夏 Teisha - 邁向前端">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          無障礙網站(2) - 網頁設計注意事項
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2021-07-02 00:00:00" itemprop="dateCreated datePublished" datetime="2021-07-02T00:00:00+08:00">2021-07-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2024-02-17 11:56:30" itemprop="dateModified" datetime="2024-02-17T11:56:30+08:00">2024-02-17</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <style>
+.box{
+  border:2px solid #ccc;
+  padding: 5px;
+}
+h4{
+  font-weight:bold;
+}
+h5{
+  margin-top:3px;
+  margin-botton:5px;
+}
+
+.blockBox{
+  display:inline-block;
+  text-align: center;
+  padding:10px;
+}
+.colorBox{
+  width:50px;
+  height:50px;
+  display: flex;
+}
+.light .primary{
+  background-color: rgba(0,0,0,0.87);
+}
+.light .secondary{
+  background-color: rgba(0,0,0,0.54);
+}
+.light .disabled{
+  background-color: rgba(0,0,0,0.26);
+}
+.light .link{
+  background-color: #3367D6;
+}
+.light .positive{
+  background-color: #0B8043;
+}
+.light .nagative{
+  background-color: #C53929;
+}
+.light .warning{
+  background-color: #EA6100;
+}
+
+.dark{
+  background-color: #323232;
+}
+.dark h4, .dark h5, .dark p{
+  color:#fff;
+}
+
+.dark .primary{
+  background-color: rgba(255,255,255,0.87);
+}
+.dark .secondary{
+  background-color: rgba(255,255,255,0.54);
+}
+.dark .disabled{
+  background-color: rgba(255,255,255,0.26);
+}
+.dark .link{
+  background-color: #7BAAF7;
+}
+.dark .positive{
+  background-color: #57BB8A;
+}
+.dark .nagative{
+  background-color: #E67C73;
+}
+.dark .warning{
+  background-color: #F7CB4D;
+}
+</style>
+
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>根據客戶特色與需求，設計出容易判讀、階層性、易用的網站。</p>
+<ul>
+<li>注意用色<br>EX:色盲、視障人士可能無法分辨顏色，黃色對於自閉症患者太刺激(但也不是網頁就不能使用，需要了解使用的客戶特色)<br>EX:使用數據圖.重要資料除了用顏色也可以用不同形狀、文字標記。</li>
+<li>易判讀：群組設計<br>一起的資料排在附近，不同的資料拉開一點，距離相近的排版容易被看成一組。</li>
+<li>階層性：重點的突出<br>設計出一看就能立即抓住重點的頁面<span id="more"></span>
+<a href="https://medium.com/uxeastmeetswest/%E6%8F%90%E5%8D%87%E6%98%93%E8%AE%80%E6%80%A7-%E4%BA%8C-%E8%A6%96%E8%A6%BA%E5%B1%A4%E7%B4%9A%E4%BB%8B%E7%B4%B9%E8%88%87%E5%AF%A6%E4%BE%8Bvisual-hierarchy-cf451622b48a" target="_blank">
+提升易讀性(二): 視覺層級介紹與實例Visual Hierarchy</a></li>
+</ul>
+<h3 id="設計細節"><a href="#設計細節" class="headerlink" title="設計細節"></a>設計細節</h3><h4 id="目前所處位置"><a href="#目前所處位置" class="headerlink" title="目前所處位置"></a>目前所處位置</h4><ul>
+<li>強調樣式：需要統一的設計，使用快速鍵或 Tab 會顯示位置，EX:點擊(Botton 按鈕、Link 連結)。<br>在<a href="https://www.railway.gov.tw/tra-tip-web/tip" target="_blank">台鐵</a>網站中使用 Tab 可以看到紅色原點組成框的樣式</li>
+<li>頁面上的麵包屑 breadcream (顯示路徑 EX：首頁 &lt; 產品 &lt; 某項產品)</li>
+</ul>
+<h4 id="A-顏色"><a href="#A-顏色" class="headerlink" title="A. 顏色"></a>A. 顏色</h4><h5 id="a-色票定義"><a href="#a-色票定義" class="headerlink" title="a. 色票定義"></a>a. 色票定義</h5><p>設計頁面前需要先定義好色票。<br>注意文字與背景的對比度，使用　<a href="https://contrast-ratio.com/" target="_blank">檢測工具</a>　幫助判定，建議至少達到無障礙的 AA 級 4.5:1 比例，對比太低容易糊在一起，太高容易覺得模糊、旋轉。（如果背景是白色，主色是黃色、橙色、綠色要做無障礙網頁的話需要酌情處理，盡量還是大於 3）</p>
+<ul>
+<li>基本色：主色深淺同色調 3 種內</li>
+<li>強調色：主要的按鈕元件，讓使用者操作頁面時可以更明顯知道哪裡可以點擊（EX:開關、滑桿</li>
+<li>灰階：層次化的傳達訊息</li>
+<li>亮細、暗系主題</li>
+</ul>
+<p><a href="https://kknews.cc/design/9m4vy28.html" target="_blank">無障礙設計之「對比度」的探索 - 五. 滿足「無障礙色彩標準」的配色流程</a></p>
+<h5 id="b-提示訊息配色-通常狀況"><a href="#b-提示訊息配色-通常狀況" class="headerlink" title="b. 提示訊息配色(通常狀況)"></a>b. 提示訊息配色(通常狀況)</h5><ul>
+<li>藍：資訊或預設的主要網頁顏色</li>
+<li>紅：危險(確認刪除)</li>
+<li>黃：警告</li>
+<li>綠：成功(成功送出、訂單完成)</li>
+</ul>
+<h5 id="c-Google-配色"><a href="#c-Google-配色" class="headerlink" title="c. Google 配色"></a>c. Google 配色</h5><p>文字顏色的深淺(Primary、Secondary、Disabled)，都是一樣的顏色調整透明度。<br>disable 的顏色規範不在 AAA 顏色對比的範圍內。</p>
+<div class="box light">
+  <h4>On light #FFF</h4>
+  <div class="blockBox">
+    <div class="colorBox primary"></div>
+    <h5>Primary</h5>
+    <p>#000 0.87a</p>
+  </div>
+  <div class="blockBox">
+    <div class="colorBox secondary"></div>
+    <h5>Secondary</h5>
+    <p>#000 0.54a</p>
+  </div>
+  <div class="blockBox">
+    <div class="colorBox disabled"></div>
+    <h5>Disabled</h5>
+    <p>#000 0.26a</p>
+  </div>
+  <div class="blockBox">
+    <div class="colorBox link"></div>
+    <h5>Link</h5>
+    <p>#3367D6</p>
+  </div>
+  <div class="blockBox">
+    <div class="colorBox positive"></div>
+    <h5>Positive </h5>
+    <p>#0B8043</p>
+  </div>
+  <div class="blockBox">
+    <div class="colorBox nagative"></div>
+    <h5>Negative</h5>
+    <p>#C53929</p>
+  </div>
+  <div class="blockBox">
+    <div class="colorBox warning"></div>
+    <h5>Warning</h5>
+    <p>#EA6100</p>
+  </div>
+</div>
+
+<div class="box dark">
+  <h4>On dark #323232</h4>
+  <div class="blockBox">
+    <div class="colorBox primary"></div>
+    <h5>Primary</h5>
+    <p>#FFF 0.87a</p>
+  </div>
+  <div class="blockBox">
+    <div class="colorBox secondary"></div>
+    <h5>Secondary</h5>
+    <p>#FFF 0.54a</p>
+  </div>
+  <div class="blockBox">
+    <div class="colorBox disabled"></div>
+    <h5>Disabled</h5>
+    <p>#FFF 0.26a</p>
+  </div>
+  <div class="blockBox">
+    <div class="colorBox link"></div>
+    <h5>Link</h5>
+    <p>#7BAAF7</p>
+  </div>
+  <div class="blockBox">
+    <div class="colorBox positive"></div>
+    <h5>Positive </h5>
+    <p>#57BB8A</p>
+  </div>
+  <div class="blockBox">
+    <div class="colorBox nagative"></div>
+    <h5>Negative</h5>
+    <p>#E67C73</p>
+  </div>
+  <div class="blockBox">
+    <div class="colorBox warning"></div>
+    <h5>Warning</h5>
+    <p>#F7CB4D</p>
+  </div>
+</div>
+
+<p><a href="https://kknews.cc/design/9m4vy28.html" target="_blank">無障礙設計之「對比度」的探索 - 五. 滿足「無障礙色彩標準」的配色流程</a></p>
+<h4 id="B-表單"><a href="#B-表單" class="headerlink" title="B. 表單"></a>B. 表單</h4><ul>
+<li><p>標頭(表格標題)資訊<br>a. 不要省略，設計時盡量在輸入格上方，不要只用 placeholder，使用者容易迷失。<br>b. 盡量有外框範圍邊界，只有底線設計視力不好者不容易操作。讓用戶明確知道點擊目標的位置和大小，如果沒有清晰的邊框，用戶一開始比較難找到輸入框在哪，如果是沒邊框設計在點擊時 focus 要有框的呈現讓使用者知道。</p>
+</li>
+<li><p>Switch 開關設計<br>設計中有很多變化，可以使用<a href="https://proto.io/freebies/onoff/" target="_blank">Switch 設計 - Proto.io</a> 網站來協助設計觀察。</p>
+</li>
+<li><p>4 種狀態設計<br>焦點(focus)、默認(default)、禁用(disabled)、錯誤(mistake)。<br>focus 在無障礙時須要統一(同 link、bottom 的設計)。<br>下圖是錯誤提示的間距參考</p>
+<img src="https://wcc723.gitbooks.io/google_design_translate/content/images/patterns/patterns_errors_userinput_keyline2.png" alt="">
+(引用自 Google Material Design 圖片)</li>
+</ul>
+<h4 id="文字"><a href="#文字" class="headerlink" title="文字"></a>文字</h4><p>表現方式：字體、字體大小、粗細、行距。<br>如果用特殊字體需要注意不同載體上能不能呈現。<br>標題通常會用粗體增加份量感。內文需要注意行距，使文章更容易閱讀(一般內文最小 16px，行距1.5～2)，有時候使用者都是長輩時內文可以用到 18px，內文大概 14px~18px 都有人在用的，可以依使用者狀況來調整。</p>
+<h4 id="按鈕"><a href="#按鈕" class="headerlink" title="按鈕"></a>按鈕</h4><p>精簡的文字、尺寸不會過小好點擊、適當的間距（8px)比較不會誤觸</p>
+<h4 id="手機板"><a href="#手機板" class="headerlink" title="手機板"></a>手機板</h4><ul>
+<li><p>距離左右邊寬離 16px 在放內容。</p>
+<img src="https://wcc723.gitbooks.io/google_design_translate/content/images/components/components-recommendedthreelinelists-2_large_mdpi.png" alt=""></li>
+<li><p>文字<br>內文大小跟電腦版一樣尺寸(14px~18px 都可以，一般比較常用 16px)，標題大小都可以，但建議最大的中文標題 24px 就好。</p>
+</li>
+<li><p>下方呈現<br>注意下方的留白有時候需要多一點<br>fb的使用者體驗*假app形式（下面的快速鍵</p>
+</li>
+</ul>
+<h4 id="網站導覽頁"><a href="#網站導覽頁" class="headerlink" title="網站導覽頁"></a>網站導覽頁</h4><ul>
+<li>標示連結的快速鍵</li>
+<li>網站地圖(快速了解網站整體架構有哪些服務)</li>
+</ul>
+<p>*網站定位點（也可以用跟底圖顏色一樣隱藏）<br>可以用鍵盤快速切換位置（3個冒號<br>-header區塊（logo左上）：包含網站導覽<br>-breadcream 左上<br>-footer左上<br>-網站搜尋</p>
+<h4 id="todo-系統化的規劃"><a href="#todo-系統化的規劃" class="headerlink" title="todo 系統化的規劃"></a>todo 系統化的規劃</h4><ul>
+<li>訂好主要顏色(色票)</li>
+<li>文字這些細節</li>
+<li>測試對比度並調整</li>
+<li>備帶到強日光下去、放在昏暗房間裡，調低手機的屏幕亮度（許多手機快沒電了的用戶經常這樣做）自己去感受測試</li>
+</ul>
+<hr>
+<p>參考<br><a target="_blank" rel="noopener" href="https://kknews.cc/design/9m4vy28.html">乾貨！色彩無障礙設計之「對比度」的探索</a><br><a target="_blank" rel="noopener" href="https://medium.com/as-a-product-designer/%E7%84%A1%E9%9A%9C%E7%A4%99%E7%B6%B2%E9%A0%81%E7%A5%95%E6%8A%80-%E4%BB%8B%E9%9D%A2%E8%A8%AD%E8%A8%88%E5%A4%A7%E8%A3%9C%E4%B8%B8-9640dc1fde2b">【無障礙網頁祕技】介面設計大補丸</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/hexo_blogger/tags/%E7%84%A1%E9%9A%9C%E7%A4%99%E7%B6%B2%E7%AB%99/" rel="tag"># 無障礙網站</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2020/09/11/nuxt/" rel="prev" title="Nuxt.js">
+                  <i class="fa fa-chevron-left"></i> Nuxt.js
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2021/07/02/%E7%84%A1%E9%9A%9C%E7%A4%99%E7%B6%B2%E7%AB%99-1%E5%89%8D%E8%A8%80/" rel="next" title="無障礙網站(1) - 為何需要使用?">
+                  無障礙網站(1) - 為何需要使用? <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Teisha HSU</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/hexo_blogger/js/comments.js"></script><script src="/hexo_blogger/js/utils.js"></script><script src="/hexo_blogger/js/motion.js"></script><script src="/hexo_blogger/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

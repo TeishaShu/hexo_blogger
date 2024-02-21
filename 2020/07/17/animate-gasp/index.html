@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo_blogger/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo_blogger/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo_blogger/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/hexo_blogger/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/hexo_blogger/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"teishashu.github.io","root":"/hexo_blogger/","images":"/hexo_blogger/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/hexo_blogger/js/config.js"></script>
+<meta name="description" content="介紹GSAP3：專門處理動畫與特效的 JS 套件 安裝官方各種安裝方式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="網頁動畫、特效(2) - Gsap3 + Vue.js">
+<meta property="og:url" content="https://teishashu.github.io/hexo_blogger/2020/07/17/animate-gasp/index.html">
+<meta property="og:site_name" content="亭夏 Teisha - 邁向前端">
+<meta property="og:description" content="介紹GSAP3：專門處理動畫與特效的 JS 套件 安裝官方各種安裝方式">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-07-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-02-25T05:19:05.250Z">
+<meta property="article:author" content="Teisha HSU">
+<meta property="article:tag" content="網頁特效">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="Gsap">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://teishashu.github.io/hexo_blogger/2020/07/17/animate-gasp/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://teishashu.github.io/hexo_blogger/2020/07/17/animate-gasp/","path":"2020/07/17/animate-gasp/","title":"網頁動畫、特效(2) - Gsap3 + Vue.js"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>網頁動畫、特效(2) - Gsap3 + Vue.js | 亭夏 Teisha - 邁向前端</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/hexo_blogger/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo_blogger/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">亭夏 Teisha - 邁向前端</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/hexo_blogger/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li>
+        <li class="menu-item menu-item-about"><a href="/hexo_blogger/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li>
+        <li class="menu-item menu-item-tags"><a href="/hexo_blogger/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+        <li class="menu-item menu-item-categories"><a href="/hexo_blogger/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li>
+        <li class="menu-item menu-item-archives"><a href="/hexo_blogger/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.</span> <span class="nav-text">介紹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D"><span class="nav-number">2.</span> <span class="nav-text">安裝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">使用方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%AC%E5%BC%8F"><span class="nav-number">3.1.</span> <span class="nav-text">公式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B8%AC%E8%A9%A6%E5%B0%88%E6%A1%88-gsap-%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%9D%E6%88%90%E5%8A%9F"><span class="nav-number">3.2.</span> <span class="nav-text">測試專案 gsap 是否安裝成功</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ScrollTrigger-%E6%BB%BE%E5%8B%95%E8%A7%B8%E7%99%BC"><span class="nav-number">4.</span> <span class="nav-text">ScrollTrigger 滾動觸發</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#start-%E5%8F%AF%E6%94%BE%E7%9A%84%E5%80%BC"><span class="nav-number">4.1.</span> <span class="nav-text">start 可放的值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#toggleActions-%E5%8F%AF%E4%BB%A5%E6%94%BE4%E5%80%8B%E5%80%BC-%E4%BE%9D%E5%BA%8F%E8%B7%91"><span class="nav-number">4.2.</span> <span class="nav-text">toggleActions 可以放4個值.依序跑</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Teisha HSU</p>
+  <div class="site-description" itemprop="description">前端學習筆記紀錄</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/hexo_blogger/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/hexo_blogger/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/hexo_blogger/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:colorfulspirit@gmail.com" title="E-Mail → mailto:colorfulspirit@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://teishashu.github.io/hexo_blogger/2020/07/17/animate-gasp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo_blogger/images/avatar.gif">
+      <meta itemprop="name" content="Teisha HSU">
+      <meta itemprop="description" content="前端學習筆記紀錄">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="亭夏 Teisha - 邁向前端">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          網頁動畫、特效(2) - Gsap3 + Vue.js
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2020-07-17 00:00:00" itemprop="dateCreated datePublished" datetime="2020-07-17T00:00:00+08:00">2020-07-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2023-02-25 13:19:05" itemprop="dateModified" datetime="2023-02-25T13:19:05+08:00">2023-02-25</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo_blogger/categories/Gsap/" itemprop="url" rel="index"><span itemprop="name">Gsap</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h3><p><a target="_blank" rel="noopener" href="https://hackmd.io/@chupai/SJStDfFV8#GSAP3">GSAP3：專門處理動畫與特效的 JS 套件</a></p>
+<h3 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h3><p><a target="_blank" rel="noopener" href="https://greensock.com/docs/v3/Installation?checked=core">官方各種安裝方式</a></p>
+<span id="more"></span>
+<ol>
+<li><p>npm 安裝</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install gsap</span><br></pre></td></tr></table></figure></li>
+<li><p>引入專案中<br>上面官方網站 npm 安裝的部分<br>有些插件可以挑選.這次需要 ScrollTrigger (頁面滑到才動)<br>另外目前設定只有專案的首頁需要用到.所以在那 component 頁面打下面的指令引入 3行。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; gsap &#125; from &quot;gsap&quot;;</span><br><span class="line">import &#123; ScrollTrigger &#125; from &quot;gsap/ScrollTrigger&quot;;</span><br><span class="line">gsap.registerPlugin(ScrollTrigger);</span><br><span class="line"></span><br><span class="line">export default &#123;...&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h3><p>gsap 是使用 id 或 class 操作動畫。</p>
+<h4 id="公式"><a href="#公式" class="headerlink" title="公式"></a>公式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">gsap.method(&#x27;selector&#x27;, &#123;&#125;);</span><br><span class="line"></span><br><span class="line">// 使用例子 1</span><br><span class="line">gsap.to(&quot;.a&quot;, &#123;color: &#x27;#ccc&#x27;, duration: 2&#125;);</span><br><span class="line"></span><br><span class="line">// 使用例子 2</span><br><span class="line">gasp.from (&quot;.a&quot;, &#123;</span><br><span class="line">  duration:3, x:&quot;-50vw&quot;, rotation:-300, ease:&quot;linear&quot;,</span><br><span class="line">  scrollTrigger:&#123;</span><br><span class="line">    trigger:&quot;.a&quot;,</span><br><span class="line">    markers:true</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="測試專案-gsap-是否安裝成功"><a href="#測試專案-gsap-是否安裝成功" class="headerlink" title="測試專案 gsap 是否安裝成功"></a>測試專案 gsap 是否安裝成功</h4><p>(成功的話 #h1 出現在畫面中會右移)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;h1 id=&quot;h1&quot;&gt;我是標題&lt;/h1&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; gsap &#125; from &quot;gsap&quot;;</span><br><span class="line">import &#123; ScrollTrigger &#125; from &quot;gsap/ScrollTrigger&quot;;</span><br><span class="line">gsap.registerPlugin(ScrollTrigger);</span><br><span class="line">export default &#123;</span><br><span class="line">  mounted() &#123;</span><br><span class="line">    gsap.to(&quot;#h1&quot;, &#123;x: 100, duration: 1&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ScrollTrigger-滾動觸發"><a href="#ScrollTrigger-滾動觸發" class="headerlink" title="ScrollTrigger 滾動觸發"></a>ScrollTrigger 滾動觸發</h3><p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=X7IBa7vZjmo">Introducing ScrollTrigger for GSAP</a></p>
+<p>注意: scrollTrigger (要小寫s開頭).不然會顯示找不到這插件 !</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">gsap.to(&quot;#h1&quot;, &#123; //要觸發的元素</span><br><span class="line">  scrollTrigger:&#123; //頁面滑動觸發設定</span><br><span class="line">    trigger: &quot;#product1&quot;,  //要觸發的元素</span><br><span class="line">    start: &quot;top center&quot;, //第一個值:元素的開始位置，第二個值:畫面的位置</span><br><span class="line">    end: &quot;bottom 100px&quot; // 同 start 用法</span><br><span class="line">    marker: true, //顯示提示字.會顯示設定、物件的開始結束</span><br><span class="line">    toggleActions: &quot;restart none none none&quot;  //切換動作</span><br><span class="line">  &#125;,</span><br><span class="line">  x: 400, //外部這是要改變的效果</span><br><span class="line">  duration:2</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h4 id="start-可放的值"><a href="#start-可放的值" class="headerlink" title="start 可放的值"></a>start 可放的值</h4><p>top、center、bottom、pixels、percentages(relative to top)</p>
+<h4 id="toggleActions-可以放4個值-依序跑"><a href="#toggleActions-可以放4個值-依序跑" class="headerlink" title="toggleActions 可以放4個值.依序跑"></a>toggleActions 可以放4個值.依序跑</h4><table>
+<thead>
+<tr>
+<th>值</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>play</td>
+<td>只跑一次</td>
+</tr>
+<tr>
+<td>pause</td>
+<td>暫停</td>
+</tr>
+<tr>
+<td>resume</td>
+<td>繼續</td>
+</tr>
+<tr>
+<td>reverse</td>
+<td>逆轉</td>
+</tr>
+<tr>
+<td>restart</td>
+<td>重複跑</td>
+</tr>
+<tr>
+<td>reset</td>
+<td>重置</td>
+</tr>
+<tr>
+<td>complete</td>
+<td>完成</td>
+</tr>
+<tr>
+<td>none</td>
+<td>無</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/hexo_blogger/tags/%E7%B6%B2%E9%A0%81%E7%89%B9%E6%95%88/" rel="tag"># 網頁特效</a>
+              <a href="/hexo_blogger/tags/Vue/" rel="tag"># Vue</a>
+              <a href="/hexo_blogger/tags/Gsap/" rel="tag"># Gsap</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2020/07/15/animate-animation-transition/" rel="prev" title="網頁動畫、特效(1) - Animation、Transition">
+                  <i class="fa fa-chevron-left"></i> 網頁動畫、特效(1) - Animation、Transition
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2020/08/03/select/" rel="next" title="Select 改樣式 - 用 ul、li 改寫">
+                  Select 改樣式 - 用 ul、li 改寫 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Teisha HSU</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/hexo_blogger/js/comments.js"></script><script src="/hexo_blogger/js/utils.js"></script><script src="/hexo_blogger/js/motion.js"></script><script src="/hexo_blogger/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo_blogger/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo_blogger/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo_blogger/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/hexo_blogger/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/hexo_blogger/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"teishashu.github.io","root":"/hexo_blogger/","images":"/hexo_blogger/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/hexo_blogger/js/config.js"></script>
+<meta name="description" content="Hook 是 React 16.8 中增加的新功能，在函數中使用 state、react 其他特性。不必在寫 class 就能使用 state 以及其他 React 的功能。 說明：函式最大的問題是沒有自己的 this，所以無法使用 component 的3個特性(state、props、refs，只有 props 特殊可以用)。也因為沒有 this 沒有生命週期可以用，因此透過 Hook 解決">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React(6) Hook - useState、useEffect、useRefs">
+<meta property="og:url" content="https://teishashu.github.io/hexo_blogger/2022/07/08/react-6-hook/index.html">
+<meta property="og:site_name" content="亭夏 Teisha - 邁向前端">
+<meta property="og:description" content="Hook 是 React 16.8 中增加的新功能，在函數中使用 state、react 其他特性。不必在寫 class 就能使用 state 以及其他 React 的功能。 說明：函式最大的問題是沒有自己的 this，所以無法使用 component 的3個特性(state、props、refs，只有 props 特殊可以用)。也因為沒有 this 沒有生命週期可以用，因此透過 Hook 解決">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-07-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-02-25T05:19:06.015Z">
+<meta property="article:author" content="Teisha HSU">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://teishashu.github.io/hexo_blogger/2022/07/08/react-6-hook/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://teishashu.github.io/hexo_blogger/2022/07/08/react-6-hook/","path":"2022/07/08/react-6-hook/","title":"React(6) Hook - useState、useEffect、useRefs"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>React(6) Hook - useState、useEffect、useRefs | 亭夏 Teisha - 邁向前端</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/hexo_blogger/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo_blogger/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">亭夏 Teisha - 邁向前端</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/hexo_blogger/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li>
+        <li class="menu-item menu-item-about"><a href="/hexo_blogger/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li>
+        <li class="menu-item menu-item-tags"><a href="/hexo_blogger/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+        <li class="menu-item menu-item-categories"><a href="/hexo_blogger/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li>
+        <li class="menu-item menu-item-archives"><a href="/hexo_blogger/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#useState"><span class="nav-number">1.</span> <span class="nav-text">useState</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E5%80%8B%E6%AD%A5%E9%A9%9F%E5%BB%BA%E7%AB%8B-useState"><span class="nav-number">1.2.</span> <span class="nav-text">3個步驟建立 useState</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useEffect"><span class="nav-number">2.</span> <span class="nav-text">useEffect</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%8B%80%E6%B3%81"><span class="nav-number">2.1.</span> <span class="nav-text">使用狀況</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useRefs"><span class="nav-number">3.</span> <span class="nav-text">useRefs</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E8%89%B2"><span class="nav-number">3.1.</span> <span class="nav-text">特色</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%83%85%E6%99%AF"><span class="nav-number">3.2.</span> <span class="nav-text">使用情景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useState%E3%80%81useRefs-%E6%AF%94%E8%BC%83"><span class="nav-number">4.</span> <span class="nav-text">useState、useRefs 比較</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Teisha HSU</p>
+  <div class="site-description" itemprop="description">前端學習筆記紀錄</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/hexo_blogger/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/hexo_blogger/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/hexo_blogger/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:colorfulspirit@gmail.com" title="E-Mail → mailto:colorfulspirit@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://teishashu.github.io/hexo_blogger/2022/07/08/react-6-hook/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo_blogger/images/avatar.gif">
+      <meta itemprop="name" content="Teisha HSU">
+      <meta itemprop="description" content="前端學習筆記紀錄">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="亭夏 Teisha - 邁向前端">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React(6) Hook - useState、useEffect、useRefs
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-07-08 00:00:00" itemprop="dateCreated datePublished" datetime="2022-07-08T00:00:00+08:00">2022-07-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2023-02-25 13:19:06" itemprop="dateModified" datetime="2023-02-25T13:19:06+08:00">2023-02-25</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo_blogger/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <ul>
+<li>Hook 是 React 16.8 中增加的新功能，在函數中使用 state、react 其他特性。不必在寫 class 就能使用 state 以及其他 React 的功能。</li>
+<li>說明：函式最大的問題是沒有自己的 this，所以無法使用 component 的3個特性(state、props、refs，只有 props 特殊可以用)。也因為沒有 this 沒有生命週期可以用，因此透過 Hook 解決相關問題。</li>
+<li>只要以 use 開頭的函式代表是個 Hook，(注意： use 開頭的函式不可以放在判斷式內)</li>
+<li>只能在 React Function 中呼叫 Hook。 class component 是不能用的。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// Class-based Component</span><br><span class="line">class App extends React.component &#123;</span><br><span class="line">  render () &#123; return &lt;/&gt; &#125;</span><br><span class="line">&#125;</span><br><span class="line">// Function Component</span><br><span class="line">function App () &#123;</span><br><span class="line">  return ()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<span id="more"></span>
+<hr>
+<h3 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h3><p>useState 會回傳包含兩個值的 array，第一個值是 state、第二個值是用來更新 state 的函式，每當 state 值改變，就會觸發 re-render。</p>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><ul>
+<li><p>結構：<br>[number, setNumber] 解構賦值。<br>number 變數名稱，setNumber 一個改變 number 的方法。initValue 初始化的值</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定義</span></span><br><span class="line"><span class="keyword">const</span> [number, setNumber] = useState(initValue)</span><br></pre></td></tr></table></figure></li>
+<li><p>使用方式2種</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用A：直接放值</span></span><br><span class="line">setNumber(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用B：可以放函式</span></span><br><span class="line">setNumber(<span class="function">(<span class="params">number</span>) =&gt;</span> &#123;<span class="keyword">return</span> number+<span class="number">1</span>&#125;)</span><br><span class="line"><span class="comment">// 簡寫</span></span><br><span class="line">setNumber(<span class="function"><span class="params">number</span> =&gt;</span> number+<span class="number">1</span>)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="3個步驟建立-useState"><a href="#3個步驟建立-useState" class="headerlink" title="3個步驟建立 useState"></a>3個步驟建立 useState</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">const &#123; useState &#125; = React; // 1. 從 React 物件中取出 useState 方法。解構方式比較多人用。</span><br><span class="line">// React.useState();  也可以使用這方式取出 React 物件的方法。</span><br><span class="line"></span><br><span class="line">const Content = (</span><br><span class="line">  // let math = 0; 原本是這樣寫改成下行</span><br><span class="line">  const [math, setMath] = useState(0); // 2. [想要監控的資料變數, 修改資料變數的方法] = useState(預設值)</span><br><span class="line"></span><br><span class="line">  return(</span><br><span class="line">    &lt;div </span><br><span class="line">      onClick=&#123;() =&gt; &#123;</span><br><span class="line">        // math = math + 1; 原本是這樣寫改成下行的方式</span><br><span class="line">        setMath(math + 1);</span><br><span class="line">      &#125;</span><br><span class="line">    &gt;</span><br><span class="line">      &#123;&#123;text&#125;&#125;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">    &#123;/* 只要 React 有更新畫面，JSX執行 */&#125;</span><br><span class="line">    &#123;console.log(&#x27;render&#x27;)&#125;</span><br><span class="line">  );</span><br><span class="line">);</span><br><span class="line">ReactDOM.render(Content, document.getElementById(&#x27;root&#x27;));</span><br></pre></td></tr></table></figure>
+<p>透過 useState 監控一個資料(上面的 math)，透過 setMath 改變 math 數值時畫面會重新刷出來。<br>預設值可以放字串、數值、物件。<br>使用 useState 時會回傳一個陣列，為了方便使用物件的解構賦值 [math, setMath]，變數名稱都可以自己取，第二個通常以 set 開頭(因為負責修改第一個變數)。<br>更換時只會更換改變的部分(diff 運算)，不會整個 DOM 換掉，能讓網頁效能提升。</p>
+<p>useState 在使用 CDN 時是用 const { useState } = React; 使用這功能。<br>在 cli 中是使用  import React, { useState } from ‘react’;</p>
+<hr>
+<h3 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a>useEffect</h3><ul>
+<li><p>使用情況：某種情況下執行 function。(ex:抓遠端資料、更新 state 值)<br>監聽，相當於3個生命週期：創建 componentDidMount、更新 componentDidUpdate、卸載 componentWillUnmount。<br>(可以搭配舊的生命週期了解)</p>
+</li>
+<li><p>接收兩個參數：<br>第一個箭頭函式，定義 componentDidMount 或 componentDidUpdate 要做什麼事。<br>第二個是一個 array，定義哪些變數被改變時，觸發 useEffect 第一個函式內容。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">    // 第一個是函式  </span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">&#125;, [// 第二個是 array，哪些變數被改變時觸發 useEffect 第一個函式內容 ]); </span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="使用狀況"><a href="#使用狀況" class="headerlink" title="使用狀況"></a>使用狀況</h4><p>第二個參數的差別寫法</p>
+<ol>
+<li><p>after every render：每次畫面 render 都會跑一次</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">  // Runs after EVERY rendering</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p>once：在初始 render 後執行一次 (before rendering 執行辦不太到)<br>空陣列.相當於 componentDidMount。<br><a target="_blank" rel="noopener" href="https://daveceddia.com/react-hook-after-render/">React Hook to Run Code After Render</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">  // Runs ONCE after initial rendering</span><br><span class="line">&#125;,[])</span><br></pre></td></tr></table></figure></li>
+<li><p>state/props change：變數改變時觸發 function</p>
+<ul>
+<li><p>on state change：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const [state, setState] = useState()</span><br><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">  // Run here when state change</span><br><span class="line">&#125;,[state])</span><br></pre></td></tr></table></figure></li>
+<li><p>on props change：外部傳進來的值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function Demo(somProps)&#123;</span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    // Runs here when props change</span><br><span class="line">  &#125;,[somProps])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>也可以同時偵測多個：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const [state, setState] = useState()</span><br><span class="line">const [count, setCount] = useState()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">useEffect(()=&gt;&#123;</span><br><span class="line">  console.log(&#x27;@&#x27;)</span><br><span class="line">&#125;,[state, count])   // 同時偵測多個</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<ol start="4">
+<li>on unmount：卸載<br>透過返回一個函式來清除，像生命週期的 componentWillUnmount<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">  return () =&gt; &#123; // 組件卸載前執行</span><br><span class="line">    // ex: 清除定時器、取消訂閱...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,[state])</span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<h3 id="useRefs"><a href="#useRefs" class="headerlink" title="useRefs"></a>useRefs</h3><h4 id="特色"><a href="#特色" class="headerlink" title="特色"></a>特色</h4><ol>
+<li><p>不會觸發 re-render 的狀態下：<br>更新值，可以讓我們抓取、控制 DOM 節點的 hook。<br>(類似 id 用法，可以參考 <a href="/hexo_blogger/2022/07/04/react-2-屬性/#refs" target="_black">第二篇的 refs 區塊</a> 由這概念演變)</p>
+</li>
+<li><p>current 屬性：<br>useRef 只回傳一個帶有 current 屬性的 Object，current 傳入的參數為初始值（<code>initialValue</code>）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const test1 = useRef();  // 空的話通常是給 null</span><br><span class="line">// test1 = &#123; current: undefined &#125;</span><br><span class="line"></span><br><span class="line">const test2 = useRef(&#123;aaa: &#x27;111&#x27;, bbb: &#x27;222&#x27;&#125;);  </span><br><span class="line">// test2 = &#123; current: &#123;aaa: &#x27;111&#x27;, bbb: &#x27;222&#x27;&#125; &#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="使用情景"><a href="#使用情景" class="headerlink" title="使用情景"></a>使用情景</h4><p>通常不影響畫面顯示才會使用 useRef 控制 DOM。</p>
+<ul>
+<li><p>計算 render 幾次</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const Demo = () =&gt; &#123;</span><br><span class="line">  const count = useRef(0);  // &#123; current: 0 &#125;</span><br><span class="line">  </span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    count.current += 1;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  return &lt;p&gt;count.current&lt;/p&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>類似 id 用法，使用在 input 搜尋的即時性</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useRef &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> UseRefExample = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> inputRef = useRef(<span class="literal">null</span>); <span class="comment">// 1.定義</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> handleClick = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    inputRef.current.focus();  <span class="comment">// 3.使用會有 current 屬性</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">ref</span>=<span class="string">&#123;inputRef&#125;</span> /&gt;</span>  // 2.連結到的DOM</span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleClick&#125;</span>&gt;</span>click me<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>抓 Previous 的值<br>function component 透過 render 更新頁面，如果要知道上一次 state 的值，需使用 useRef 因為 current 值改變不會觸發 re-render。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const Demo = () =&gt; &#123;</span><br><span class="line">  const preCount = useRef(0); </span><br><span class="line">  </span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    preCount.current = num; //這2邊搭配</span><br><span class="line">  &#125;, [num]) //這2邊搭配</span><br><span class="line"></span><br><span class="line">  return &lt;p&gt;Previous count is &#123;num.current&#125;&lt;/p&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h3 id="useState、useRefs-比較"><a href="#useState、useRefs-比較" class="headerlink" title="useState、useRefs 比較"></a>useState、useRefs 比較</h3><ul>
+<li>相同：都是用來保存值 keep value，render 時值會被保留不會被初始化。</li>
+<li>比較 <table width="100%" style="table-layout:fixed">
+<thead>
+  <tr>
+    <th width="40px"></th>
+    <th>useState</th>
+    <th>useRefs</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>程式</td>
+    <td>
+      <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const [count, setCount] = useState(0); //寫法</span><br><span class="line">console.log(count);  // 顯示： 0</span><br></pre></td></tr></table></figure>
+    </td>
+    <td>
+      <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const count = useRef(0);  //寫法</span><br><span class="line">console.log(count);  // 顯示：  &#123; current: 0 &#125;</span><br></pre></td></tr></table></figure>
+    </td>
+  </tr>
+  <tr>
+    <td>差異</td>
+    <td>
+      1. useState 回傳一個 array，裡面有2個變數。<br>
+      &nbsp;&nbsp;&nbsp;(第一個-值 state、第二個-<span style="color:red">函式</span>用來更新 state ) <br>
+      2. 每當第一個值改變就會觸發 re-render
+    </td>
+    <td>
+      1. useRef 只回傳一個值，這值是一個有 current 屬性的 Object<br>
+      2. 更新 current 值時<span style="color:red">不會觸發 re-render</span>
+    </td>
+  </tr>
+</tbody>
+</table></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/hexo_blogger/tags/React/" rel="tag"># React</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2022/07/07/react-5-%E5%87%BD%E5%BC%8F%E7%B5%84%E4%BB%B6/" rel="prev" title="React(5) Function Component 函式組件">
+                  <i class="fa fa-chevron-left"></i> React(5) Function Component 函式組件
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2022/07/09/react-7-cli/" rel="next" title="React(7) 使用 cli 建立專案">
+                  React(7) 使用 cli 建立專案 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Teisha HSU</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/hexo_blogger/js/comments.js"></script><script src="/hexo_blogger/js/utils.js"></script><script src="/hexo_blogger/js/motion.js"></script><script src="/hexo_blogger/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

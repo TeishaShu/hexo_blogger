@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo_blogger/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo_blogger/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo_blogger/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/hexo_blogger/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/hexo_blogger/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"teishashu.github.io","root":"/hexo_blogger/","images":"/hexo_blogger/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/hexo_blogger/js/config.js"></script>
+<meta name="description" content="介紹Vue 進階的框架.解決 Vue 開發上的問題把一些設定都已經做好.解決一些繁瑣、需要手刻的部分.使開發更輕鬆完成、上線、穩定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nuxt.js">
+<meta property="og:url" content="https://teishashu.github.io/hexo_blogger/2020/09/11/nuxt/index.html">
+<meta property="og:site_name" content="亭夏 Teisha - 邁向前端">
+<meta property="og:description" content="介紹Vue 進階的框架.解決 Vue 開發上的問題把一些設定都已經做好.解決一些繁瑣、需要手刻的部分.使開發更輕鬆完成、上線、穩定">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-09-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-02-25T05:19:05.291Z">
+<meta property="article:author" content="Teisha HSU">
+<meta property="article:tag" content="Nuxt">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://teishashu.github.io/hexo_blogger/2020/09/11/nuxt/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://teishashu.github.io/hexo_blogger/2020/09/11/nuxt/","path":"2020/09/11/nuxt/","title":"Nuxt.js"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Nuxt.js | 亭夏 Teisha - 邁向前端</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/hexo_blogger/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo_blogger/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">亭夏 Teisha - 邁向前端</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/hexo_blogger/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li>
+        <li class="menu-item menu-item-about"><a href="/hexo_blogger/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li>
+        <li class="menu-item menu-item-tags"><a href="/hexo_blogger/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+        <li class="menu-item menu-item-categories"><a href="/hexo_blogger/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li>
+        <li class="menu-item menu-item-archives"><a href="/hexo_blogger/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.</span> <span class="nav-text">介紹</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%A8%AE%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">3 種使用方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Server-Side-Rendered"><span class="nav-number">1.1.1.</span> <span class="nav-text">Server Side Rendered</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Statically-Generated-%E9%9D%9C%E6%85%8B%E7%94%A2%E7%94%9F"><span class="nav-number">1.1.2.</span> <span class="nav-text">Statically Generated 靜態產生</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Single-Page-Application-SPA"><span class="nav-number">1.1.3.</span> <span class="nav-text">Single Page Application (SPA)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D"><span class="nav-number">2.</span> <span class="nav-text">安裝</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#A-%E9%9B%BB%E8%85%A6%E7%92%B0%E5%A2%83%E5%AE%89%E8%A3%9D%E5%A5%BD-node-js"><span class="nav-number">2.1.</span> <span class="nav-text">A. 電腦環境安裝好 node.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-%E5%AE%89%E8%A3%9D-nuxt-%E5%B0%88%E6%A1%88"><span class="nav-number">2.2.</span> <span class="nav-text">B. 安裝 nuxt 專案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-%E5%AE%89%E8%A3%9D%E5%A5%97%E4%BB%B6"><span class="nav-number">2.3.</span> <span class="nav-text">C. 安裝套件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#D-%E5%95%9F%E5%8B%95%E5%B0%88%E6%A1%88"><span class="nav-number">2.4.</span> <span class="nav-text">D. 啟動專案</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B3%87%E6%96%99%E5%A4%BE%E6%9E%B6%E6%A7%8B-Directory-Structure"><span class="nav-number">3.</span> <span class="nav-text">資料夾架構 Directory Structure</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E6%96%B0%E9%A0%81%E9%9D%A2"><span class="nav-number">3.1.</span> <span class="nav-text">增加新頁面</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E7%B6%B2%E9%A0%81%E8%AA%BF%E6%95%B4%E6%88%90-nuxt"><span class="nav-number">4.</span> <span class="nav-text">一般網頁調整成 nuxt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pages-%E6%AA%94%E6%A1%88%E4%BF%AE%E6%94%B9"><span class="nav-number">5.</span> <span class="nav-text">pages 檔案修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B-nuxt-%E7%9A%84%E4%B8%BB%E6%A8%A1%E6%9D%BF"><span class="nav-number">6.</span> <span class="nav-text">建立 nuxt 的主模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%AD%A3-main-js-%E7%9A%84-bug"><span class="nav-number">7.</span> <span class="nav-text">修正 main.js 的 bug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B1%E7%94%A8%E5%9C%B0%E6%96%B9%E8%AE%8A%E6%88%90-component"><span class="nav-number">8.</span> <span class="nav-text">共用地方變成 component</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nuxt-link-%E8%B6%85%E9%80%A3%E7%B5%90"><span class="nav-number">9.</span> <span class="nav-text">nuxt-link 超連結</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-scss-%E6%94%B9%E5%8E%9F%E6%9C%AC%E7%9A%84%E6%A8%A3%E5%BC%8F"><span class="nav-number">10.</span> <span class="nav-text">使用 scss 改原本的樣式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nuxt-%E9%A0%81%E9%9D%A2%E9%81%8E%E6%B8%A1-vue-transition"><span class="nav-number">11.</span> <span class="nav-text">nuxt 頁面過渡 (vue transition)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E5%82%B3%E5%89%8D%E4%BF%AE%E6%94%B9%E8%A8%AD%E5%AE%9A%E6%AA%94"><span class="nav-number">12.</span> <span class="nav-text">上傳前修改設定檔</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BC%E5%B8%83%E5%89%8D"><span class="nav-number">13.</span> <span class="nav-text">發布前</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E4%B8%8A%E5%82%B3%E5%88%B0%E9%81%A0%E7%AB%AF"><span class="nav-number"></span> <span class="nav-text">在上傳到遠端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%B7%B1%E7%9A%84%E4%B8%BB%E9%A1%8C-Server-side-render"><span class="nav-number">1.</span> <span class="nav-text">更深的主題 Server side render</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Teisha HSU</p>
+  <div class="site-description" itemprop="description">前端學習筆記紀錄</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/hexo_blogger/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/hexo_blogger/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/hexo_blogger/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:colorfulspirit@gmail.com" title="E-Mail → mailto:colorfulspirit@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://teishashu.github.io/hexo_blogger/2020/09/11/nuxt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo_blogger/images/avatar.gif">
+      <meta itemprop="name" content="Teisha HSU">
+      <meta itemprop="description" content="前端學習筆記紀錄">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="亭夏 Teisha - 邁向前端">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Nuxt.js
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2020-09-11 00:00:00" itemprop="dateCreated datePublished" datetime="2020-09-11T00:00:00+08:00">2020-09-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2023-02-25 13:19:05" itemprop="dateModified" datetime="2023-02-25T13:19:05+08:00">2023-02-25</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo_blogger/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h3><p>Vue 進階的框架.解決 Vue 開發上的問題<br>把一些設定都已經做好.解決一些繁瑣、需要手刻的部分.使開發更輕鬆<br>完成、上線、穩定</p>
+<span id="more"></span>
+
+<h4 id="3-種使用方式"><a href="#3-種使用方式" class="headerlink" title="3 種使用方式"></a>3 種使用方式</h4><p>下面 3 種整合在這工具裡面.<br>原本 SSR 要自己寫. render 靠其他工具. spa 要靠 vue cli .但是 nuxt 整合在一起<br>特色:</p>
+<ul>
+<li>自動 code 分割<br>不會全部一個 js 檔.這樣載第一個畫面時跑比較久</li>
+<li>Server Side Rendered<br>提供 seo</li>
+</ul>
+<h5 id="Server-Side-Rendered"><a href="#Server-Side-Rendered" class="headerlink" title="Server Side Rendered"></a>Server Side Rendered</h5><p>做 spa 單頁式網站最大的問題是 seo 比較難處理.<br>vue 有提供 ssr 解決方案.但是 nuxt 處理起來會比較輕鬆。<br>前端會碰到 node.js、server 這塊。<br>在網頁原始碼裡面會真的看到文字、網頁內容<br>可是用 vue cli 可能會出現</p>
+<p>這邊是網頁一開始進來的頁面( google 爬蟲只會爬一次)<br>如果有切換頁面是 Client Side Rendered</p>
+<h5 id="Statically-Generated-靜態產生"><a href="#Statically-Generated-靜態產生" class="headerlink" title="Statically Generated 靜態產生"></a>Statically Generated 靜態產生</h5><p>原本是打 API 產生在頁面上.現在可以把內容形成一個靜態網頁。很適合弄好丟到一個普通空間ex:github<br>靜態檔: 頁面永遠長那樣.畫面不會一直因為 API 一直變動</p>
+<h5 id="Single-Page-Application-SPA"><a href="#Single-Page-Application-SPA" class="headerlink" title="Single Page Application (SPA)"></a>Single Page Application (SPA)</h5><p>沒有ssr 原本的 vue，如果只做這個可以直接用 vue cli</p>
+<hr>
+<h3 id="安裝"><a href="#安裝" class="headerlink" title="安裝"></a>安裝</h3><h4 id="A-電腦環境安裝好-node-js"><a href="#A-電腦環境安裝好-node-js" class="headerlink" title="A. 電腦環境安裝好 node.js"></a>A. 電腦環境安裝好 node.js</h4><h4 id="B-安裝-nuxt-專案"><a href="#B-安裝-nuxt-專案" class="headerlink" title="B. 安裝 nuxt 專案"></a>B. 安裝 nuxt 專案</h4><ol>
+<li><p>建立專案<br>用 npx 比較方便</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx create-nuxt-app &lt;project-name&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>安裝時需要設定<br>會詢問很多項目，確認按 Enter</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">Q: Project name: (nuxtText)</span><br><span class="line">A: Enter</span><br><span class="line"></span><br><span class="line">Q: Programming language: (Use arrow keys)</span><br><span class="line">A: JavaScript</span><br><span class="line"></span><br><span class="line">Q: Package manager: (Use arrow keys)</span><br><span class="line">A: Npm</span><br><span class="line"></span><br><span class="line">Q: UI framework: (Use arrow keys)</span><br><span class="line">A: 看自己有沒有用 UI 框架，或是選 None 之後自己裝</span><br><span class="line"></span><br><span class="line">Q: Nuxt.js modules:</span><br><span class="line">A: 選第一個 Axios</span><br><span class="line"></span><br><span class="line">Q: Linting tools: </span><br><span class="line">A: ESLint </span><br><span class="line"></span><br><span class="line">Q: Testing framework:</span><br><span class="line">A: None</span><br><span class="line"></span><br><span class="line">Q: Rendering mode: (Use arrow keys)</span><br><span class="line">A: 看自己專案是屬於要哪一個</span><br><span class="line"></span><br><span class="line">Q: Deployment target: //部屬目標</span><br><span class="line">A: Server (Node.js hosting) 有伺服器、Static (Static/JAMStack hosting) 靜態網站</span><br><span class="line"></span><br><span class="line">Q: Development tools:</span><br><span class="line">A: jsconfig.json (Recommended for VS Code if you&#x27;re not using typescript)</span><br><span class="line"></span><br><span class="line">Q: What is your GitHub username? (Name)</span><br><span class="line">A: Enter</span><br><span class="line"></span><br><span class="line">Q: Version control system: (Use arrow keys)</span><br><span class="line">A: Git</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="C-安裝套件"><a href="#C-安裝套件" class="headerlink" title="C. 安裝套件"></a>C. 安裝套件</h4><ul>
+<li>scss 套件 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install node-sass sass-loader</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="D-啟動專案"><a href="#D-啟動專案" class="headerlink" title="D. 啟動專案"></a>D. 啟動專案</h4><p>執行後會在終端機出現本地端伺服器 ex: <a target="_blank" rel="noopener" href="http://localhost:8000/">http://localhost:8000/</a> 之類的，點開出現 nuxt logo 的畫面。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="資料夾架構-Directory-Structure"><a href="#資料夾架構-Directory-Structure" class="headerlink" title="資料夾架構 Directory Structure"></a>資料夾架構 Directory Structure</h3><p>了解 images、css、sass、webfonts、js 放哪裡。</p>
+<ul>
+<li>assets (會被打包)<br>用到的支援檔.在這邊會壓縮、轉譯<br>(圖片、css、sass、webfonts)</li>
+<li>components<br>模組.寫的 vue 檔</li>
+<li>layouts<br>排版.版型定位</li>
+<li>pages<br>每頁 router 要進的頁面(ex:首頁、產品頁…)<br>透過資料夾結構來呈現router</li>
+</ul>
+<h4 id="增加新頁面"><a href="#增加新頁面" class="headerlink" title="增加新頁面"></a>增加新頁面</h4><ul>
+<li><p>在 pages 裡面新增一個 generic.vue 檔</p>
+</li>
+<li><p>內容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;123&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>在網址上增加 <code>/generic</code> 看是否可以換過去<br>成功就修改內容</p>
+</li>
+</ul>
+<p>在 pages 資料夾中新增檔案優點是可以直接變成有 router</p>
+<ul>
+<li>plugins<br>別人寫的組件 ex: axios、tweenmax…</li>
+<li>static (不會被打包)<br>靜態檔 ex:css、圖片不要壓縮的(ico)、js</li>
+<li>server<br>app.use(nuxt.render) 把 component 跑成網頁給使用者看.優點是只要寫一份前端程式就可以解決.不用寫2份程式<br>用 php 困難的地方在怎麼把前端 vue component 轉譯成真的畫面<br>進入點是 server/index.js</li>
+</ul>
+<h3 id="一般網頁調整成-nuxt"><a href="#一般網頁調整成-nuxt" class="headerlink" title="一般網頁調整成 nuxt"></a>一般網頁調整成 nuxt</h3><ol>
+<li>移動<br>assets 資料夾: img、css、font<br>static 資料夾: ico、js</li>
+<li>引入上面檔案(link、script)<br>nuxt.config.js 是一個 js 的物件導出</li>
+</ol>
+<p>引入 js</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//原本在 html 中</span><br><span class="line">&lt;script src=&quot;assets/js/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">//更改在 nuxt.config.js</span><br><span class="line">head:&#123;</span><br><span class="line">  script:[</span><br><span class="line">    &#123;src: &quot;/js/jquery.min.js&quot;, body:true&#125;,</span><br><span class="line">    &#123;src: &quot;/js/browser.min.js&quot;, body:true&#125;,</span><br><span class="line">    &#123;src: &quot;/js/breakpoints.min.js&quot;, body:true&#125;,</span><br><span class="line">    &#123;src: &quot;/js/util.js&quot;, body:true&#125;,</span><br><span class="line">    &#123;src: &quot;/js/main.js&quot;, body:true&#125;,</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>引入 css</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/* Global CSS */</span><br><span class="line"> css: [</span><br><span class="line">   &quot;~/assets/css/main.css&quot;</span><br><span class="line"> ],</span><br></pre></td></tr></table></figure>
+<p><b>蚯蚓符號是 nuxt 代表根目錄</b><br>注意檔案路徑.有些會不太一樣要確認( main.scss 裡面)<br>改網站內的連結路徑.記得用 ~ 開頭</p>
+<h3 id="pages-檔案修改"><a href="#pages-檔案修改" class="headerlink" title="pages 檔案修改"></a>pages 檔案修改</h3><p>首頁資料移過去</p>
+<h3 id="建立-nuxt-的主模板"><a href="#建立-nuxt-的主模板" class="headerlink" title="建立 nuxt 的主模板"></a>建立 nuxt 的主模板</h3><p>模板上 body 標籤上有元素</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;body class=&quot;is-preload&quot;&gt;...&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+
+<p>nuxt 無法直接執行 body 上的元素<br>因此在資料夾一進來的地方建一個模板 index.html  (vue 中是在 public)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html &#123;&#123; HTML_ATTRS &#125;&#125;&gt;</span><br><span class="line">	&lt;head &#123;&#123; HEAD_ATTRS&#125;&#125;&gt;</span><br><span class="line">		&#123;&#123; HEAD &#125;&#125;</span><br><span class="line">	&lt;/head&gt;</span><br><span class="line">	&lt;body class=&quot;is-preload&quot; &#123;&#123; BODY_ATTRS &#125;&#125;&gt;</span><br><span class="line">    &#123;&#123; APP &#125;&#125;</span><br><span class="line">	&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在重啟一次 npm run dev</p>
+<hr>
+<h3 id="修正-main-js-的-bug"><a href="#修正-main-js-的-bug" class="headerlink" title="修正 main.js 的 bug"></a>修正 main.js 的 bug</h3><p>頁面中 menu 的部分還是跑版<br>在查看上面載入的 js 中發現 main.js 的 menu 地方跟 nuxt 衝突<br>(main.js 是原本版型的運作原理)<br>需要使用生命週期更改</p>
+<p>先在 layouts/default.vue 的 template 下面<br>使用下面這段</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">export default&#123;</span><br><span class="line">  mounted()&#123;</span><br><span class="line">    var $window = $(window),</span><br><span class="line">      $body = $(&#x27;body&#x27;);</span><br><span class="line">      //copy main.js 的 menu 內容</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>在把 main.js 中 menu 程式的部分移到上面程式的註解下方的位置</p>
+<p>重整網頁就可以顯示<br>主要是調整程式跑的前後順序<br>一開始的 main.js 先執行了.可是 el 還沒上去因此這段無法顯示.後來放到 mounted 裡面就抓的到</p>
+<h3 id="共用地方變成-component"><a href="#共用地方變成-component" class="headerlink" title="共用地方變成 component"></a>共用地方變成 component</h3><p>在資料夾 components 中新增.檔案名習慣大寫開頭<br>之後引入到需要的頁面</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import Header from &quot;~/components/Header.vue&quot;;</span><br><span class="line">export default &#123;</span><br><span class="line">  components: &#123;</span><br><span class="line">    Header,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>頁面使用的地方放上標籤 <code>&lt;Header/&gt;</code></p>
+<h3 id="nuxt-link-超連結"><a href="#nuxt-link-超連結" class="headerlink" title="nuxt-link 超連結"></a>nuxt-link 超連結</h3><p>換頁不會重整</p>
+<p>傳統作法使用 <code>&lt;a href=&quot;/generic&quot;&gt;</code> 會跳頁<br>變成使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;nuxt-link to=&quot;/generic&quot; class=&quot;link-style&quot;&gt;...</span><br><span class="line">&lt;/nuxt-link&gt;</span><br></pre></td></tr></table></figure>
+
+<p>改好 menu 頁面時發現切換時網頁的ico位置會重新跑<br>這是 menu 原本程式寫法需要修改.移除下面程式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">window.setTimeout(function() &#123;</span><br><span class="line">  window.location.href = href;</span><br><span class="line">&#125;, 350);</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用-scss-改原本的樣式"><a href="#使用-scss-改原本的樣式" class="headerlink" title="使用 scss 改原本的樣式"></a>使用 scss 改原本的樣式</h3><p>在當個頁面使用下面這語法</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;style lang=&quot;scss&quot; scoped&gt;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="nuxt-頁面過渡-vue-transition"><a href="#nuxt-頁面過渡-vue-transition" class="headerlink" title="nuxt 頁面過渡 (vue transition)"></a>nuxt 頁面過渡 (vue transition)</h3><p>在 assets/sass/main.scss 中增加</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.page-enter-active,</span><br><span class="line">.page-leave-active&#123;</span><br><span class="line">  transition: opacity 0.27s;</span><br><span class="line">&#125;</span><br><span class="line">.page-enter,</span><br><span class="line">.page-leave-active&#123;</span><br><span class="line">  opacity: 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>移除 assets/sass/layout/_menu.scss 檔案中的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#wrapper &#123;</span><br><span class="line">  @include vendor(&#x27;transition&#x27;, &#x27;opacity #&#123;_duration(menu)&#125; ease&#x27;);</span><br><span class="line">  opacity: 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="上傳前修改設定檔"><a href="#上傳前修改設定檔" class="headerlink" title="上傳前修改設定檔"></a>上傳前修改設定檔</h3><p>到 nuxt.config.js 新增 router 的設定<br>並修改 head 中 script 的路徑]</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">router: &#123;</span><br><span class="line">  base: &#x27;/repository名稱/&#x27;</span><br><span class="line">&#125;,</span><br><span class="line">head: &#123;</span><br><span class="line">  link: [</span><br><span class="line">    &#123; rel: &#x27;icon&#x27;, type: &#x27;image/x-icon&#x27;, href: &#x27;/repository名稱/favicon.ico&#x27; &#125;,</span><br><span class="line">  ],</span><br><span class="line">  script:[</span><br><span class="line">    &#123;src: &quot;/repository名稱/js/jquery.min.js&quot;, body:true&#125;,</span><br><span class="line">    &#123;src: &quot;/repository名稱/js/browser.min.js&quot;, body:true&#125;,</span><br><span class="line">    &#123;src: &quot;/repository名稱/js/breakpoints.min.js&quot;, body:true&#125;,</span><br><span class="line">    &#123;src: &quot;/repository名稱/js/util.js&quot;, body:true&#125;,</span><br><span class="line">    &#123;src: &quot;/repository名稱/js/main.js&quot;, body:true&#125;,</span><br><span class="line">  ]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="發布前"><a href="#發布前" class="headerlink" title="發布前"></a>發布前</h3><p>建置打包優化處理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br></pre></td></tr></table></figure>
+
+<p>產生靜態檔案.產生一個 dist 檔站</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run generate</span><br></pre></td></tr></table></figure>
+
+<h2 id="在上傳到遠端"><a href="#在上傳到遠端" class="headerlink" title="在上傳到遠端"></a>在上傳到遠端</h2><h3 id="更深的主題-Server-side-render"><a href="#更深的主題-Server-side-render" class="headerlink" title="更深的主題 Server side render"></a>更深的主題 Server side render</h3><p>spa 網站最大的問題是 SEO，搜尋引擎比較難抓 vue render 出來的資料，所以使用 nuxt 通常是做 SSR 應用<br>就不會用 vue cli</p>
+<p>用 spa 網頁文字是透過 vue 組建產生.所以搜尋引擎爬不到文字<br>所以 nuxt 最強是做 SSR 應用</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/hexo_blogger/tags/Nuxt/" rel="tag"># Nuxt</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2020/09/10/eslint/" rel="prev" title="ESLint 操作筆記">
+                  <i class="fa fa-chevron-left"></i> ESLint 操作筆記
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2021/07/02/%E7%84%A1%E9%9A%9C%E7%A4%99%E7%B6%B2%E7%AB%99-2%E8%A8%AD%E8%A8%88/" rel="next" title="無障礙網站(2) - 網頁設計注意事項">
+                  無障礙網站(2) - 網頁設計注意事項 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Teisha HSU</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/hexo_blogger/js/comments.js"></script><script src="/hexo_blogger/js/utils.js"></script><script src="/hexo_blogger/js/motion.js"></script><script src="/hexo_blogger/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

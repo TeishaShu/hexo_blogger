@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo_blogger/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo_blogger/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo_blogger/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/hexo_blogger/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/hexo_blogger/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"teishashu.github.io","root":"/hexo_blogger/","images":"/hexo_blogger/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/hexo_blogger/js/config.js"></script>
+<meta name="description" content="關於物件的介紹，這次分成 3 篇來統整，之前都是這邊學一點那邊學一點，所以找個時間統整來檢視自己學了多少。重點介紹：  第一篇- JavaScript 中值的分類、物件的使用方式 第二篇- 物件的傳參考特性、深層淺層複製 第三篇- 比較 陣列、JSON">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 物件(1) - 介紹與使用方式">
+<meta property="og:url" content="https://teishashu.github.io/hexo_blogger/2020/08/04/js-1-object1/index.html">
+<meta property="og:site_name" content="亭夏 Teisha - 邁向前端">
+<meta property="og:description" content="關於物件的介紹，這次分成 3 篇來統整，之前都是這邊學一點那邊學一點，所以找個時間統整來檢視自己學了多少。重點介紹：  第一篇- JavaScript 中值的分類、物件的使用方式 第二篇- 物件的傳參考特性、深層淺層複製 第三篇- 比較 陣列、JSON">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-08-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-02-25T05:19:05.261Z">
+<meta property="article:author" content="Teisha HSU">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://teishashu.github.io/hexo_blogger/2020/08/04/js-1-object1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://teishashu.github.io/hexo_blogger/2020/08/04/js-1-object1/","path":"2020/08/04/js-1-object1/","title":"JavaScript 物件(1) - 介紹與使用方式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JavaScript 物件(1) - 介紹與使用方式 | 亭夏 Teisha - 邁向前端</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/hexo_blogger/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo_blogger/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">亭夏 Teisha - 邁向前端</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/hexo_blogger/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li>
+        <li class="menu-item menu-item-about"><a href="/hexo_blogger/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li>
+        <li class="menu-item menu-item-tags"><a href="/hexo_blogger/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+        <li class="menu-item menu-item-categories"><a href="/hexo_blogger/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li>
+        <li class="menu-item menu-item-archives"><a href="/hexo_blogger/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF%E7%89%A9%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">什麼是物件?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E4%BB%B6%E5%BB%BA%E7%AB%8B"><span class="nav-number">2.</span> <span class="nav-text">物件建立</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#A-%E7%89%A9%E4%BB%B6%E5%AF%A6%E5%AD%97-Object-Literals"><span class="nav-number">2.1.</span> <span class="nav-text">A. 物件實字 Object Literals</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-%E7%89%A9%E4%BB%B6%E5%BB%BA%E6%A7%8B%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">B. 物件建構式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">使用方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#A-%E5%8F%96%E5%80%BC"><span class="nav-number">3.1.</span> <span class="nav-text">A. 取值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-%E6%96%B0%E5%A2%9E"><span class="nav-number">3.2.</span> <span class="nav-text">B. 新增</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-%E5%88%AA%E9%99%A4"><span class="nav-number">3.3.</span> <span class="nav-text">C. 刪除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#D-%E6%B3%A8%E6%84%8F"><span class="nav-number">3.4.</span> <span class="nav-text">D. 注意</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Teisha HSU</p>
+  <div class="site-description" itemprop="description">前端學習筆記紀錄</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/hexo_blogger/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/hexo_blogger/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/hexo_blogger/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:colorfulspirit@gmail.com" title="E-Mail → mailto:colorfulspirit@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://teishashu.github.io/hexo_blogger/2020/08/04/js-1-object1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo_blogger/images/avatar.gif">
+      <meta itemprop="name" content="Teisha HSU">
+      <meta itemprop="description" content="前端學習筆記紀錄">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="亭夏 Teisha - 邁向前端">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript 物件(1) - 介紹與使用方式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2020-08-04 00:00:00" itemprop="dateCreated datePublished" datetime="2020-08-04T00:00:00+08:00">2020-08-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2023-02-25 13:19:05" itemprop="dateModified" datetime="2023-02-25T13:19:05+08:00">2023-02-25</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo_blogger/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>關於物件的介紹，這次分成 3 篇來統整，<br>之前都是這邊學一點那邊學一點，所以找個時間統整來檢視自己學了多少。<br>重點介紹：</p>
+<ul>
+<li>第一篇- JavaScript 中值的分類、物件的使用方式</li>
+<li>第二篇- 物件的傳參考特性、深層淺層複製</li>
+<li>第三篇- 比較 陣列、JSON<span id="more"></span></li>
+</ul>
+<h3 id="什麼是物件"><a href="#什麼是物件" class="headerlink" title="什麼是物件?"></a>什麼是物件?</h3><ol>
+<li>值分成 2 大類：</li>
+</ol>
+<ul>
+<li>純值：String (字串)、Number (數字)、Boolean (布林值 true、false)、Null (沒有)、undefined (沒定義) …</li>
+<li>物件型別：Object (物件)、Array (陣列)、Function (函式)</li>
+</ul>
+<ol start="2">
+<li>JavaScript 賦予一個值在變數上，大致分成傳值 Call by value、傳參考 Call by reference。</li>
+</ol>
+<ul>
+<li>純值是傳值 Call by value：直接拷貝</li>
+<li>物件是傳參照(傳參考) Call by reference：傳遞的是隱式的參照，不是像上面純值直接拷貝。在 JavaScript 更精確的名詞是傳共用物呼叫 Call by sharing：傳遞的是共用物件，物件定義出來後共用給不同的變數使用。</li>
+</ul>
+<ol start="3">
+<li>特色：<br>A. 純值無法新增屬性，物件才有屬性。<br>(使用物件時可以搭配 console.dir 來看裡面有什麼屬性可以來操作。)<br>B. 變數無法刪除，屬性可以刪除<br>C. 物件具有傳參考的特性(共用記憶體位置)</li>
+</ol>
+<hr>
+<h3 id="物件建立"><a href="#物件建立" class="headerlink" title="物件建立"></a>物件建立</h3><h4 id="A-物件實字-Object-Literals"><a href="#A-物件實字-Object-Literals" class="headerlink" title="A. 物件實字 Object Literals"></a>A. 物件實字 Object Literals</h4><ul>
+<li>一個變數等於「{}」。</li>
+<li>裡面的內容是「屬性: 值」，<b>屬性代表是「字串」</b>。<br>ex: name、order、haveFinished…<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var orderFood = &#123;</span><br><span class="line">  name: &quot;Teisha&quot;,</span><br><span class="line">  order: &#123;</span><br><span class="line">    drink: &#x27;綠茶&#x27;,</span><br><span class="line">    dessert: &#x27;奶凍&#x27;,</span><br><span class="line">  &#125;</span><br><span class="line">  haveFinished: function() &#123;</span><br><span class="line">    console.log(&#x27;完成可以出餐&#x27;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="B-物件建構式"><a href="#B-物件建構式" class="headerlink" title="B. 物件建構式"></a>B. 物件建構式</h4><ul>
+<li>一個變數等於「new Object()」。</li>
+<li>括號裡可以放物件、數字、字串。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var orderFood = &#123;</span><br><span class="line">  name: &quot;Teisha&quot;,</span><br><span class="line">  order: &#123;</span><br><span class="line">    drink: &#x27;綠茶&#x27;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">var newOrder = new Object(orderFood);</span><br><span class="line">var newOrder = new Object(1);</span><br><span class="line">var newOrder = new Object(&#x27;字串&#x27;);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h3 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h3><h4 id="A-取值"><a href="#A-取值" class="headerlink" title="A. 取值"></a>A. 取值</h4><ol>
+<li>使用「.」點。</li>
+<li>使用「[]」中括號，裡面放變數、字串 (可以使用特殊符號)。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">var orderFood = &#123;</span><br><span class="line">  name: &quot;Teisha&quot;,</span><br><span class="line">  order: &#123;</span><br><span class="line">    drink: &#x27;綠茶&#x27;,</span><br><span class="line">  &#125;,</span><br><span class="line">  1: &#x27;1&#x27;,</span><br><span class="line">  &#x27;$22.3&#x27;: &#x27;22.3&#x27;,</span><br><span class="line">  haveFinished: function() &#123;</span><br><span class="line">    console.log(&#x27;完成可以出餐&#x27;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">var a = &#x27;name&#x27;;</span><br><span class="line"></span><br><span class="line">console.log(orderFood.order.drink); // 點的方式</span><br><span class="line">console.log(orderFood[&#x27;name&#x27;]); // 中括號 + 字串</span><br><span class="line"></span><br><span class="line">console.log(orderFood[a]); // 中括號 + 變數</span><br><span class="line">console.log(orderFood[1]); // 中括號 + 變數</span><br><span class="line">console.log(orderFood.1); // 無法使用，因為屬性是字串，要用中括號</span><br><span class="line">console.log(orderFood[&#x27;$22.3&#x27;]); // 中括號 + 字串</span><br><span class="line"></span><br><span class="line">orderFood.haveFinished() // 完成可以出餐</span><br><span class="line">orderFood[&#x27;haveFinished&#x27;]() // 完成可以出餐</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="B-新增"><a href="#B-新增" class="headerlink" title="B. 新增"></a>B. 新增</h4><p>使用「.」或「[]」來新增屬性。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var orderFood = &#123;</span><br><span class="line">  name: &quot;Teisha&quot;,</span><br><span class="line">  order: &#123;</span><br><span class="line">    drink: &#x27;綠茶&#x27;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//新增</span><br><span class="line">orderFood.addOrder1 = &#x27;咖啡&#x27;;</span><br><span class="line">orderFood[&#x27;@addOrder2&#x27;] = &#x27;鮮奶茶&#x27;; //可以使用特殊符號</span><br><span class="line"></span><br><span class="line">console.log(orderFood); // 查看變化後的樣子</span><br></pre></td></tr></table></figure>
+
+<h4 id="C-刪除"><a href="#C-刪除" class="headerlink" title="C. 刪除"></a>C. 刪除</h4><p>delete 後面接要刪除的東西，也是使用「.」或「[]」。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var orderFood = &#123;</span><br><span class="line">  name: &quot;Teisha&quot;,</span><br><span class="line">  order: &#123;</span><br><span class="line">    drink: &#x27;綠茶&#x27;,</span><br><span class="line">  &#125;,</span><br><span class="line">  1: &#x27;1&#x27;,</span><br><span class="line">  &#x27;$22.3&#x27;: &#x27;22.3&#x27;,</span><br><span class="line">  haveFinished: function() &#123;</span><br><span class="line">    console.log(&#x27;完成可以出餐&#x27;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//刪除</span><br><span class="line">delete orderFood.name;</span><br><span class="line">delete orderFood[&#x27;$22.3&#x27;];</span><br><span class="line"></span><br><span class="line">console.log(orderFood); // 查看變化後的樣子</span><br></pre></td></tr></table></figure>
+
+<h4 id="D-注意"><a href="#D-注意" class="headerlink" title="D. 注意"></a>D. 注意</h4><p><span style="color:red">變數無法被刪除，屬性才可以被刪除。</span></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var a = 1;</span><br><span class="line">b = 1;</span><br><span class="line">console.log(window); // 查看樣子</span><br><span class="line"></span><br><span class="line">//刪除</span><br><span class="line">delete a; // false</span><br><span class="line">delete b; // true</span><br><span class="line">console.log(window); // 查看樣子</span><br><span class="line"></span><br><span class="line">console.log(a); // 1</span><br><span class="line">console.log(b); // b is not defined</span><br></pre></td></tr></table></figure>
+
+<p>說明：<br>在全域中定義變數，window 下會都顯示，<br>可是 a 是變數方式新增，第二行的 b 實際上是 window.b 的屬性方式新增，<br>只有屬性才可以被刪除。</p>
+<hr>
+<p>接下來會在下篇介紹 JavaScript 物件使用上的特性</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/hexo_blogger/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2020/08/04/js-1-object2/" rel="prev" title="JavaScript 物件(2) - 特性與解決特性">
+                  <i class="fa fa-chevron-left"></i> JavaScript 物件(2) - 特性與解決特性
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2020/08/04/js-0-JavaScript%E3%80%8C_%E3%80%8D%E4%BB%80%E9%BA%BC%E6%84%8F%E6%80%9D/" rel="next" title="JavaScript 「_」 什麼意思?">
+                  JavaScript 「_」 什麼意思? <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Teisha HSU</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/hexo_blogger/js/comments.js"></script><script src="/hexo_blogger/js/utils.js"></script><script src="/hexo_blogger/js/motion.js"></script><script src="/hexo_blogger/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

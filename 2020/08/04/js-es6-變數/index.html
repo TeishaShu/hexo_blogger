@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo_blogger/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo_blogger/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo_blogger/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/hexo_blogger/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/hexo_blogger/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"teishashu.github.io","root":"/hexo_blogger/","images":"/hexo_blogger/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/hexo_blogger/js/config.js"></script>
+<meta name="description" content="varES6 之前 JavaScript 沒有區塊域的概念，透過 var 定義所有的變數，導致可能出現區域變數覆蓋全域變數或 for 循環變數洩漏為全域變數，因此在 ES6 推出 let、const 改善這問題。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript 的變數比較 var、let、const">
+<meta property="og:url" content="https://teishashu.github.io/hexo_blogger/2020/08/04/js-es6-%E8%AE%8A%E6%95%B8/index.html">
+<meta property="og:site_name" content="亭夏 Teisha - 邁向前端">
+<meta property="og:description" content="varES6 之前 JavaScript 沒有區塊域的概念，透過 var 定義所有的變數，導致可能出現區域變數覆蓋全域變數或 for 循環變數洩漏為全域變數，因此在 ES6 推出 let、const 改善這問題。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-08-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-02-25T05:19:05.279Z">
+<meta property="article:author" content="Teisha HSU">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="ES6">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://teishashu.github.io/hexo_blogger/2020/08/04/js-es6-%E8%AE%8A%E6%95%B8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://teishashu.github.io/hexo_blogger/2020/08/04/js-es6-%E8%AE%8A%E6%95%B8/","path":"2020/08/04/js-es6-變數/","title":"JavaScript 的變數比較 var、let、const"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JavaScript 的變數比較 var、let、const | 亭夏 Teisha - 邁向前端</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/hexo_blogger/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo_blogger/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">亭夏 Teisha - 邁向前端</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/hexo_blogger/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li>
+        <li class="menu-item menu-item-about"><a href="/hexo_blogger/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li>
+        <li class="menu-item menu-item-tags"><a href="/hexo_blogger/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+        <li class="menu-item menu-item-categories"><a href="/hexo_blogger/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li>
+        <li class="menu-item menu-item-archives"><a href="/hexo_blogger/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#var"><span class="nav-number">1.</span> <span class="nav-text">var</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AFES6"><span class="nav-number">2.</span> <span class="nav-text">什麼是ES6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#let"><span class="nav-number">3.</span> <span class="nav-text">let</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const"><span class="nav-number">4.</span> <span class="nav-text">const</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%94%AF%E8%AE%80%E8%AE%8A%E6%95%B8%E3%80%81%E4%B8%8D%E8%83%BD%E4%BF%AE%E6%94%B9"><span class="nav-number">4.1.</span> <span class="nav-text">唯讀變數、不能修改</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%A9%E4%BB%B6%E3%80%81%E9%99%A3%E5%88%97%E6%9C%89%E5%82%B3%E5%8F%83%E8%80%83%E7%89%B9%E6%80%A7"><span class="nav-number">4.2.</span> <span class="nav-text">物件、陣列有傳參考特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Object-freeze"><span class="nav-number">4.3.</span> <span class="nav-text">Object.freeze()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#let%E3%80%81const-%E7%89%B9%E6%80%A7"><span class="nav-number">5.</span> <span class="nav-text">let、const 特性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#A-%E5%8D%80%E5%A1%8A%E8%AE%8A%E6%95%B8"><span class="nav-number">5.1.</span> <span class="nav-text">A. 區塊變數</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-hoisting-%E5%90%91%E4%B8%8A%E6%8F%90%E5%8D%87-%E5%89%B5%E9%80%A0%E3%80%81%E5%9F%B7%E8%A1%8C%E9%A0%86%E5%BA%8F"><span class="nav-number">5.2.</span> <span class="nav-text">B. hoisting 向上提升(創造、執行順序)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%9D%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">思考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Teisha HSU</p>
+  <div class="site-description" itemprop="description">前端學習筆記紀錄</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/hexo_blogger/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/hexo_blogger/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/hexo_blogger/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:colorfulspirit@gmail.com" title="E-Mail → mailto:colorfulspirit@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://teishashu.github.io/hexo_blogger/2020/08/04/js-es6-%E8%AE%8A%E6%95%B8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo_blogger/images/avatar.gif">
+      <meta itemprop="name" content="Teisha HSU">
+      <meta itemprop="description" content="前端學習筆記紀錄">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="亭夏 Teisha - 邁向前端">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JavaScript 的變數比較 var、let、const
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2020-08-04 00:00:00" itemprop="dateCreated datePublished" datetime="2020-08-04T00:00:00+08:00">2020-08-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2023-02-25 13:19:05" itemprop="dateModified" datetime="2023-02-25T13:19:05+08:00">2023-02-25</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo_blogger/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="var"><a href="#var" class="headerlink" title="var"></a>var</h3><p>ES6 之前 JavaScript 沒有區塊域的概念，透過 var 定義所有的變數，導致可能出現區域變數覆蓋全域變數或 for 循環變數洩漏為全域變數，<br>因此在 ES6 推出 let、const 改善這問題。</p>
+<span id="more"></span>
+<p>另外，如果有不同的開發者變數很有可能互相汙染到 window 裡面物件的內容，<br>所以產生使用 let、const 就不會汙染到全域變數(不會影響到 window)。<br>用 for 迴圈、if 判斷式裡面的 var，也會影響到 window，顯示 i = 某某。</p>
+<div style="background: #e0f4f4; font-size: 0.95rem; padding: 15px; line-height: 1.7rem; color: #10adad; margin-bottom: 20px;">
+全域變數：window 下的變數，整個程式中都可以被存取與修改。<br>
+區域變數：在「{}」這符號內的變數，執行時建立變數，執行完後銷毀 (ex: if、else、for、while)，<br>
+此外 function 函式之外的所有程式碼都不能存取這個變數。
+</div>
+
+<ol>
+<li><p>var 容易汙染全域變數 window 裡面</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 例子1</span><br><span class="line">var a = 1;</span><br><span class="line">console.log(window.a);  // 1</span><br><span class="line"></span><br><span class="line">// 例子2</span><br><span class="line">for(var i = 0; i&lt;10; i++) &#123;</span><br><span class="line">  console.log(i);</span><br><span class="line">&#125;</span><br><span class="line">console.log(i); // undefined 代表有定義還沒賦予值</span><br></pre></td></tr></table></figure></li>
+<li><p>不影響外面變數：使用 function </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function a() &#123;</span><br><span class="line">  var i = 1;</span><br><span class="line">  console.log(i);  // 1</span><br><span class="line">&#125;</span><br><span class="line">a();</span><br><span class="line">console.log(i);  // i is not defined</span><br></pre></td></tr></table></figure></li>
+<li><p>不影響外面變數：用 IIFE 立即函式 <code>(function() &#123;&#125;)()</code> ，或 var 改成 let 。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">for (var i = 0; i &lt; 5; i++) &#123;</span><br><span class="line">  setTimeout(function () &#123;</span><br><span class="line">    console.log(&#x27;這執行第&#x27; + i + &#x27;次&#x27;);</span><br><span class="line">  &#125;, 10);</span><br><span class="line">&#125;</span><br><span class="line">console.log(i); // undefined</span><br><span class="line">// 這執行第10次 (這句會重複跑 5 次)</span><br><span class="line"></span><br><span class="line">for (var i = 0; i &lt; 5; i++) &#123;</span><br><span class="line">  (function (j) &#123;</span><br><span class="line">    setTimeout(function () &#123;</span><br><span class="line">      console.log(&#x27;這執行第&#x27; + j + &#x27;次&#x27;);</span><br><span class="line">    &#125;, 10);</span><br><span class="line">  &#125;)(i);</span><br><span class="line">&#125;</span><br><span class="line">// 這執行第0次、這執行第1次、這執行第2次、這執行第3次、這執行第4次</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="什麼是ES6"><a href="#什麼是ES6" class="headerlink" title="什麼是ES6"></a>什麼是ES6</h3><p>來解決 ES5 不足的部分.提升程式碼品質可以幫助開發時更便利。</p>
+<ul>
+<li>優點: 解決 ES5 不方便的部分，避免汙染全域變數使得維護性較高</li>
+<li>問題: 舊版瀏覽器需要編譯才能用</li>
+</ul>
+<p>相關電子書<br><a target="_blank" rel="noopener" href="https://eyesofkids.gitbooks.io/javascript-start-from-es6">從 ES6 開始的 JavaScript 學習生活</a><br><a target="_blank" rel="noopener" href="https://es6.ruanyifeng.com/">ECMAScript 6 入門</a><br><a target="_blank" rel="noopener" href="https://www.fooish.com/javascript/ES6/">JavaScript ES6 介紹</a></p>
+<hr>
+<h3 id="let"><a href="#let" class="headerlink" title="let"></a>let</h3><ol>
+<li>需要重複定義的變數使用。</li>
+<li>for 的用法</li>
+</ol>
+<p>例子1</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for (let i=0; i&lt;3; i++) &#123;</span><br><span class="line">    console.log(i); // i 分別等於0、1、2</span><br><span class="line">&#125;</span><br><span class="line">console.log(i); // i is not defined</span><br></pre></td></tr></table></figure>
+<p>在 for 中 i 會顯示 0、1、2，<br>但是在外面看 i 會顯示 is not defined 因為在全域中沒有定義這變數</p>
+<p>例子2</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul class=&quot;list&quot;&gt;</span><br><span class="line">  &lt;li&gt;1&lt;/li&gt;</span><br><span class="line">  &lt;li&gt;2&lt;/li&gt;</span><br><span class="line">  &lt;li&gt;3&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  const list = document.querySelectorAll(&#x27;.list li&#x27;);</span><br><span class="line">  for(var i=0; i&lt;list.length; i++) &#123;</span><br><span class="line">    list[i].addEventListener(&#x27;click&#x27;,function()&#123;</span><br><span class="line">      console.log(i+1)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>document.querySelectorAll(‘.list li’) 是一個陣列<br>點所有的數字都會顯示4，因為被全域影響到，查看 console 會發現 i=3<br>想解決只要把 var 變成 let 就可以</p>
+<hr>
+<h3 id="const"><a href="#const" class="headerlink" title="const"></a>const</h3><h4 id="唯讀變數、不能修改"><a href="#唯讀變數、不能修改" class="headerlink" title="唯讀變數、不能修改"></a>唯讀變數、不能修改</h4><p>不會再定義這變數使用 const，可避免同樣變數重複定義 (ex：url的網址)，去修改就會顯示錯誤。</p>
+<p>也因此在過去可以先使用 var 宣告變數 (未賦予值 undefined )，<br>但在 const 宣告時一定要賦予值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var a; // undefined</span><br><span class="line">const b;  // Uncaught SyntaxError: Missing initializer in const declaration</span><br></pre></td></tr></table></figure>
+
+<h4 id="物件、陣列有傳參考特性"><a href="#物件、陣列有傳參考特性" class="headerlink" title="物件、陣列有傳參考特性"></a>物件、陣列有傳參考特性</h4><p>可以修改裡面的值，但是不能重新定義</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const person = &#123;</span><br><span class="line">  name: &quot;aaa&quot;,</span><br><span class="line">  money: 100</span><br><span class="line">&#125;</span><br><span class="line">person.name = &quot;bbb&quot;;   // person ==&gt; &#123;name: &quot;bbb&quot;, money: 100&#125;</span><br><span class="line">person = &#123;&#125;;  // Uncaught TypeError: Assignment to constant variable.</span><br></pre></td></tr></table></figure>
+
+<h4 id="Object-freeze"><a href="#Object-freeze" class="headerlink" title="Object.freeze()"></a>Object.freeze()</h4><p>物件、陣列裡面的值永遠凍結<br>Object.freeze (變數);  被凍結的是裡面的屬性 name、money</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const person = &#123;  </span><br><span class="line">  name: &quot;aaa&quot;,</span><br><span class="line">  money: 100</span><br><span class="line">&#125;</span><br><span class="line">person.name = &quot;bbb&quot;;</span><br><span class="line">Object.freeze(person);</span><br><span class="line">person.money = 500;  // person ==&gt; &#123;name: &quot;bbb&quot;, money: 100&#125;</span><br><span class="line">person = &#123;&#125;;  // person ==&gt; Uncaught TypeError: Assignment to constant variable.</span><br></pre></td></tr></table></figure>
+
+<p>如果使用 var ，物件還是可以被修改，但使用上面 const 就會全部被凍結</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var person = &#123;  // 使用 var</span><br><span class="line">  name: &quot;aaa&quot;,</span><br><span class="line">  money: 100</span><br><span class="line">&#125;</span><br><span class="line">person.name = &quot;bbb&quot;;</span><br><span class="line">Object.freeze(person);</span><br><span class="line">person.money = 500;  // person ==&gt; &#123;name: &quot;bbb&quot;, money: 100&#125;</span><br><span class="line">person = &#123;&#125;;  // person ==&gt; &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="let、const-特性"><a href="#let、const-特性" class="headerlink" title="let、const 特性"></a>let、const 特性</h3><p>為了解決原本使用 var 容易汙染全域變數。<br>維護性比較高，不會互相汙染到變數影響開發者(避免合併時會有衝突)</p>
+<h4 id="A-區塊變數"><a href="#A-區塊變數" class="headerlink" title="A. 區塊變數"></a>A. 區塊變數</h4><p>用來宣告區塊裡的變數，被「{}」花括弧包起來的變數，使用到 let、const 時只會存活在括號裡。<br>盡量使用 const，除非變數要改才用 let。</p>
+<h4 id="B-hoisting-向上提升-創造、執行順序"><a href="#B-hoisting-向上提升-創造、執行順序" class="headerlink" title="B. hoisting 向上提升(創造、執行順序)"></a>B. hoisting 向上提升(創造、執行順序)</h4><p>var 的向上提升的特性使的定義變數前.變數也有 undefined，此外也可同個變數重複命名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// var a; // 下一行出現 undefined 是因為這行隱藏了事先定義變數。</span><br><span class="line">console.log(a); // undefined</span><br><span class="line">var a = 3;</span><br><span class="line">var a = 4;</span><br><span class="line">console.log(a); // 4</span><br></pre></td></tr></table></figure>
+
+<p>let、const 沒有上面的特性<br>1.從哪邊開始寫就是從哪邊開始創建這變數<br>2.不能在同區塊上重複命名<br>3.不會在全域裡出現</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let a = 1;</span><br><span class="line">let a = 2; // Uncaught SyntaxError: Identifier &#x27;a&#x27; has already been declared</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><ul>
+<li><p>Q1: console 是?</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">console.log(a); </span><br><span class="line">let a = 10;</span><br></pre></td></tr></table></figure></li>
+<li><p>Q2: var、let、const 的區別<br>var 函式作用域(可以全域、區塊).可以重複定義.會影響全域變數使的維護不容易、協作變數容易互相影響。<br>let 區塊作用域.無法重複定義.但是變數可以重新賦予值。<br>const 區塊作用域.無法重複定義.宣告時必須給定值，不能再被更改，有效降低出現錯誤的機會。</p>
+</li>
+</ul>
+<p>參考<br><a target="_blank" rel="noopener" href="https://askie.today/differences-among-var-let-const/">在 JavaScript 中，Var、Let、Const 的差異？</a><br><a target="_blank" rel="noopener" href="https://wcc723.github.io/javascript/2017/12/20/javascript-es6-let-const/">ES6 開始的新生活 let, const</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/hexo_blogger/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/hexo_blogger/tags/ES6/" rel="tag"># ES6</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2020/08/03/select/" rel="prev" title="Select 改樣式 - 用 ul、li 改寫">
+                  <i class="fa fa-chevron-left"></i> Select 改樣式 - 用 ul、li 改寫
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2020/08/04/js-storage%E6%AF%94%E8%BC%83/" rel="next" title="Cookie、LocalStorage、SessionStorage 比較">
+                  Cookie、LocalStorage、SessionStorage 比較 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Teisha HSU</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/hexo_blogger/js/comments.js"></script><script src="/hexo_blogger/js/utils.js"></script><script src="/hexo_blogger/js/motion.js"></script><script src="/hexo_blogger/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

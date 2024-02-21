@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo_blogger/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo_blogger/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo_blogger/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/hexo_blogger/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/hexo_blogger/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"teishashu.github.io","root":"/hexo_blogger/","images":"/hexo_blogger/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/hexo_blogger/js/config.js"></script>
+<meta name="description" content="State目的: 管理資料狀態.資料儲存 (類似 data )。 將 component 頁面中需要放到 VueX 管理的 data 資料放到 state 裡統一控制，修改的 data 換成使用 computed 回傳值。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VueX - 2. State、Mutations、Actions 狀態">
+<meta property="og:url" content="https://teishashu.github.io/hexo_blogger/2020/08/06/vuex-2%E5%B1%AC%E6%80%A7/index.html">
+<meta property="og:site_name" content="亭夏 Teisha - 邁向前端">
+<meta property="og:description" content="State目的: 管理資料狀態.資料儲存 (類似 data )。 將 component 頁面中需要放到 VueX 管理的 data 資料放到 state 裡統一控制，修改的 data 換成使用 computed 回傳值。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-08-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-02-25T05:19:05.279Z">
+<meta property="article:author" content="Teisha HSU">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="VueX">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://teishashu.github.io/hexo_blogger/2020/08/06/vuex-2%E5%B1%AC%E6%80%A7/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://teishashu.github.io/hexo_blogger/2020/08/06/vuex-2%E5%B1%AC%E6%80%A7/","path":"2020/08/06/vuex-2屬性/","title":"VueX - 2. State、Mutations、Actions 狀態"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>VueX - 2. State、Mutations、Actions 狀態 | 亭夏 Teisha - 邁向前端</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/hexo_blogger/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo_blogger/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">亭夏 Teisha - 邁向前端</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/hexo_blogger/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li>
+        <li class="menu-item menu-item-about"><a href="/hexo_blogger/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li>
+        <li class="menu-item menu-item-tags"><a href="/hexo_blogger/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+        <li class="menu-item menu-item-categories"><a href="/hexo_blogger/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li>
+        <li class="menu-item menu-item-archives"><a href="/hexo_blogger/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#State"><span class="nav-number">1.</span> <span class="nav-text">State</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mutations"><span class="nav-number">2.</span> <span class="nav-text">Mutations</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E7%9A%84"><span class="nav-number">2.1.</span> <span class="nav-text">目的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-commit-%E8%A7%B8%E7%99%BC"><span class="nav-number">2.2.</span> <span class="nav-text">使用 commit 觸發</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B6%B2%E9%A0%81%E9%96%8B%E7%99%BC%E8%80%85%E5%B7%A5%E5%85%B7%E4%B8%AD"><span class="nav-number">2.3.</span> <span class="nav-text">網頁開發者工具中</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Actions"><span class="nav-number">3.</span> <span class="nav-text">Actions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E7%9A%84-1"><span class="nav-number">3.1.</span> <span class="nav-text">目的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#context-%E5%B1%AC%E6%80%A7"><span class="nav-number">3.2.</span> <span class="nav-text">context 屬性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-dispatch-%E5%91%BC%E5%8F%AB"><span class="nav-number">3.3.</span> <span class="nav-text">使用 dispatch 呼叫</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mapActions-%E9%87%9D%E5%B0%8D-methods-%E7%B0%A1%E5%8C%96"><span class="nav-number">3.4.</span> <span class="nav-text">mapActions 針對 methods 簡化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tip"><span class="nav-number">4.</span> <span class="nav-text">tip</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Teisha HSU</p>
+  <div class="site-description" itemprop="description">前端學習筆記紀錄</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/hexo_blogger/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/hexo_blogger/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/hexo_blogger/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:colorfulspirit@gmail.com" title="E-Mail → mailto:colorfulspirit@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://teishashu.github.io/hexo_blogger/2020/08/06/vuex-2%E5%B1%AC%E6%80%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo_blogger/images/avatar.gif">
+      <meta itemprop="name" content="Teisha HSU">
+      <meta itemprop="description" content="前端學習筆記紀錄">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="亭夏 Teisha - 邁向前端">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          VueX - 2. State、Mutations、Actions 狀態
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2020-08-06 00:00:00" itemprop="dateCreated datePublished" datetime="2020-08-06T00:00:00+08:00">2020-08-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2023-02-25 13:19:05" itemprop="dateModified" datetime="2023-02-25T13:19:05+08:00">2023-02-25</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo_blogger/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="State"><a href="#State" class="headerlink" title="State"></a>State</h3><p>目的: 管理資料狀態.資料儲存 (類似 data )。</p>
+<p>將 component 頁面中需要放到 VueX 管理的 data 資料放到 state 裡統一控制，<br>修改的 data 換成使用 computed 回傳值。</p>
+<span id="more"></span>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 資料夾 src/store/index.js 中</span><br><span class="line">export default new Vuex.Store(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line">    isLoading:false,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// component 頁面(store前面記得加$)</span><br><span class="line">computed:&#123;</span><br><span class="line">  isLoading()&#123;</span><br><span class="line">    return this.$store.state.isLoading;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="Mutations"><a href="#Mutations" class="headerlink" title="Mutations"></a>Mutations</h3><h4 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h4><p>處理資料 state 的狀態(改變資料內容)。</p>
+<ul>
+<li>改動 state，(這邊改 devtools 也會變)</li>
+<li>執行同步行為</li>
+<li>使用常數(全都大寫名稱來區分.也可以不這樣用)</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mutations: &#123; </span><br><span class="line">  // LOADING 跟 actions 的 updateLoading 提交的名稱有關</span><br><span class="line">  // 第一個填 state，第二個要傳的資料 (payload).太多資料用物件</span><br><span class="line">  LOADING (state, payload) &#123;</span><br><span class="line">    state.isLoading = payload;</span><br><span class="line">  &#125;,</span><br><span class="line">  INCREMENT (state, payload) &#123;</span><br><span class="line">    state.count += payload.amount</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用-commit-觸發"><a href="#使用-commit-觸發" class="headerlink" title="使用 commit 觸發"></a>使用 commit 觸發</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// component 的 methods 中使用</span><br><span class="line">store.commit(&#x27;LOADING&#x27;, true);</span><br><span class="line"></span><br><span class="line">// 物件方式.第二個可以放比較多參數(但如果沒有全放只改要改的值.其他參數會不見出錯)</span><br><span class="line">store.commit(&#x27;INCREMENT&#x27;, &#123;</span><br><span class="line">  amount: 10</span><br><span class="line">&#125;);</span><br><span class="line">store.commit(&#123;</span><br><span class="line">  type: &#x27;INCREMENT&#x27;,</span><br><span class="line">  amount: 10</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// actions 中使用</span><br><span class="line">actions: &#123; </span><br><span class="line">  // LOADING 是 updateLoading 提交的「 Mutation 名稱」</span><br><span class="line">  updateLoading(context,changeStatus)&#123;</span><br><span class="line">    // 改變資料這樣寫</span><br><span class="line">    context.commit(&#x27;LOADING&#x27;,changeStatus);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h4 id="網頁開發者工具中"><a href="#網頁開發者工具中" class="headerlink" title="網頁開發者工具中"></a>網頁開發者工具中</h4><p>只要觸發在 Filter mutations 搜尋的下面會看到觸發的時點和名稱<br>畫面右邊會顯示 state、mutations 的狀況<br>(state、mutations 的資料要同步才正常)</p>
+<hr>
+<h3 id="Actions"><a href="#Actions" class="headerlink" title="Actions"></a>Actions</h3><h4 id="目的-1"><a href="#目的-1" class="headerlink" title="目的"></a>目的</h4><ul>
+<li>操作一些動作(類似 methods )、取得遠端資料(不會改變資料狀態)<br>處理 API (非同步、取得遠端資 ajax )、setTimeout (資料處理是在 mutations )。</li>
+<li>可以串接很多功能( mutations 和其他的 actions )，也可以拿 getters、state 的資料<br>注意資料的順序方向.不要逆向。</li>
+</ul>
+<h4 id="context-屬性"><a href="#context-屬性" class="headerlink" title="context 屬性"></a>context 屬性</h4><ul>
+<li><p>使用範例.第一位是 context 屬性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">actions: &#123; </span><br><span class="line">  updateLoading(context,changeStatus)&#123;</span><br><span class="line">    context.commit(&#x27;LOADING&#x27;,changeStatus);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></li>
+<li><p>context 有下面這些屬性 (** 注意是 context 中有這些)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  state,      // 等同於 `store.state`，若在模版中則為局部狀態</span><br><span class="line">  commit,     // 等同於 `store.commit`</span><br><span class="line">  dispatch,   // 等同於 `store.dispatch`</span><br><span class="line">  getters,    // 等同於 `store.getters`</span><br><span class="line"></span><br><span class="line">  // 下面2個使用 modules 才有</span><br><span class="line">  rootState,  // 等同於 `store.state`，只存在於模版中</span><br><span class="line">  rootGetters // 等同於 `store.getters`，只存在於模版中</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="使用-dispatch-呼叫"><a href="#使用-dispatch-呼叫" class="headerlink" title="使用 dispatch 呼叫"></a>使用 dispatch 呼叫</h4><ul>
+<li><p>在 component 的 methods 中使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">this.$store.dispatch(&#x27;名稱&#x27;,true);</span><br></pre></td></tr></table></figure></li>
+<li><p>在 actions 中使用其他的 function<br>使用 context 下的 dispatch</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">context.dispatch(&#x27;名稱&#x27;)</span><br><span class="line"></span><br><span class="line">//例子</span><br><span class="line">this.aaa();   // 原本呼叫 aaa function 的方式</span><br><span class="line">context.dispatch(&#x27;aaa&#x27;);   // 變成這樣呼叫</span><br></pre></td></tr></table></figure></li>
+<li><p>很多參數需要傳的狀況下「全部用物件」方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">this.selectCategory(categoryStyle, false); // 原本</span><br><span class="line"></span><br><span class="line">// 修改</span><br><span class="line">context.dispatch(&#123;</span><br><span class="line">  type: &#x27;selectCategory&#x27;,</span><br><span class="line">  style: categoryStyle,</span><br><span class="line">  isPageClick: false</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>action 中.太多參數要用物件傳入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">selectCategory (context, &#123;style, isPageClick&#125;) &#123;...&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="mapActions-針對-methods-簡化"><a href="#mapActions-針對-methods-簡化" class="headerlink" title="mapActions 針對 methods 簡化"></a>mapActions 針對 methods 簡化</h4><ul>
+<li><p>原本 component 中的樣子</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">methods: &#123;</span><br><span class="line">  // 這可以簡化</span><br><span class="line">  addCartProductIn() &#123;</span><br><span class="line">    this.$store.dispatch(&#x27;addCartProductIn&#x27;);</span><br><span class="line">  &#125;,</span><br><span class="line">  // 這無法簡化.因為有參數需要傳入</span><br><span class="line">  changeNum(num) &#123;</span><br><span class="line">    this.$store.dispatch(&#x27;changeNum&#x27;, num)</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></li>
+<li><p>修改 step 1<br>component 中引入 mapActions</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">import &#123; mapGetters, mapActions &#125; from &#x27;vuex&#x27;; // 加入這段(沒 mapGetters 就刪除 mapGetters)</span><br><span class="line">export default &#123;...&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>修改 step 2<br>改變 component 中的設定<br>注意:需要帶參數進去的無法縮減</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">methods: &#123;</span><br><span class="line">  changeNum(num) &#123;</span><br><span class="line">    this.$store.dispatch(&#x27;changeNum&#x27;, num); // 無法縮減 </span><br><span class="line">  &#125;,</span><br><span class="line">  ...mapActions([&#x27;addCartProductIn&#x27;]), // 改這邊</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h3 id="tip"><a href="#tip" class="headerlink" title="tip"></a>tip</h3><p>VueX 中太多參數要傳遞.都是用物件方式(解構)<br>因為是解構所以參數可以直接用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">// component 頁面</span><br><span class="line">addtoCart(id, qty = 1) &#123;   // 「= 1」預設值的意思</span><br><span class="line"></span><br><span class="line">  // 原本參數太多</span><br><span class="line">  // this.$store.dispatch(&#x27;addtoCart&#x27;,id, qty);</span><br><span class="line"></span><br><span class="line">  // 用物件包起來</span><br><span class="line">  this.$store.dispatch(&#x27;addtoCart&#x27;,&#123;id, qty&#125;);</span><br><span class="line"></span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line">// vuex 裡面</span><br><span class="line">addtoCart(context, &#123;id, qty&#125;) &#123;  //注意!不要寫上預設值。解構-&gt;直接用參數即可</span><br><span class="line">  const vm = this;</span><br><span class="line">  const url = `$&#123;process.env.APIPATH&#125;/api/$&#123;process.env.CUSTOMPATH&#125;/cart`;</span><br><span class="line">  const item = &#123;</span><br><span class="line">    product_id: id,</span><br><span class="line">    qty,</span><br><span class="line">  &#125;;</span><br><span class="line">  context.commit(&#x27;LOADING&#x27;,true)</span><br><span class="line">  axios.post(url, &#123; data: item &#125;).then((response) =&gt; &#123;</span><br><span class="line">    context.commit(&#x27;LOADING&#x27;,false)</span><br><span class="line">    context.dispatch(&#x27;getCart&#x27;);</span><br><span class="line">    console.log(&#x27;加入購物車:&#x27;, response);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/hexo_blogger/tags/Vue/" rel="tag"># Vue</a>
+              <a href="/hexo_blogger/tags/VueX/" rel="tag"># VueX</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2020/08/05/vuex-1%E5%89%8D%E8%A8%80/" rel="prev" title="VueX - 1. 前言">
+                  <i class="fa fa-chevron-left"></i> VueX - 1. 前言
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2020/08/07/vuex-3%E7%B0%A1%E5%8C%96%E6%A8%A1%E7%B5%84/" rel="next" title="VueX - 3. Getter、Modules 簡化與模組化">
+                  VueX - 3. Getter、Modules 簡化與模組化 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Teisha HSU</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/hexo_blogger/js/comments.js"></script><script src="/hexo_blogger/js/utils.js"></script><script src="/hexo_blogger/js/motion.js"></script><script src="/hexo_blogger/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

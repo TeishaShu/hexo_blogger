@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo_blogger/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo_blogger/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo_blogger/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/hexo_blogger/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/hexo_blogger/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"teishashu.github.io","root":"/hexo_blogger/","images":"/hexo_blogger/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"}}</script><script src="/hexo_blogger/js/config.js"></script>
+<meta name="description" content="Redux 是另一個團隊，FB 發現大家很喜歡在 React 中使用，增加一個 react-redux (FB後來用的，介紹在下一篇，這篇是 Redux)  目的：讓資料 state 統一管理。&#x3D;&#x3D;&gt; 集中式狀態管理 Action、Dispatch、Action、Store、View全域的資料管理工具，管理整個網頁的 state，需要資料的 Component 從 Redux 中取得，可以確">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redux 相關(1) - Redux 資料管理工具">
+<meta property="og:url" content="https://teishashu.github.io/hexo_blogger/2022/07/16/redux-1/index.html">
+<meta property="og:site_name" content="亭夏 Teisha - 邁向前端">
+<meta property="og:description" content="Redux 是另一個團隊，FB 發現大家很喜歡在 React 中使用，增加一個 react-redux (FB後來用的，介紹在下一篇，這篇是 Redux)  目的：讓資料 state 統一管理。&#x3D;&#x3D;&gt; 集中式狀態管理 Action、Dispatch、Action、Store、View全域的資料管理工具，管理整個網頁的 state，需要資料的 Component 從 Redux 中取得，可以確">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://note.pcwu.net/assets/images/2017-03-04-redux-intro-8c335.png">
+<meta property="article:published_time" content="2022-07-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-02-25T05:19:06.024Z">
+<meta property="article:author" content="Teisha HSU">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="Redux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://note.pcwu.net/assets/images/2017-03-04-redux-intro-8c335.png">
+
+
+<link rel="canonical" href="https://teishashu.github.io/hexo_blogger/2022/07/16/redux-1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://teishashu.github.io/hexo_blogger/2022/07/16/redux-1/","path":"2022/07/16/redux-1/","title":"Redux 相關(1) - Redux 資料管理工具"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Redux 相關(1) - Redux 資料管理工具 | 亭夏 Teisha - 邁向前端</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/hexo_blogger/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo_blogger/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">亭夏 Teisha - 邁向前端</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/hexo_blogger/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li>
+        <li class="menu-item menu-item-about"><a href="/hexo_blogger/about/" rel="section"><i class="fa fa-user fa-fw"></i>關於</a></li>
+        <li class="menu-item menu-item-tags"><a href="/hexo_blogger/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li>
+        <li class="menu-item menu-item-categories"><a href="/hexo_blogger/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li>
+        <li class="menu-item menu-item-archives"><a href="/hexo_blogger/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8F%BE%E5%AF%A6%E6%83%85%E5%A2%83%E6%A8%A1%E6%93%AC"><span class="nav-number">1.</span> <span class="nav-text">現實情境模擬</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%92%E8%89%B2"><span class="nav-number">1.1.</span> <span class="nav-text">角色</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%83%85%E5%A2%83"><span class="nav-number">1.2.</span> <span class="nav-text">情境</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Action-Creators-%E5%89%B5%E5%BB%BA%E8%A1%8C%E7%82%BA"><span class="nav-number">2.</span> <span class="nav-text">Action Creators 創建行為</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Action"><span class="nav-number">2.1.</span> <span class="nav-text">Action</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Dispatch-%E4%B8%80%E5%80%8B%E7%99%BC%E9%80%81%E7%9A%84%E5%8B%95%E4%BD%9C"><span class="nav-number">2.2.</span> <span class="nav-text">Dispatch 一個發送的動作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Store"><span class="nav-number">3.</span> <span class="nav-text">Store</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Reducers"><span class="nav-number">3.1.</span> <span class="nav-text">Reducers</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getState-%E7%8D%B2%E5%8F%96%E7%8B%80%E6%85%8B"><span class="nav-number">3.2.</span> <span class="nav-text">getState() 獲取狀態</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#View"><span class="nav-number">4.</span> <span class="nav-text">View</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redux-%E6%B3%A8%E6%84%8F"><span class="nav-number">5.</span> <span class="nav-text">Redux 注意!!</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Teisha HSU</p>
+  <div class="site-description" itemprop="description">前端學習筆記紀錄</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/hexo_blogger/archives/">
+        
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/hexo_blogger/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/hexo_blogger/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="mailto:colorfulspirit@gmail.com" title="E-Mail → mailto:colorfulspirit@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://teishashu.github.io/hexo_blogger/2022/07/16/redux-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo_blogger/images/avatar.gif">
+      <meta itemprop="name" content="Teisha HSU">
+      <meta itemprop="description" content="前端學習筆記紀錄">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="亭夏 Teisha - 邁向前端">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Redux 相關(1) - Redux 資料管理工具
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-07-16 00:00:00" itemprop="dateCreated datePublished" datetime="2022-07-16T00:00:00+08:00">2022-07-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新於</span>
+        <time title="修改時間：2023-02-25 13:19:06" itemprop="dateModified" datetime="2023-02-25T13:19:06+08:00">2023-02-25</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo_blogger/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Redux 是另一個團隊，FB 發現大家很喜歡在 React 中使用，增加一個 react-redux (FB後來用的，介紹在下一篇，這篇是 Redux)</p>
+<ul>
+<li>目的：<br>讓資料 state 統一管理。<br>==&gt; 集中式狀態管理 Action、Dispatch、Action、Store、View<br>全域的資料管理工具，管理整個網頁的 state，需要資料的 Component 從 Redux 中取得，可以確保整個專案資料來自同個地方。<span id="more"></span></li>
+<li>特色：<br>各司其職、分工合作，畫面(交給 component 修改)、資料(交給 redux 管理) 分離比較快找到問題。<br>在大型專案中如果獲取資料都在各自的 Component 比較不方便管理，發生問題也不容易找到。</li>
+<li>使用情況：<br>A. 共享：需要跨組件拿到狀態 state<br>B. 跨組件改資料：一個組件需要改另一個組件的資料(不一定是父子關係)</li>
+<li>可以搭配 google 插件 (Redux DevTools)</li>
+</ul>
+<hr>
+<h3 id="現實情境模擬"><a href="#現實情境模擬" class="headerlink" title="現實情境模擬"></a>現實情境模擬</h3><p>先看一次故事後，把情境跟下方 Redux 運作流程圖 搭配一起理解看看圖的概念。</p>
+<h4 id="角色"><a href="#角色" class="headerlink" title="角色"></a>角色</h4><p>Components：一家公司的很多客戶，圖UI腳色<br>Action Creators：負責接待客戶的業務(這位置處理 API 非同步)<br>Store：公司的老闆(只有一位負責人)<br>Reducers：很多位員工專門處理各項事務</p>
+<h4 id="情境"><a href="#情境" class="headerlink" title="情境"></a>情境</h4><p>客戶(Components)跟業務說很多自己的需求。<br>業務成功接到業績後，整理成一張單子標示需要執行的任務標題和相關需要用到的資料(action = {type: “things type 標題”, data: things data 資料})。<br>整理好後把這些案子交給老闆(Store)。<br>老闆馬上分配給專門處理不同任務的員工(Reducers)。<br>員工處理好後把案件交給老闆 (return new State)。<br>客戶跟老闆拿貨品(getState())。<br><img width="500" src='https://note.pcwu.net/assets/images/2017-03-04-redux-intro-8c335.png' alt=""></p>
+<p>(Redux 資料流- from <a target="_blank" rel="noopener" href="https://www.slideshare.net/nikgraf/react-redux-introduction">React + Redux Introduction</a>。)</p>
+<hr>
+<h3 id="Action-Creators-創建行為"><a href="#Action-Creators-創建行為" class="headerlink" title="Action Creators 創建行為"></a>Action Creators 創建行為</h3><h4 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h4><ul>
+<li><p>負責：「改變」state 資料狀態，這邊也會處理非同步(獲取 API 資料)</p>
+</li>
+<li><p>結構：action 是物件，包含了 type、data。</p>
+<ul>
+<li>type 事件名稱/方法：要做什麼行為、動作(api 在程式內的位置)。<b>字串形式、必要的屬性</b></li>
+<li>data 資訊：行為的資料(要傳到 api 的資料)。<b>可選的屬性</b><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const action = &#123;</span><br><span class="line">  type: &#x27;authList/initAuthResult&#x27;, </span><br><span class="line">  data: &#123;</span><br><span class="line">    text: &#x27;想顯示的文字內容&#x27;  </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dispatch(action);</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>Action 分2種：物件 or 函式</p>
+<ul>
+<li><p>同步 —&gt; obj{}<br>之後交給 reducer 處理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">export const createIncrementAction = data =&gt; (&#123;type:INCREMENT, data&#125;);</span><br><span class="line">// &#123; data: data &#125; 簡寫 ==&gt;直接寫 &#123; data &#125;</span><br><span class="line"></span><br><span class="line">// 錯誤寫法</span><br><span class="line">// export const createIncrementAction = data =&gt; &#123;type:INCREMENT, data&#125;;</span><br><span class="line">// 後面的大括號&#123;&#125;會被認為是函式的括弧</span><br></pre></td></tr></table></figure></li>
+<li><p>異步 —&gt; 返回 function<br>只有函式裡面才能放異步，需要安裝 redux-thunk<br>(要先在 store 引入 redux-thunk)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import countReducer from &#x27;./count_reducer&#x27;</span><br><span class="line"></span><br><span class="line">// 增加 applyMiddleware 中間鍵方法</span><br><span class="line">import &#123; createStore, applyMiddleware &#125; from &#x27;redux&#x27;</span><br><span class="line"></span><br><span class="line">// 引入套件</span><br><span class="line">import thunk from &#x27;redux-thunk&#x27;</span><br><span class="line"></span><br><span class="line">// 輸出 store 時，把 applyMiddleware 當成第二個值傳入並傳入 thunk 值</span><br><span class="line">export default createStore(countReducer,applyMiddleware(thunk))</span><br></pre></td></tr></table></figure>
+
+<p>在返回函式，不然會報錯</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">export const incrementAsyncAction = (data, time) =&gt; &#123;</span><br><span class="line">  return () =&gt; &#123; //返回函式</span><br><span class="line">    setTimeout(() =&gt; &#123;</span><br><span class="line">      store.dispatch(&#123; type: INCREMENT, data &#125;)</span><br><span class="line">    &#125;, time)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<p>*返回物件是 reducers 執行，返回函式(非同步)是 store 自己執行</p>
+<h4 id="Dispatch-一個發送的動作"><a href="#Dispatch-一個發送的動作" class="headerlink" title="Dispatch 一個發送的動作"></a>Dispatch 一個發送的動作</h4><ul>
+<li>dispatch 是一個函數，把 action (動作對象)帶入往下送，是 Component 跟 Store (處理資料)的溝通橋梁。</li>
+<li>每個 App 只有一個，向所有 Store 發送 action 事件</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dispatch(action)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="Store"><a href="#Store" class="headerlink" title="Store"></a>Store</h3><ul>
+<li>Redux 運作的核心，負責儲存整個 state tree，類似公司的主管(指揮者、調度的人)，所有任務都會到主管手中，不會停留馬上將任務往下分派給其他人員處理。</li>
+<li>一個 App 只有一個 Store。把 state、action、reducer 連結在一起。</li>
+<li>store.subscribe(render) 只要 store 更新重新 render。</li>
+</ul>
+<h4 id="Reducers"><a href="#Reducers" class="headerlink" title="Reducers"></a>Reducers</h4><ul>
+<li>工作：<br>拿到 Store 給的 action 資料，負責改變 state 的狀態。</li>
+<li>情境：處理、加工的人。<br>Store 的屬下，reducers 像很多的員工，有很多位分別處理不同的業務，做完交付內容給老闆完成。</li>
+<li>單向的資料流：<br>過程中 state 只能讀取，透過回傳修改值，不能直接改 state。</li>
+<li>初始的：<br>store 把 (previousState 之前的狀態, action)，交給 Reducers 處理，處理完把新的狀態 return newState 改變 state 的值。<br>(在初始化時. previousState 是 undefined)<br>action ={ type: “@@redux/INIT…….隨機的字” }<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const counter = (state = 0, action) =&gt; &#123;</span><br><span class="line">  switch (action.type) &#123;</span><br><span class="line">    case &#x27;INCREMENT&#x27;:</span><br><span class="line">      return state + 1;</span><br><span class="line">    case &#x27;DECREMENT&#x27;:</span><br><span class="line">      return state - 1;</span><br><span class="line">    default:</span><br><span class="line">      return state;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="getState-獲取狀態"><a href="#getState-獲取狀態" class="headerlink" title="getState() 獲取狀態"></a>getState() 獲取狀態</h4><p>store 把新的狀態透過 getState() 這方法返回給 component</p>
+<hr>
+<h3 id="View"><a href="#View" class="headerlink" title="View"></a>View</h3><p>React 負責的各種事情發生後，負責把資料呈現在 UI 上。</p>
+<hr>
+<h3 id="Redux-注意"><a href="#Redux-注意" class="headerlink" title="Redux 注意!!"></a>Redux 注意!!</h3><p>只管狀態，不管頁面有沒有 render 更新。<br>破解方式是使用生命週期 componentDidMount</p>
+<ol>
+<li>subscribe (訂閱)。只要 redux 的任何狀態改變就調用。</li>
+<li>生命週期的this是組件的實例對象。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">componentDidMount() &#123;</span><br><span class="line">  store.subscript(() =&gt; &#123;</span><br><span class="line">    //只要 store 狀態一改變就會觸發</span><br><span class="line">    this.setState(&#123;&#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/hexo_blogger/tags/React/" rel="tag"># React</a>
+              <a href="/hexo_blogger/tags/Redux/" rel="tag"># Redux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2022/07/12/react-8-spa/" rel="prev" title="React(8) 路由 - SPA、react-router">
+                  <i class="fa fa-chevron-left"></i> React(8) 路由 - SPA、react-router
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo_blogger/2022/07/17/redux-2-ReactRedux/" rel="next" title="Redux 相關(2) - React-Redux">
+                  Redux 相關(2) - React-Redux <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Teisha HSU</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/hexo_blogger/js/comments.js"></script><script src="/hexo_blogger/js/utils.js"></script><script src="/hexo_blogger/js/motion.js"></script><script src="/hexo_blogger/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
