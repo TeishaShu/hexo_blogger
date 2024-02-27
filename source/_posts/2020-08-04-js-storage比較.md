@@ -1,5 +1,5 @@
 ---
-title: Cookie、LocalStorage、SessionStorage 比較
+title: 存資料的方式比較 Cookie、LocalStorage、SessionStorage、Memory
 tags: JavaScript
 ---
 3種存資料的比較
@@ -14,7 +14,7 @@ tags: JavaScript
 
 -------------------------------------------------
 ### LocalStorage
-- 特性：(不重要但常用的資料存在用戶端)
+- 特性：不重要但常用的資料存在用戶端.比較不安全
 - 不會過期.需要手動清除
 - 容量 5mb
 - 每次 request 時不會帶上
@@ -62,5 +62,30 @@ value 只能是 string 格式，可以使用 JSON 轉換
     let value = ['1', 'a'];
     let valueToString = JSON.stringify(value);
   ```
+
+-------------------------------------------------
+### Memory
+每次頁面重整就會不見，存在記憶體
+
+```
+cache (EX:Taiwan area 台灣不同的地區名稱)
+- data format: 資料需要轉成特定格式儲存
+- last update time: 更新的時間需要紀錄上去再存
+- API update time: 假如一周更新一次，需要比較時間來更新上去
+
+// memory.ts
+export const globalMemory = {
+  abc: 'hello'
+}
+
+// Component.tsx
+import { globalMemory } from 'memory.ts'
+globalMemory.abc = 'hi'
+```
+
+-------------------------------------------------
+暫存的使用情境:
+想要省時間不要直打 API，要看需求狀況判斷 API 多久是要暫存的。
+缺點是需要維護，資料會過期，沒有寫好會出現資料都沒有更新。
 
 [參考：Day20 localStorage、sessionStorage](https://ithelp.ithome.com.tw/articles/10203525)

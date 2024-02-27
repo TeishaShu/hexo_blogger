@@ -1,5 +1,5 @@
 ---
-title: Redux 相關比較(4)：Redux、React-Redux、Redux-Saga 
+title: Redux(4) 比較 Redux、React-Redux、Redux-Saga 
 tags: 
 - Redux
 - React

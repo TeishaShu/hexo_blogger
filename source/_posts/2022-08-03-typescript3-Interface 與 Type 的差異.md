@@ -113,6 +113,7 @@ interface MyDog extends AnimalType, DogType {
 解釋上例:
 想要時做出 MyDog 的介面時，除了它本身的屬性外，還要符合 AnimalType、DogType 這2者介面定義出來的屬性與功能，透過這種方式可以減少重複的部分，以增進彈性和複用性
 
+
 ```
 type AnimalType {
   feetNumber: number,
@@ -135,11 +136,26 @@ MyDog 的靜態資料格式是由 AnimalType、DogType 2者組成的。
 
 
 ### 結論
-type、interface 差異: interface 能擴展
-<!-- 開發上通常怎麼使用? -->
-<!-- 主要寫 type，物件在使用可以擴展、更彈性、堆疊其他屬性的 interface 嗎? -->
+TypeScript 會一直更新，type、interface 原本有點差異(很多資料寫 interface 比較能擴展)，後來其實沒有差很多，實務開發上都可以。
 
 累加屬性的程式寫法不同:
+
+1. 「+」使用
 type: A屬性+B屬性
 interface: 有自己的屬性+A屬性+B屬性，屬性是堆疊全部都要符合
 
+2. 擴展使用方式
+```
+interface Base {
+  f: number;
+}
+
+interface AbcInterface extends Base {
+  field: string;
+}
+
+
+type AbcType = Base & {
+  field: string;
+}
+```
