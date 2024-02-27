@@ -18,18 +18,28 @@ protected 受保護
 1.44.17泛型 -->
 --------------------------------------
 ##### 泛型
-- function、class 都可以用(class下一頁說明)
-一個變數可能有不同類型，使用時才會知道他的類型
+在函式被執行時才能確定是什麼類型，看怎麼使用決定他的類型。
+function、class 都可以用
 下圖寫法：<類型名稱>，後面()中把類型放進去
 ```
 function print<T> (data: T) {
   console.log(data)
 }
 
-print<number>(123)
+print<number>(123) //使用成 number
 print<number>("ttt") //報錯
-print<string>("ttt")
-print<boolean>(true)
+print<string>("ttt") //使用成 string
+print<boolean>(true) //使用成 boolean
+```
+
+2種泛型使用
+```
+function fn2<T, K>(a: T, b: K):T{
+  console.log(b)
+  return a;
+}
+fn2(111,"文字"); //可以寫這樣裡面知道泛型
+fn2<number, string>(111,"文字"); //把型別放上去更明確
 ```
 
 ---------------------------------------
