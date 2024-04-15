@@ -50,8 +50,18 @@ fn2<number, string>(111,"文字"); //把型別放上去更明確
 宣告2種類型變成物件
 record 在不指定內容下宣告物件
 
+https://zhuanlan.zhihu.com/p/356662885
+Record 比較像是物件的使用，第一個放枚舉(哪些項目).像是key的腳色，第二個放value的型別。類似mapping
+
 - Pick<Type, Keys>
 跟上面 Record 相反，主要是塞選出東西來
 
 - Omit<Type, Keys>
 過濾
+
+
+
+
+Partial
+更新其中一欄位
+https://ithelp.ithome.com.tw/articles/10273198?sc=hot
